@@ -1,0 +1,33 @@
+package helper
+
+import(
+	"strings"
+	"net/http"
+	"strconv"
+	"fmt"
+	"encoding/json"
+)
+
+func ParserInt(r *http.Request, prefix string) (int32, error) {
+	idStr := strings.TrimPrefix(r.URL.Path, prefix)
+	val, err := strconv.ParseInt(idStr, 10, 32)
+	if err != nil {
+		return 0, fmt.Errorf("ID tidak valid: %v", err)
+	}
+	return int32(val), nil
+}
+
+func ParserBody[T any](r io.Reader, body T)(T,error){
+	// setting decoding
+	decoder := json.NewDecoder(r)
+    decoder.DisallowUnknownFields()
+
+	//run decoding
+    if err := decoder.Decode(&body); err != nil {
+		var zero T
+		return zero, err
+	}
+	
+	return body, nil
+	
+}
