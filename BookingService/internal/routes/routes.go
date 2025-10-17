@@ -1,8 +1,8 @@
 package routes
 
 import (
-	"cinema/internal/app/handlers"
 	"cinema/config"
+	"cinema/internal/app/handlers"
 	"net/http"
 )
 

@@ -1,11 +1,12 @@
 package helper
 
-import(
-	"strings"
+import (
+	"encoding/json"
+	"fmt"
+	"io"
 	"net/http"
 	"strconv"
-	"fmt"
-	"encoding/json"
+	"strings"
 )
 
 func ParserInt(r *http.Request, prefix string) (int32, error) {
@@ -17,17 +18,17 @@ func ParserInt(r *http.Request, prefix string) (int32, error) {
 	return int32(val), nil
 }
 
-func ParserBody[T any](r io.Reader, body T)(T,error){
+func ParserBody[T any](r io.Reader, body T) (T, error) {
 	// setting decoding
 	decoder := json.NewDecoder(r)
-    decoder.DisallowUnknownFields()
+	decoder.DisallowUnknownFields()
 
 	//run decoding
-    if err := decoder.Decode(&body); err != nil {
+	if err := decoder.Decode(&body); err != nil {
 		var zero T
 		return zero, err
 	}
-	
+
 	return body, nil
-	
+
 }

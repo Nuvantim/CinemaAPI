@@ -10,21 +10,21 @@ import (
 	"time"
 )
 
-func ClearScreen(){
-	switch runtime.GOOS{
-		case "windows":
-			cmd := exec.Command("cmd","/c","cls")
-			cmd.Stdout = os.Stdout
-			cmd.Stderr = os.Stderr
-			cmd.Run()
-		case "linux":
-			cmd := exec.Command("clear")
-			cmd.Stdout = os.Stdout
-			cmd.Stderr = os.Stderr
-			cmd.Run()
-		default:
-			log.Fatal("os not detected")
-		}
+func ClearScreen() {
+	switch runtime.GOOS {
+	case "windows":
+		cmd := exec.Command("cmd", "/c", "cls")
+		cmd.Stdout = os.Stdout
+		cmd.Stderr = os.Stderr
+		cmd.Run()
+	case "linux":
+		cmd := exec.Command("clear")
+		cmd.Stdout = os.Stdout
+		cmd.Stderr = os.Stderr
+		cmd.Run()
+	default:
+		log.Fatal("os not detected")
+	}
 }
 func getOSVersion() string {
 	switch runtime.GOOS {
