@@ -1,4 +1,4 @@
-package services
+package service
 
 import (
 	db "cinema/database"
@@ -12,4 +12,44 @@ func ListGenre() ([]model.Genre, error) {
 		return []model.Genre{}, err
 	}
 	return genre, nil
+}
+
+func GetGenre(id int32) (model.Genre, error) {
+	genre, err := db.Queries.GetGenre(ctx.Background(), id)
+	if err != nil {
+		return model.Genre{}, err
+	}
+	return genre, nil
+}
+
+func CreateGenre(name string) (model.Genre, error) {
+	genre, err := db.Queries.CreateGenre(ctx.Background(), name)
+	if err != nil {
+		return model.Genre{}, err
+	}
+	return genre, nil
+}
+
+func UpdateGenre(id int32, body model.Genre) (model.Genre, error) {
+	GenreID, err := db.Queries.UpdateGenre(ctx.Background(), model.UpdateGenreParams{
+		ID:   id,
+		Name: body.Name,
+	})
+	if err != nil {
+		return model.Genre{}, err
+	}
+
+	data, err := GetGenre(GenreID)
+	if err != nil {
+		return model.Genre{}, err
+	}
+
+	return data, nil
+}
+
+func DeleteGenre(id int32) error {
+	if err := db.Queries.DeleteGenre(ctx.Background(), id); err != nil {
+		return err
+	}
+	return nil
 }

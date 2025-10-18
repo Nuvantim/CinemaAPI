@@ -11,8 +11,9 @@ SELECT film.id, film.title, film.director, genre.name AS genre, film.duration FR
 INNER JOIN genre  ON film.genre_id = genre.id WHERE film.id=$1;
 
 -- name: SearchFilm :many
-SELECT film.id, film.title, film.director, genre.name AS genre, film.duration FROM film  
-INNER JOIN genre  ON film.genre_id = genre.id WHERE LIKE $1;
+SELECT film.id, film.title, film.director, genre.name AS genre, film.duration FROM film
+INNER JOIN genre  ON film.genre_id = genre.id
+WHERE film.title LIKE $1;
 
 -- name: SearchGenreFilm :many
 SELECT film.id, film.title, film.director, genre.name AS genre, film.duration FROM film  
