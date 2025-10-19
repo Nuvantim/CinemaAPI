@@ -2,7 +2,7 @@ package routes
 
 import (
 	"cinema/config"
-	"cinema/internal/app/handler"
+	"cinema/internal/app/handlers"
 	"net/http"
 )
 
@@ -21,8 +21,15 @@ func Setup(mux *http.ServeMux) {
 	r.Get("/films", handler.ListGenre)
 	r.Get("/film/", handler.GetGenre)
 	r.Get("/film/search", handler.SearchFilm)
-	r.Get("/film/genre/", handler.SearchGenreFilm)
+	r.Get("/film/genre/", handler.SearchFilmGenre)
 	r.Post("/film/create", handler.CreateFilm)
 	r.Put("/film/update/", handler.UpdateFilm)
 	r.Delete("/film/delete/", handler.DeleteFilm)
+
+	// cinema
+	r.Get("/cinemas", handler.ListCinema)
+	r.Get("/cinema/", handler.GetCinema)
+	r.Post("/cinema/create", handler.CreateCinema)
+	r.Put("/cinema/update/", handler.UpdateCinema)
+	r.Delete("/cinema/delete/", handler.DeleteCinema)
 }
