@@ -4,15 +4,16 @@ SELECT * FROM screen_type;
 -- name: CreateScreenType :one
 INSERT INTO screen_type (name)
 VALUES ($1)
-RETURNING *;
+RETURNING id;
 
 -- name: GetScreenType :one
 SELECT * FROM screen_type WHERE id = $1;
 
--- name: UpdateScreenType :exec
+-- name: UpdateScreenType :one
 UPDATE screen_type
 SET name = $2
-WHERE id = $1;
+WHERE id = $1
+RETURNING id;
 
 -- name: DeleteScreenType :exec
 DELETE FROM screen_type WHERE id = $1;
@@ -34,7 +35,7 @@ INSERT INTO screen (cinema_id, name, screen_type_id)
 SELECT $1, $2, $3
 WHERE EXISTS (SELECT 1 FROM cinema WHERE id = $1)
   AND EXISTS (SELECT 1 FROM screen_type WHERE id = $3)
-RETURNING *;
+RETURNING id;
 
 -- name: GetScreen :one
 SELECT
@@ -55,7 +56,7 @@ SET cinema_id = $2,
 WHERE screen.id = $1
   AND EXISTS (SELECT 1 FROM cinema WHERE id = $2)
   AND EXISTS (SELECT 1 FROM screen_type WHERE id = $4)
-RETURNING *;
+RETURNING id;
 
 -- name: DeleteScreen :exec
 DELETE FROM screen WHERE id = $1;

@@ -1,18 +1,61 @@
 package service
 
-import(
+import (
 	db "cinema/database"
 	model "cinema/internal/app/repository"
 	ctx "context"
 )
 
-func ListScreen()([]ListScreenRow,error){}
+func ListScreen() ([]model.ListScreenRow, error) {
+	data, err := db.Queries.ListScreen(ctx.Background())
+	if err != nil {
+		return []model.ListScreenRow{}, err
+	}
+	return data, nil
+}
 
-func GetScreen(id int)(model.GetScreenRow,error){}
+func GetScreen(id int32) (model.GetScreenRow, error) {
+	data, err := db.Queries.GetScreen(ctx.Background(), id)
+	if err != nil {
+		return model.GetScreenRow{}, err
+	}
+	return data, nil
+}
 
-func CreateScreen(body model.CreateScreenParams)(model.GetScreenRow,error){}
+func CreateScreen(body model.CreateScreenParams) (model.GetScreenRow, error) {
+	screen_id, err := db.Queries.CreateScreen(ctx.Background(), body)
+	if err != nil {
+		return model.GetScreenRow{}, err
+	}
 
-func UpdateScreen(id int32, model.UpdateScreenParams)(model.GetScreenRow,error){}
+	data, err := db.Queries.GetScreen(ctx.Background(), screen_id)
+	if err != nil {
+		return model.GetScreenRow{}, err
+	}
 
-func DeleteScreen(id int32)error{}
+	return data, nil
+}
 
+func UpdateScreen(id int32, body model.UpdateScreenParams) (model.GetScreenRow, error) {
+	body.ID = id
+
+	screen_id, err := db.Queries.UpdateScreen(ctx.Background(), body)
+	if err != nil {
+		return model.GetScreenRow{}, err
+	}
+
+	data, err := db.Queries.GetScreen(ctx.Background(), screen_id)
+	if err != nil {
+		return model.GetScreenRow{}, err
+	}
+
+	return data, nil
+}
+
+func DeleteScreen(id int32) error {
+	if err := db.Queries.DeleteScreen(ctx.Background(), id); err != nil {
+		return err
+	}
+
+	return nil
+}

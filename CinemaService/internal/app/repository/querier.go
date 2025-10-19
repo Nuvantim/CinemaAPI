@@ -12,9 +12,9 @@ type Querier interface {
 	CreateCinema(ctx context.Context, arg CreateCinemaParams) (Cinema, error)
 	CreateFilm(ctx context.Context, arg CreateFilmParams) (int32, error)
 	CreateGenre(ctx context.Context, name string) (Genre, error)
-	CreateScreen(ctx context.Context, arg CreateScreenParams) (Screen, error)
-	CreateScreenType(ctx context.Context, name string) (ScreenType, error)
-	CreateSeat(ctx context.Context, arg CreateSeatParams) (Seat, error)
+	CreateScreen(ctx context.Context, arg CreateScreenParams) (int32, error)
+	CreateScreenType(ctx context.Context, name string) (int32, error)
+	CreateSeat(ctx context.Context, arg CreateSeatParams) (int32, error)
 	CreateShowTime(ctx context.Context, arg CreateShowTimeParams) (Showtime, error)
 	DeleteCinema(ctx context.Context, id int32) error
 	DeleteFilm(ctx context.Context, id int32) error
@@ -42,9 +42,9 @@ type Querier interface {
 	UpdateCinema(ctx context.Context, arg UpdateCinemaParams) (int32, error)
 	UpdateFilm(ctx context.Context, arg UpdateFilmParams) (int32, error)
 	UpdateGenre(ctx context.Context, arg UpdateGenreParams) (int32, error)
-	UpdateScreen(ctx context.Context, arg UpdateScreenParams) (Screen, error)
-	UpdateScreenType(ctx context.Context, arg UpdateScreenTypeParams) error
-	UpdateSeat(ctx context.Context, arg UpdateSeatParams) (Seat, error)
+	UpdateScreen(ctx context.Context, arg UpdateScreenParams) (int32, error)
+	UpdateScreenType(ctx context.Context, arg UpdateScreenTypeParams) (int32, error)
+	UpdateSeat(ctx context.Context, arg UpdateSeatParams) (int32, error)
 	UpdateShowTime(ctx context.Context, arg UpdateShowTimeParams) (Showtime, error)
 }
 

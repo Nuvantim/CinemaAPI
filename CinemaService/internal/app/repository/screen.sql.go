@@ -14,7 +14,7 @@ INSERT INTO screen (cinema_id, name, screen_type_id)
 SELECT $1, $2, $3
 WHERE EXISTS (SELECT 1 FROM cinema WHERE id = $1)
   AND EXISTS (SELECT 1 FROM screen_type WHERE id = $3)
-RETURNING id, cinema_id, name, screen_type_id
+RETURNING id
 `
 
 type CreateScreenParams struct {
@@ -23,29 +23,24 @@ type CreateScreenParams struct {
 	ScreenTypeID int32  `json:"screen_type_id"`
 }
 
-func (q *Queries) CreateScreen(ctx context.Context, arg CreateScreenParams) (Screen, error) {
+func (q *Queries) CreateScreen(ctx context.Context, arg CreateScreenParams) (int32, error) {
 	row := q.db.QueryRow(ctx, CreateScreen, arg.CinemaID, arg.Name, arg.ScreenTypeID)
-	var i Screen
-	err := row.Scan(
-		&i.ID,
-		&i.CinemaID,
-		&i.Name,
-		&i.ScreenTypeID,
-	)
-	return i, err
+	var id int32
+	err := row.Scan(&id)
+	return id, err
 }
 
 const CreateScreenType = `-- name: CreateScreenType :one
 INSERT INTO screen_type (name)
 VALUES ($1)
-RETURNING id, name
+RETURNING id
 `
 
-func (q *Queries) CreateScreenType(ctx context.Context, name string) (ScreenType, error) {
+func (q *Queries) CreateScreenType(ctx context.Context, name string) (int32, error) {
 	row := q.db.QueryRow(ctx, CreateScreenType, name)
-	var i ScreenType
-	err := row.Scan(&i.ID, &i.Name)
-	return i, err
+	var id int32
+	err := row.Scan(&id)
+	return id, err
 }
 
 const DeleteScreen = `-- name: DeleteScreen :exec
@@ -183,7 +178,7 @@ SET cinema_id = $2,
 WHERE screen.id = $1
   AND EXISTS (SELECT 1 FROM cinema WHERE id = $2)
   AND EXISTS (SELECT 1 FROM screen_type WHERE id = $4)
-RETURNING id, cinema_id, name, screen_type_id
+RETURNING id
 `
 
 type UpdateScreenParams struct {
@@ -193,27 +188,23 @@ type UpdateScreenParams struct {
 	ScreenTypeID int32  `json:"screen_type_id"`
 }
 
-func (q *Queries) UpdateScreen(ctx context.Context, arg UpdateScreenParams) (Screen, error) {
+func (q *Queries) UpdateScreen(ctx context.Context, arg UpdateScreenParams) (int32, error) {
 	row := q.db.QueryRow(ctx, UpdateScreen,
 		arg.ID,
 		arg.CinemaID,
 		arg.Name,
 		arg.ScreenTypeID,
 	)
-	var i Screen
-	err := row.Scan(
-		&i.ID,
-		&i.CinemaID,
-		&i.Name,
-		&i.ScreenTypeID,
-	)
-	return i, err
+	var id int32
+	err := row.Scan(&id)
+	return id, err
 }
 
-const UpdateScreenType = `-- name: UpdateScreenType :exec
+const UpdateScreenType = `-- name: UpdateScreenType :one
 UPDATE screen_type
 SET name = $2
 WHERE id = $1
+RETURNING id
 `
 
 type UpdateScreenTypeParams struct {
@@ -221,7 +212,9 @@ type UpdateScreenTypeParams struct {
 	Name string `json:"name"`
 }
 
-func (q *Queries) UpdateScreenType(ctx context.Context, arg UpdateScreenTypeParams) error {
-	_, err := q.db.Exec(ctx, UpdateScreenType, arg.ID, arg.Name)
-	return err
+func (q *Queries) UpdateScreenType(ctx context.Context, arg UpdateScreenTypeParams) (int32, error) {
+	row := q.db.QueryRow(ctx, UpdateScreenType, arg.ID, arg.Name)
+	var id int32
+	err := row.Scan(&id)
+	return id, err
 }

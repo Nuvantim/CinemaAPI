@@ -23,7 +23,7 @@ WHERE seat.id = $1;
 INSERT INTO seat (screen_id, seat_row, seat_number, seat_price_modifier)
 SELECT $1, $2, $3, $4
 WHERE EXISTS (SELECT 1 FROM screen WHERE id = $1)
-RETURNING *;
+RETURNING id;
 
 -- name: UpdateSeat :one
 UPDATE seat
@@ -33,7 +33,7 @@ SET screen_id = $2,
     seat_price_modifier = $5
 WHERE seat.id = $1
   AND EXISTS (SELECT 1 FROM screen WHERE id = $2)
-RETURNING *;
+RETURNING id;
 
 -- name: DeleteSeat :exec
 DELETE FROM seat WHERE id = $1;

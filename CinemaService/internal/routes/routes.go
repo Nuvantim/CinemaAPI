@@ -32,4 +32,19 @@ func Setup(mux *http.ServeMux) {
 	r.Post("/cinema/create", handler.CreateCinema)
 	r.Put("/cinema/update/", handler.UpdateCinema)
 	r.Delete("/cinema/delete/", handler.DeleteCinema)
+
+	// screen type
+	r.Get("/screen/types", handler.ListScreenType)
+	r.Get("/screen/type/", handler.GetScreenType)
+	r.Post("/screen/type/create", handler.CreateScreenType)
+	r.Put("/screen/type/update/", handler.UpdateScreenType)
+	r.Delete("/screen/type/delete/", handler.DeleteScreenType)
+
+	// screen
+	r.Get("/screens", handler.ListScreen)
+	r.Get("/screen/", handler.GetScreen)
+	r.Post("/screen/create", handler.CreateScreen)
+	r.Put("/screen/update/", handler.UpdateScreen)
+	r.Delete("/screen/delete/", handler.DeleteScreen)
+
 }

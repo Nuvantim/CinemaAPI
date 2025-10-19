@@ -15,7 +15,7 @@ const CreateSeat = `-- name: CreateSeat :one
 INSERT INTO seat (screen_id, seat_row, seat_number, seat_price_modifier)
 SELECT $1, $2, $3, $4
 WHERE EXISTS (SELECT 1 FROM screen WHERE id = $1)
-RETURNING id, screen_id, seat_row, seat_number, seat_price_modifier
+RETURNING id
 `
 
 type CreateSeatParams struct {
@@ -25,22 +25,16 @@ type CreateSeatParams struct {
 	SeatPriceModifier float64     `json:"seat_price_modifier"`
 }
 
-func (q *Queries) CreateSeat(ctx context.Context, arg CreateSeatParams) (Seat, error) {
+func (q *Queries) CreateSeat(ctx context.Context, arg CreateSeatParams) (int32, error) {
 	row := q.db.QueryRow(ctx, CreateSeat,
 		arg.ScreenID,
 		arg.SeatRow,
 		arg.SeatNumber,
 		arg.SeatPriceModifier,
 	)
-	var i Seat
-	err := row.Scan(
-		&i.ID,
-		&i.ScreenID,
-		&i.SeatRow,
-		&i.SeatNumber,
-		&i.SeatPriceModifier,
-	)
-	return i, err
+	var id int32
+	err := row.Scan(&id)
+	return id, err
 }
 
 const DeleteSeat = `-- name: DeleteSeat :exec
@@ -138,7 +132,7 @@ SET screen_id = $2,
     seat_price_modifier = $5
 WHERE seat.id = $1
   AND EXISTS (SELECT 1 FROM screen WHERE id = $2)
-RETURNING id, screen_id, seat_row, seat_number, seat_price_modifier
+RETURNING id
 `
 
 type UpdateSeatParams struct {
@@ -149,7 +143,7 @@ type UpdateSeatParams struct {
 	SeatPriceModifier float64     `json:"seat_price_modifier"`
 }
 
-func (q *Queries) UpdateSeat(ctx context.Context, arg UpdateSeatParams) (Seat, error) {
+func (q *Queries) UpdateSeat(ctx context.Context, arg UpdateSeatParams) (int32, error) {
 	row := q.db.QueryRow(ctx, UpdateSeat,
 		arg.ID,
 		arg.ScreenID,
@@ -157,13 +151,7 @@ func (q *Queries) UpdateSeat(ctx context.Context, arg UpdateSeatParams) (Seat, e
 		arg.SeatNumber,
 		arg.SeatPriceModifier,
 	)
-	var i Seat
-	err := row.Scan(
-		&i.ID,
-		&i.ScreenID,
-		&i.SeatRow,
-		&i.SeatNumber,
-		&i.SeatPriceModifier,
-	)
-	return i, err
+	var id int32
+	err := row.Scan(&id)
+	return id, err
 }

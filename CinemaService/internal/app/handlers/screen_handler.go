@@ -56,7 +56,7 @@ func UpdateScreen(w http.ResponseWriter, r *http.Request) {
 		helper.Error(w, err)
 	}
 
-	data, err := helper.UpdateScreen(id, body)
+	data, err := service.UpdateScreen(id, body)
 	if err != nil {
 		helper.Error(w, err)
 	}
