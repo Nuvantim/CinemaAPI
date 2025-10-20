@@ -15,7 +15,7 @@ type Querier interface {
 	CreateScreen(ctx context.Context, arg CreateScreenParams) (int32, error)
 	CreateScreenType(ctx context.Context, name string) (int32, error)
 	CreateSeat(ctx context.Context, arg CreateSeatParams) (int32, error)
-	CreateShowTime(ctx context.Context, arg CreateShowTimeParams) (Showtime, error)
+	CreateShowTime(ctx context.Context, arg CreateShowTimeParams) (int32, error)
 	DeleteCinema(ctx context.Context, id int32) error
 	DeleteFilm(ctx context.Context, id int32) error
 	DeleteGenre(ctx context.Context, id int32) error
@@ -45,7 +45,7 @@ type Querier interface {
 	UpdateScreen(ctx context.Context, arg UpdateScreenParams) (int32, error)
 	UpdateScreenType(ctx context.Context, arg UpdateScreenTypeParams) (int32, error)
 	UpdateSeat(ctx context.Context, arg UpdateSeatParams) (int32, error)
-	UpdateShowTime(ctx context.Context, arg UpdateShowTimeParams) (Showtime, error)
+	UpdateShowTime(ctx context.Context, arg UpdateShowTimeParams) (int32, error)
 }
 
 var _ Querier = (*Queries)(nil)

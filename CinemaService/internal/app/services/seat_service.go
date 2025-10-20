@@ -11,7 +11,7 @@ func ListSeat() ([]model.ListSeatRow, error) {
 	if err != nil {
 		return []model.ListSeatRow{}, err
 	}
-	return data,nil
+	return data, nil
 }
 
 func GetSeat(id int32) (model.GetSeatRow, error) {

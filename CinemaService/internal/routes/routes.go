@@ -47,4 +47,18 @@ func Setup(mux *http.ServeMux) {
 	r.Put("/screen/update/", handler.UpdateScreen)
 	r.Delete("/screen/delete/", handler.DeleteScreen)
 
+	// seat
+	r.Get("/seats", handler.ListSeat)
+	r.Get("/seat/", handler.GetSeat)
+	r.Post("/seat/create", handler.CreateSeat)
+	r.Put("/seat/update/", handler.UpdateSeat)
+	r.Delete("/seat/delete/", handler.DeleteSeat)
+
+	// showtime
+	r.Get("/showtimes", handler.ListShowTime)
+	r.Get("/showtime/", handler.GetShowTime)
+	r.Post("/showtime/create", handler.CreateShowTime)
+	r.Put("/showtime/update/", handler.UpdateShowTime)
+	r.Delete("/showtime/delete/", handler.DeleteShowTime)
+
 }

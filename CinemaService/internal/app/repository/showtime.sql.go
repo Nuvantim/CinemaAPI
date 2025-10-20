@@ -14,7 +14,7 @@ INSERT INTO showtime (film_id, screen_id, start_time, base_price)
 SELECT $1, $2, $3, $4
 WHERE EXISTS (SELECT 1 FROM film WHERE id = $1)
   AND EXISTS (SELECT 1 FROM screen WHERE id = $2)
-RETURNING id, film_id, screen_id, start_time, base_price
+RETURNING id
 `
 
 type CreateShowTimeParams struct {
@@ -24,22 +24,16 @@ type CreateShowTimeParams struct {
 	BasePrice int32  `json:"base_price"`
 }
 
-func (q *Queries) CreateShowTime(ctx context.Context, arg CreateShowTimeParams) (Showtime, error) {
+func (q *Queries) CreateShowTime(ctx context.Context, arg CreateShowTimeParams) (int32, error) {
 	row := q.db.QueryRow(ctx, CreateShowTime,
 		arg.FilmID,
 		arg.ScreenID,
 		arg.StartTime,
 		arg.BasePrice,
 	)
-	var i Showtime
-	err := row.Scan(
-		&i.ID,
-		&i.FilmID,
-		&i.ScreenID,
-		&i.StartTime,
-		&i.BasePrice,
-	)
-	return i, err
+	var id int32
+	err := row.Scan(&id)
+	return id, err
 }
 
 const DeleteShowTime = `-- name: DeleteShowTime :exec
@@ -141,7 +135,7 @@ SET
 WHERE showtime.id = $1
   AND EXISTS (SELECT 1 FROM film WHERE id = $2)
   AND EXISTS (SELECT 1 FROM screen WHERE id = $3)
-RETURNING id, film_id, screen_id, start_time, base_price
+RETURNING id
 `
 
 type UpdateShowTimeParams struct {
@@ -152,7 +146,7 @@ type UpdateShowTimeParams struct {
 	BasePrice int32  `json:"base_price"`
 }
 
-func (q *Queries) UpdateShowTime(ctx context.Context, arg UpdateShowTimeParams) (Showtime, error) {
+func (q *Queries) UpdateShowTime(ctx context.Context, arg UpdateShowTimeParams) (int32, error) {
 	row := q.db.QueryRow(ctx, UpdateShowTime,
 		arg.ID,
 		arg.FilmID,
@@ -160,13 +154,7 @@ func (q *Queries) UpdateShowTime(ctx context.Context, arg UpdateShowTimeParams) 
 		arg.StartTime,
 		arg.BasePrice,
 	)
-	var i Showtime
-	err := row.Scan(
-		&i.ID,
-		&i.FilmID,
-		&i.ScreenID,
-		&i.StartTime,
-		&i.BasePrice,
-	)
-	return i, err
+	var id int32
+	err := row.Scan(&id)
+	return id, err
 }
