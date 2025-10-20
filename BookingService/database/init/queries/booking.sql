@@ -3,7 +3,7 @@ INSERT INTO booking (user_id, showtime_id, total_amount)
 SELECT $1, $2, 0
 WHERE EXISTS (SELECT id FROM user_account WHERE id = $1)
   AND EXISTS (SELECT id FROM showtime WHERE id = $2)
-RETURNING id;
+RETURNING user_id;
 
 -- name: ListBooking :many
 SELECT
@@ -17,8 +17,11 @@ FROM booking
 INNER JOIN user_account ON booking.user_id = user_account.id
 INNER JOIN showtime ON booking.showtime_id = showtime.id
 INNER JOIN film ON showtime.film_id = film.id
-WHERE booking.id = $1;
+WHERE user_id = $1;
 
 -- name: UpdateBooking :one
 UPDATE booking SET total_amount = (SELECT SUM(price_paid) FROM booking_seat WHERE booking_id = $1) 
 WHERE id = $1 RETURNING total_amount;
+
+-- name: DeleteBooking :exec
+DELETE FROM booking WHERE id = $1;

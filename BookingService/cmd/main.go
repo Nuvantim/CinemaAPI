@@ -5,9 +5,9 @@ import (
 	"log"
 	"net/http"
 
-	"cinema/config"
-	"cinema/database"
-	"cinema/internal/server/http"
+	"booking/config"
+	"booking/database"
+	"booking/internal/server/http"
 )
 
 func main() {

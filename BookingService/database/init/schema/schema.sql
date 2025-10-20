@@ -62,7 +62,7 @@ CREATE  TABLE "public".booking (
 	id                   integer  NOT NULL GENERATED  BY DEFAULT AS IDENTITY ,
 	user_id              integer  NOT NULL  ,
 	showtime_id          integer  NOT NULL  ,
-	booking_time         timestamp DEFAULT CURRENT_TIMESTAMP NOT NULL  ,
+	booking_time         timestamptz DEFAULT CURRENT_TIMESTAMP NOT NULL  ,
 	total_amount         double precision    ,
 	CONSTRAINT pk_booking PRIMARY KEY ( id ),
 	CONSTRAINT unq_booking UNIQUE ( user_id, showtime_id ) ,

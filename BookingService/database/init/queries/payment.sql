@@ -4,7 +4,7 @@ SELECT $1, $2, $3, $4
 WHERE EXISTS (SELECT id from booking WHERE id = $1) RETURNING *; 
 
 -- name: ListPayment :many
-SELECT * FROM payment WHERE booking_id = (SELECT id FROM booking WHERE user_id = 1);
+SELECT * FROM payment WHERE booking_id = (SELECT id FROM booking WHERE user_id = $1);
 
 -- name: Report :many
 SELECT

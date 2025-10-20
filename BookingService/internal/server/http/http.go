@@ -4,9 +4,9 @@ import (
 	"log"
 	"net/http"
 
-	"cinema/config"
-	"cinema/database"
-	"cinema/internal/routes"
+	"booking/config"
+	"booking/database"
+	"booking/internal/routes"
 
 	"golang.org/x/net/http2"
 	"golang.org/x/net/http2/h2c"
