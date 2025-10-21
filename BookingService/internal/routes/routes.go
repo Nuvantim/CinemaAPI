@@ -16,11 +16,11 @@ func Setup(mux *http.ServeMux) {
 	r.Delete("/booking/delete/", handler.DeleteBooking)
 
 	// booking seat
-	// r.Get("/booking/seats", handler.ListBookingSeat)
-	// r.Post("/booking/create", handler.CreateBookingSeat)
+	r.Get("/booking/seats", handler.ListBookingSeat)
+	r.Post("/booking/seat/create", handler.CreateBookingSeat)
 
 	// payment
-	// r.Post("/payment/create", handler.CreatePayment)
-	// r.Get("/payment/", handler.ListPayment)
-	// r.Get("/payment/report", handler.ReportPayment)
+	r.Post("/payment/create", handler.CreatePayment)
+	r.Get("/payment/", handler.ListPayment)
+	r.Get("/report/profit", handler.ReportProfit)
 }

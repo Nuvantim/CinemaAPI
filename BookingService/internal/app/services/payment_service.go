@@ -1,0 +1,41 @@
+package service
+
+import(
+	db "booking/database"
+	model "booking/internal/app/repository"
+	ctx "context"
+	"github.com/jackc/pgx/v5/pgtype"
+)
+
+func ListPayment(user_id int32)([]model.Payment, error){
+	data,err := db.Queries.ListPayment(ctx.Background(),user_id)
+	if err != nil{
+		return []model.Payment{},err
+	}
+	return data,nil
+}
+
+func CreatePayment(body model.CreatePaymentParams)(model.Payment,error){
+	// get amount booking
+	result,err := db.Queries.UpdateBooking(ctx.Background(), body.BookingID)
+	if err != nil{
+		return model.Payment{},err
+	}
+
+	// create payment
+	body.TransactionAmount = result
+	data,err := db.Queries.CreatePayment(ctx.Background(),body)
+	if err != nil{
+		return model.Payment{},err
+	}
+
+	return data,nil
+}
+
+func ReportProfit()([]model.ReportProfitRow,error){
+	data,err := db.Queries.ReportProfit(ctx.Background())
+	if err != nil{
+		return []model.ReportProfitRow{}, err
+	}
+	return data,nil
+}

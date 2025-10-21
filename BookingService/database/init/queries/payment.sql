@@ -6,7 +6,7 @@ WHERE EXISTS (SELECT id from booking WHERE id = $1) RETURNING *;
 -- name: ListPayment :many
 SELECT * FROM payment WHERE booking_id = (SELECT id FROM booking WHERE user_id = $1);
 
--- name: Report :many
+-- name: ReportProfit :many
 SELECT
     F.title AS Film,
     C.city AS Kota,
