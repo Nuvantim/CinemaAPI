@@ -62,7 +62,6 @@ func Banner() {
 /_/ /_/\__/\__/ .___/____/ 
              /_/            
 `)
-
 	fmt.Printf(
 		"App Name     : %s\nHost Server  : %s\nPID          : %d\nRuntime      : %s\nStartup Time : %s\n",
 		appconfig.AppName,

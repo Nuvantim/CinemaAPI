@@ -1,38 +1,37 @@
 package service
 
-import(
+import (
 	db "booking/database"
 	model "booking/internal/app/repository"
 	ctx "context"
 )
 
-func ListBooking(id int32)([]model.ListBookingRow,error){
-	data,err := db.Queries.ListBooking(ctx.Background(),id)
+func ListBooking(id int32) ([]model.ListBookingRow, error) {
+	data, err := db.Queries.ListBooking(ctx.Background(), id)
 	if err != nil {
-		return []model.ListBookingRow{},err
+		return []model.ListBookingRow{}, err
 	}
 
-	return data,nil
+	return data, nil
 }
 
-func CreateBooking(body model.CreateBookingParams)([]model.ListBookingRow,error){
-	booking_id,err := db.Queries.CreateBooking(ctx.Background(),body)
+func CreateBooking(body model.CreateBookingParams) ([]model.ListBookingRow, error) {
+	booking_id, err := db.Queries.CreateBooking(ctx.Background(), body)
 	if err != nil {
-		return []model.ListBookingRow{},err
+		return []model.ListBookingRow{}, err
 	}
 
-	data,err := db.Queries.ListBooking(ctx.Background(),booking_id)
+	data, err := db.Queries.ListBooking(ctx.Background(), booking_id)
 	if err != nil {
-		return []model.ListBookingRow{},err
+		return []model.ListBookingRow{}, err
 	}
 
-	return data,nil
+	return data, nil
 }
 
-func DeleteBooking(id int32)error{
-	if err := db.Queries.DeleteBooking(ctx.Background(),id);err != nil{
+func DeleteBooking(id int32) error {
+	if err := db.Queries.DeleteBooking(ctx.Background(), id); err != nil {
 		return err
 	}
 	return nil
 }
-

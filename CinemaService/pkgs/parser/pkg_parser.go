@@ -1,4 +1,4 @@
-package helper
+package parser
 
 import (
 	"encoding/json"
@@ -9,7 +9,7 @@ import (
 	"strings"
 )
 
-func ParserInt(r *http.Request, prefix string) (int32, error) {
+func Params(r *http.Request, prefix string) (int32, error) {
 	idStr := strings.TrimPrefix(r.URL.Path, prefix)
 	val, err := strconv.ParseInt(idStr, 10, 32)
 	if err != nil {
@@ -18,7 +18,7 @@ func ParserInt(r *http.Request, prefix string) (int32, error) {
 	return int32(val), nil
 }
 
-func ParserBody[T any](r io.Reader, body T) (T, error) {
+func Body[T any](r io.Reader, body T) (T, error) {
 	// setting decoding
 	decoder := json.NewDecoder(r)
 	decoder.DisallowUnknownFields()

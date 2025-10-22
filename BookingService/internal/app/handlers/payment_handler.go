@@ -1,47 +1,48 @@
 package handler
 
-import(
-	"booking/internal/app/services"
-	"booking/pkgs/helper"
+import (
 	model "booking/internal/app/repository"
+	"booking/internal/app/services"
+	"booking/pkgs/parser"
+	"booking/pkgs/response"
 
 	"net/http"
 )
 
-func ListPayment(w http.ResponseWriter, r *http.Request){
+func ListPayment(w http.ResponseWriter, r *http.Request) {
 	var user_booking ReqUserBooking
-	body,err := helper.ParserBody(r.Body, user_booking)
-	if err != nil{
-		helper.Error(w, err)
+	body, err := parser.Body(r.Body, user_booking)
+	if err != nil {
+		response.Error(w, err)
 	}
 
-	data,err := service.ListPayment(body.UserID)
-	if err != nil{
-		helper.Error(w, err)
+	data, err := service.ListPayment(body.UserID)
+	if err != nil {
+		response.Error(w, err)
 	}
 
-	helper.Success(w, data)
+	response.Success(w, data)
 }
 
-func CreatePayment(w http.ResponseWriter, r *http.Request){
+func CreatePayment(w http.ResponseWriter, r *http.Request) {
 	var payment model.CreatePaymentParams
-	body,err := helper.ParserBody(r.Body, payment)
-	if err != nil{
-		helper.Error(w, err)
+	body, err := parser.Body(r.Body, payment)
+	if err != nil {
+		response.Error(w, err)
 	}
 
-	data,err := service.CreatePayment(body)
-	if err != nil{
-		helper.Error(w, err)
+	data, err := service.CreatePayment(body)
+	if err != nil {
+		response.Error(w, err)
 	}
 
-	helper.Success(w, data)
+	response.Success(w, data)
 }
 
-func ReportProfit(w http.ResponseWriter, r *http.Request){
-	data,err := service.ReportProfit()
-	if err != nil{
-		helper.Error(w,data)
+func ReportProfit(w http.ResponseWriter, r *http.Request) {
+	data, err := service.ReportProfit()
+	if err != nil {
+		response.Error(w, err)
 	}
-	helper.Success(w,data)
+	response.Success(w, data)
 }

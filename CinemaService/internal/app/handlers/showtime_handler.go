@@ -3,80 +3,81 @@ package handler
 import (
 	model "cinema/internal/app/repository"
 	"cinema/internal/app/services"
-	"cinema/pkgs/helper"
+	"cinema/pkgs/parser"
+	"cinema/pkgs/response"
 	"net/http"
 )
 
 func ListShowTime(w http.ResponseWriter, r *http.Request) {
 	data, err := service.ListShowTime()
 	if err != nil {
-		helper.Error(w, err)
+		response.Error(w, err)
 	}
 
-	helper.Success(w, data)
+	response.Success(w, data)
 }
 
 func GetShowTime(w http.ResponseWriter, r *http.Request) {
-	id, err := helper.ParserInt(r, "/showtime/")
+	id, err := parser.Params(r, "/showtime/")
 	if err != nil {
-		helper.Error(w, err)
+		response.Error(w, err)
 	}
 
 	data, err := service.GetShowTime(id)
 	if err != nil {
-		helper.Error(w, err)
+		response.Error(w, err)
 	}
 
-	helper.Success(w, data)
+	response.Success(w, data)
 }
 
 func CreateShowTime(w http.ResponseWriter, r *http.Request) {
 	var showtime model.CreateShowTimeParams
-	body, err := helper.ParserBody(r.Body, showtime)
+	body, err := parser.Body(r.Body, showtime)
 	if err != nil {
-		helper.Error(w, err)
+		response.Error(w, err)
 	}
 
 	data, err := service.CreateShowTime(body)
 	if err != nil {
-		helper.Error(w, err)
+		response.Error(w, err)
 	}
 
-	helper.Success(w, data)
+	response.Success(w, data)
 }
 
 func UpdateShowTime(w http.ResponseWriter, r *http.Request) {
-	id, err := helper.ParserInt(r, "/showtime/update/")
+	id, err := parser.Params(r, "/showtime/update/")
 	if err != nil {
-		helper.Error(w, err)
+		response.Error(w, err)
 	}
 
 	var showtime model.UpdateShowTimeParams
-	body, err := helper.ParserBody(r.Body, showtime)
+	body, err := parser.Body(r.Body, showtime)
 	if err != nil {
-		helper.Error(w, err)
+		response.Error(w, err)
 	}
 
 	data, err := service.UpdateShowTime(id, body)
 	if err != nil {
-		helper.Error(w, err)
+		response.Error(w, err)
 	}
 
-	helper.Success(w, data)
+	response.Success(w, data)
 
 }
 
 func DeleteShowTime(w http.ResponseWriter, r *http.Request) {
-	id, err := helper.ParserInt(r, "/showtime/delete/")
+	id, err := parser.Params(r, "/showtime/delete/")
 	if err != nil {
-		helper.Error(w, err)
+		response.Error(w, err)
 	}
 
 	if err := service.DeleteShowTime(id); err != nil {
-		helper.Error(w, err)
+		response.Error(w, err)
 	}
 
-	helper.Success(w, struct {
+	response.Success(w, struct {
 		Message string `json:"message"`
 	}{Message: "showtime deleted"})
 }
