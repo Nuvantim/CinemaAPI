@@ -18,7 +18,7 @@ func ListCinema(w http.ResponseWriter, r *http.Request) {
 }
 
 func GetCinema(w http.ResponseWriter, r *http.Request) {
-	id, err := parser.Params(r, "/film/")
+	id, err := parser.Params(r, "/cinema/")
 	if err != nil {
 		response.Error(w, err)
 	}
@@ -66,12 +66,12 @@ func UpdateCinema(w http.ResponseWriter, r *http.Request) {
 }
 
 func DeleteCinema(w http.ResponseWriter, r *http.Request) {
-	id, err := parser.Params(r, "/film/delete")
+	id, err := parser.Params(r, "/cinema/delete/")
 	if err != nil {
 		response.Error(w, err)
 	}
 
-	if err := service.DeleteFilm(id); err != nil {
+	if err := service.DeleteCinema(id); err != nil {
 		response.Error(w, err)
 	}
 
