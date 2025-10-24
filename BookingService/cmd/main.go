@@ -25,7 +25,7 @@ func main() {
 	// Jalankan server di goroutine agar bisa graceful shutdown
 	go func() {
 		fmt.Println("Server berjalan di http://localhost:" + port + " (HTTP/2 H2C enabled)")
-		fmt.Println("----------------------------------------------------------------------")
+		config.PrintLine()
 		if err := app.ListenAndServe(); err != nil && err != http.ErrServerClosed {
 			log.Fatalf("Server error: %v", err)
 		}

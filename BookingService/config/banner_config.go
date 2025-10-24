@@ -6,6 +6,7 @@ import (
 	"os"
 	"os/exec"
 	"runtime"
+	"strconv"
 	"strings"
 	"time"
 )
@@ -17,15 +18,16 @@ func ClearScreen() {
 		cmd.Stdout = os.Stdout
 		cmd.Stderr = os.Stderr
 		cmd.Run()
-	case "linux":
+	case "linux", "darwin":
 		cmd := exec.Command("clear")
 		cmd.Stdout = os.Stdout
 		cmd.Stderr = os.Stderr
 		cmd.Run()
 	default:
-		log.Fatal("os not detected")
+		log.Fatal("OS not detected")
 	}
 }
+
 func getOSVersion() string {
 	switch runtime.GOOS {
 	case "linux":
@@ -44,15 +46,40 @@ func getOSVersion() string {
 	return "Unknown OS"
 }
 
+func getTerminalWidth() int {
+	cmd := exec.Command("stty", "size")
+	cmd.Stdin = os.Stdin
+	out, err := cmd.Output()
+	if err != nil {
+		return 80
+	}
+	parts := strings.Fields(string(out))
+	if len(parts) < 2 {
+		return 80
+	}
+	width, err := strconv.Atoi(parts[1])
+	if err != nil {
+		return 80
+	}
+	return width
+}
+
+func PrintLine() {
+	width := getTerminalWidth()
+	line := strings.Repeat("─", width)
+	fmt.Println(line)
+}
+
 func Banner() {
-	// load app environment
 	var appconfig, errs = GetServerConfig()
 	if errs != nil {
 		log.Fatal(errs)
 	}
 
-	// clear screen
 	ClearScreen()
+
+	var m runtime.MemStats
+	runtime.ReadMemStats(&m)
 
 	fmt.Print(`
     __    __  __       ___ 
@@ -62,12 +89,15 @@ func Banner() {
 /_/ /_/\__/\__/ .___/____/ 
              /_/            
 `)
+
 	fmt.Printf(
-		"App Name     : %s\nHost Server  : %s\nPID          : %d\nRuntime      : %s\nStartup Time : %s\n",
+		"App Name     : %s\nHost Server  : %s\nPID          : %d\nRuntime      : %s\nStartup Time : %s\nSys Memory   : %.2f MB\nAlloc Memory : %.2f MB\n",
 		appconfig.AppName,
 		getOSVersion(),
 		os.Getpid(),
 		runtime.Version(),
 		time.Now().Format("2006-01-02 15:04:05"),
+		float64(m.Sys)/1024/1024,
+		float64(m.Alloc)/1024/1024,
 	)
 }
