@@ -18,10 +18,12 @@ func ListBookingSeat(w http.ResponseWriter, r *http.Request) {
 	body, err := parser.Body(r.Body, user_booking)
 	if err != nil {
 		response.Error(w, err)
+		return
 	}
 	data, err := service.ListBookingSeat(body.UserID)
 	if err != nil {
 		response.Error(w, err)
+		return
 	}
 
 	response.Success(w, data)
@@ -32,12 +34,30 @@ func CreateBookingSeat(w http.ResponseWriter, r *http.Request) {
 	body, err := parser.Body(r.Body, booking_seat)
 	if err != nil {
 		response.Error(w, err)
+		return
 	}
 
 	data, err := service.CreateBookingSeat(body)
 	if err != nil {
 		response.Error(w, err)
+		return
 	}
 
 	response.Success(w, data)
+}
+
+
+func DeleteBookingSeat(w http.ResponseWriter, r *http.Request) {
+	id, err := parser.Params(r, "/booking/seat/delete/")
+	if err != nil {
+		response.Error(w, err)
+		return
+	}
+	if err := service.DeleteBookingSeat(id); err != nil {
+		response.Error(w, err)
+		return
+	}
+	response.Success(w, struct {
+		Message string `json:"message"`
+	}{Message: "booking deleted"})
 }

@@ -9,7 +9,7 @@ import (
 func ListSeat() ([]model.ListSeatRow, error) {
 	data, err := db.Queries.ListSeat(ctx.Background())
 	if err != nil {
-		return []model.ListSeatRow{}, err
+		return []model.ListSeatRow{}, db.Fatal(err)
 	}
 	return data, nil
 }
@@ -17,7 +17,7 @@ func ListSeat() ([]model.ListSeatRow, error) {
 func GetSeat(id int32) (model.GetSeatRow, error) {
 	data, err := db.Queries.GetSeat(ctx.Background(), id)
 	if err != nil {
-		return model.GetSeatRow{}, err
+		return model.GetSeatRow{}, db.Fatal(err)
 	}
 
 	return data, nil
@@ -26,12 +26,12 @@ func GetSeat(id int32) (model.GetSeatRow, error) {
 func CreateSeat(body model.CreateSeatParams) (model.GetSeatRow, error) {
 	seat_id, err := db.Queries.CreateSeat(ctx.Background(), body)
 	if err != nil {
-		return model.GetSeatRow{}, err
+		return model.GetSeatRow{}, db.Fatal(err)
 	}
 
 	data, err := db.Queries.GetSeat(ctx.Background(), seat_id)
 	if err != nil {
-		return model.GetSeatRow{}, err
+		return model.GetSeatRow{}, db.Fatal(err)
 	}
 
 	return data, nil
@@ -42,12 +42,12 @@ func UpdateSeat(id int32, body model.UpdateSeatParams) (model.GetSeatRow, error)
 
 	seat_id, err := db.Queries.UpdateSeat(ctx.Background(), body)
 	if err != nil {
-		return model.GetSeatRow{}, err
+		return model.GetSeatRow{}, db.Fatal(err)
 	}
 
 	data, err := db.Queries.GetSeat(ctx.Background(), seat_id)
 	if err != nil {
-		return model.GetSeatRow{}, err
+		return model.GetSeatRow{}, db.Fatal(err)
 	}
 
 	return data, nil
@@ -56,7 +56,7 @@ func UpdateSeat(id int32, body model.UpdateSeatParams) (model.GetSeatRow, error)
 
 func DeleteSeat(id int32) error {
 	if err := db.Queries.DeleteSeat(ctx.Background(), id); err != nil {
-		return err
+		return db.Fatal(err)
 	}
 
 	return nil

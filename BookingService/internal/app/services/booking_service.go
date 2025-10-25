@@ -9,7 +9,7 @@ import (
 func ListBooking(id int32) ([]model.ListBookingRow, error) {
 	data, err := db.Queries.ListBooking(ctx.Background(), id)
 	if err != nil {
-		return []model.ListBookingRow{}, err
+		return []model.ListBookingRow{}, db.Fatal(err)
 	}
 
 	return data, nil
@@ -18,12 +18,12 @@ func ListBooking(id int32) ([]model.ListBookingRow, error) {
 func CreateBooking(body model.CreateBookingParams) ([]model.ListBookingRow, error) {
 	booking_id, err := db.Queries.CreateBooking(ctx.Background(), body)
 	if err != nil {
-		return []model.ListBookingRow{}, err
+		return []model.ListBookingRow{}, db.Fatal(err)
 	}
 
 	data, err := db.Queries.ListBooking(ctx.Background(), booking_id)
 	if err != nil {
-		return []model.ListBookingRow{}, err
+		return []model.ListBookingRow{}, db.Fatal(err)
 	}
 
 	return data, nil
@@ -31,7 +31,7 @@ func CreateBooking(body model.CreateBookingParams) ([]model.ListBookingRow, erro
 
 func DeleteBooking(id int32) error {
 	if err := db.Queries.DeleteBooking(ctx.Background(), id); err != nil {
-		return err
+		return db.Fatal(err)
 	}
 	return nil
 }

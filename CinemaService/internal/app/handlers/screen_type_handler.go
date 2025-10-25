@@ -12,6 +12,7 @@ func ListScreenType(w http.ResponseWriter, r *http.Request) {
 	data, err := service.ListScreenType()
 	if err != nil {
 		response.Error(w, err)
+		return
 	}
 	response.Success(w, data)
 }
@@ -20,11 +21,13 @@ func GetScreenType(w http.ResponseWriter, r *http.Request) {
 	id, err := parser.Params(r, "/screen/type/")
 	if err != nil {
 		response.Error(w, err)
+		return
 	}
 
 	data, err := service.GetScreenType(id)
 	if err != nil {
 		response.Error(w, err)
+		return
 	}
 
 	response.Success(w, data)
@@ -35,11 +38,13 @@ func CreateScreenType(w http.ResponseWriter, r *http.Request) {
 	body, err := parser.Body(r.Body, screen_type)
 	if err != nil {
 		response.Error(w, err)
+		return
 	}
 
 	data, err := service.CreateScreenType(body.Name)
 	if err != nil {
 		response.Error(w, err)
+		return
 	}
 
 	response.Success(w, data)
@@ -49,17 +54,20 @@ func UpdateScreenType(w http.ResponseWriter, r *http.Request) {
 	id, err := parser.Params(r, "/screen/type/update/")
 	if err != nil {
 		response.Error(w, err)
+		return
 	}
 
 	var screen_type model.UpdateScreenTypeParams
 	body, err := parser.Body(r.Body, screen_type)
 	if err != nil {
 		response.Error(w, err)
+		return
 	}
 
 	data, err := service.UpdateScreenType(id, body)
 	if err != nil {
 		response.Error(w, err)
+		return
 	}
 
 	response.Success(w, data)
@@ -69,10 +77,12 @@ func DeleteScreenType(w http.ResponseWriter, r *http.Request) {
 	id, err := parser.Params(r, "/scree/type/delete/")
 	if err != nil {
 		response.Error(w, err)
+		return
 	}
 
 	if err := service.DeleteScreenType(id); err != nil {
 		response.Error(w, err)
+		return
 	}
 
 	response.Success(w, struct {

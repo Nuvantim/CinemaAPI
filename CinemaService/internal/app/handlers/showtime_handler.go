@@ -12,6 +12,7 @@ func ListShowTime(w http.ResponseWriter, r *http.Request) {
 	data, err := service.ListShowTime()
 	if err != nil {
 		response.Error(w, err)
+		return
 	}
 
 	response.Success(w, data)
@@ -21,11 +22,13 @@ func GetShowTime(w http.ResponseWriter, r *http.Request) {
 	id, err := parser.Params(r, "/showtime/")
 	if err != nil {
 		response.Error(w, err)
+		return
 	}
 
 	data, err := service.GetShowTime(id)
 	if err != nil {
 		response.Error(w, err)
+		return
 	}
 
 	response.Success(w, data)
@@ -36,11 +39,13 @@ func CreateShowTime(w http.ResponseWriter, r *http.Request) {
 	body, err := parser.Body(r.Body, showtime)
 	if err != nil {
 		response.Error(w, err)
+		return
 	}
 
 	data, err := service.CreateShowTime(body)
 	if err != nil {
 		response.Error(w, err)
+		return
 	}
 
 	response.Success(w, data)
@@ -50,17 +55,20 @@ func UpdateShowTime(w http.ResponseWriter, r *http.Request) {
 	id, err := parser.Params(r, "/showtime/update/")
 	if err != nil {
 		response.Error(w, err)
+		return
 	}
 
 	var showtime model.UpdateShowTimeParams
 	body, err := parser.Body(r.Body, showtime)
 	if err != nil {
 		response.Error(w, err)
+		return
 	}
 
 	data, err := service.UpdateShowTime(id, body)
 	if err != nil {
 		response.Error(w, err)
+		return
 	}
 
 	response.Success(w, data)
@@ -71,10 +79,12 @@ func DeleteShowTime(w http.ResponseWriter, r *http.Request) {
 	id, err := parser.Params(r, "/showtime/delete/")
 	if err != nil {
 		response.Error(w, err)
+		return
 	}
 
 	if err := service.DeleteShowTime(id); err != nil {
 		response.Error(w, err)
+		return
 	}
 
 	response.Success(w, struct {

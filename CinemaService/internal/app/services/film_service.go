@@ -9,7 +9,7 @@ import (
 func ListFilm() ([]model.ListFilmRow, error) {
 	data, err := db.Queries.ListFilm(ctx.Background())
 	if err != nil {
-		return []model.ListFilmRow{}, err
+		return []model.ListFilmRow{}, db.Fatal(err)
 	}
 	return data, nil
 }
@@ -17,7 +17,7 @@ func ListFilm() ([]model.ListFilmRow, error) {
 func GetFilm(id int32) (model.GetFilmRow, error) {
 	data, err := db.Queries.GetFilm(ctx.Background(), id)
 	if err != nil {
-		return model.GetFilmRow{}, err
+		return model.GetFilmRow{}, db.Fatal(err)
 	}
 
 	return data, nil
@@ -26,7 +26,7 @@ func GetFilm(id int32) (model.GetFilmRow, error) {
 func SearchFilm(title string) ([]model.SearchFilmRow, error) {
 	data, err := db.Queries.SearchFilm(ctx.Background(), title)
 	if err != nil {
-		return []model.SearchFilmRow{}, err
+		return []model.SearchFilmRow{}, db.Fatal(err)
 	}
 	return data, nil
 }
@@ -34,7 +34,7 @@ func SearchFilm(title string) ([]model.SearchFilmRow, error) {
 func SearchFilmGenre(id int32) ([]model.SearchGenreFilmRow, error) {
 	data, err := db.Queries.SearchGenreFilm(ctx.Background(), id)
 	if err != nil {
-		return []model.SearchGenreFilmRow{}, err
+		return []model.SearchGenreFilmRow{}, db.Fatal(err)
 	}
 	return data, nil
 }
@@ -42,11 +42,11 @@ func SearchFilmGenre(id int32) ([]model.SearchGenreFilmRow, error) {
 func CreateFilm(body model.CreateFilmParams) (model.GetFilmRow, error) {
 	id_film, err := db.Queries.CreateFilm(ctx.Background(), body)
 	if err != nil {
-		return model.GetFilmRow{}, err
+		return model.GetFilmRow{}, db.Fatal(err)
 	}
 	data, err := db.Queries.GetFilm(ctx.Background(), id_film)
 	if err != nil {
-		return model.GetFilmRow{}, err
+		return model.GetFilmRow{}, db.Fatal(err)
 	}
 
 	return data, nil
@@ -57,12 +57,12 @@ func UpdateFilm(id int32, body model.UpdateFilmParams) (model.GetFilmRow, error)
 
 	id_film, err := db.Queries.UpdateFilm(ctx.Background(), body)
 	if err != nil {
-		return model.GetFilmRow{}, err
+		return model.GetFilmRow{}, db.Fatal(err)
 	}
 
 	data, err := db.Queries.GetFilm(ctx.Background(), id_film)
 	if err != nil {
-		return model.GetFilmRow{}, err
+		return model.GetFilmRow{}, db.Fatal(err)
 	}
 
 	return data, nil
@@ -71,7 +71,7 @@ func UpdateFilm(id int32, body model.UpdateFilmParams) (model.GetFilmRow, error)
 
 func DeleteFilm(id int32) error {
 	if err := db.Queries.DeleteFilm(ctx.Background(), id); err != nil {
-		return err
+		return db.Fatal(err)
 	}
 	return nil
 }

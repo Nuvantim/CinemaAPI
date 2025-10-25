@@ -12,6 +12,7 @@ func ListSeat(w http.ResponseWriter, r *http.Request) {
 	data, err := service.ListSeat()
 	if err != nil {
 		response.Error(w, err)
+		return
 	}
 
 	response.Success(w, data)
@@ -21,11 +22,13 @@ func GetSeat(w http.ResponseWriter, r *http.Request) {
 	id, err := parser.Params(r, "/seat/")
 	if err != nil {
 		response.Error(w, err)
+		return
 	}
 
 	data, err := service.GetSeat(id)
 	if err != nil {
 		response.Error(w, err)
+		return
 	}
 
 	response.Success(w, data)
@@ -36,11 +39,13 @@ func CreateSeat(w http.ResponseWriter, r *http.Request) {
 	body, err := parser.Body(r.Body, seat)
 	if err != nil {
 		response.Error(w, err)
+		return
 	}
 
 	data, err := service.CreateSeat(body)
 	if err != nil {
 		response.Error(w, err)
+		return
 	}
 
 	response.Success(w, data)
@@ -50,17 +55,20 @@ func UpdateSeat(w http.ResponseWriter, r *http.Request) {
 	id, err := parser.Params(r, "/seat/update/")
 	if err != nil {
 		response.Error(w, err)
+		return
 	}
 
 	var seat model.UpdateSeatParams
 	body, err := parser.Body(r.Body, seat)
 	if err != nil {
 		response.Error(w, err)
+		return
 	}
 
 	data, err := service.UpdateSeat(id, body)
 	if err != nil {
 		response.Error(w, err)
+		return
 	}
 
 	response.Success(w, data)
@@ -71,10 +79,12 @@ func DeleteSeat(w http.ResponseWriter, r *http.Request) {
 	id, err := parser.Params(r, "/seat/delete/")
 	if err != nil {
 		response.Error(w, err)
+		return
 	}
 
 	if err := service.DeleteSeat(id); err != nil {
 		response.Error(w, err)
+		return
 	}
 
 	response.Success(w, struct {

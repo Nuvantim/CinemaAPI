@@ -18,6 +18,7 @@ func Setup(mux *http.ServeMux) {
 	// booking seat
 	r.Get("/booking/seats", handler.ListBookingSeat)
 	r.Post("/booking/seat/create", handler.CreateBookingSeat)
+	r.Delete("/booking/seat/delete/", handler.DeleteBookingSeat)
 
 	// payment
 	r.Post("/payment/create", handler.CreatePayment)

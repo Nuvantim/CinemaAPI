@@ -9,3 +9,6 @@ FROM booking_seat
 INNER JOIN seat ON booking_seat.seat_id = seat.id
 WHERE booking_seat.booking_id = (SELECT id FROM booking WHERE user_id = $1);
 
+-- name: DeleteBookingSeat :exec
+DELETE FROM booking_seat WHERE id = $1;
+

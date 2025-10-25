@@ -12,6 +12,7 @@ func ListScreen(w http.ResponseWriter, r *http.Request) {
 	data, err := service.ListScreen()
 	if err != nil {
 		response.Error(w, err)
+		return
 	}
 	response.Success(w, data)
 }
@@ -20,11 +21,13 @@ func GetScreen(w http.ResponseWriter, r *http.Request) {
 	id, err := parser.Params(r, "/screen/")
 	if err != nil {
 		response.Error(w, err)
+		return
 	}
 
 	data, err := service.GetScreen(id)
 	if err != nil {
 		response.Error(w, err)
+		return
 	}
 
 	response.Success(w, data)
@@ -35,11 +38,13 @@ func CreateScreen(w http.ResponseWriter, r *http.Request) {
 	body, err := parser.Body(r.Body, screen)
 	if err != nil {
 		response.Error(w, err)
+		return
 	}
 
 	data, err := service.CreateScreen(body)
 	if err != nil {
 		response.Error(w, err)
+		return
 	}
 
 	response.Success(w, data)
@@ -49,17 +54,20 @@ func UpdateScreen(w http.ResponseWriter, r *http.Request) {
 	id, err := parser.Params(r, "/screen/update/")
 	if err != nil {
 		response.Error(w, err)
+		return
 	}
 
 	var screen model.UpdateScreenParams
 	body, err := parser.Body(r.Body, screen)
 	if err != nil {
 		response.Error(w, err)
+		return
 	}
 
 	data, err := service.UpdateScreen(id, body)
 	if err != nil {
 		response.Error(w, err)
+		return
 	}
 
 	response.Success(w, data)
@@ -70,10 +78,12 @@ func DeleteScreen(w http.ResponseWriter, r *http.Request) {
 	id, err := parser.Params(r, "/screen/delete/")
 	if err != nil {
 		response.Error(w, err)
+		return
 	}
 
 	if err := service.DeleteScreen(id); err != nil {
 		response.Error(w, err)
+		return
 	}
 
 	response.Success(w, struct {

@@ -15,6 +15,7 @@ type Querier interface {
 	CreateBookingSeat(ctx context.Context, arg CreateBookingSeatParams) (int32, error)
 	CreatePayment(ctx context.Context, arg CreatePaymentParams) (Payment, error)
 	DeleteBooking(ctx context.Context, id int32) error
+	DeleteBookingSeat(ctx context.Context, id int32) error
 	ListBooking(ctx context.Context, userID int32) ([]ListBookingRow, error)
 	ListBookingSeat(ctx context.Context, userID int32) ([]ListBookingSeatRow, error)
 	ListPayment(ctx context.Context, userID int32) ([]Payment, error)

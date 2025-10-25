@@ -9,7 +9,7 @@ import (
 func ListCinema() ([]model.Cinema, error) {
 	data, err := db.Queries.ListCinema(ctx.Background())
 	if err != nil {
-		return []model.Cinema{}, err
+		return []model.Cinema{}, db.Fatal(err)
 	}
 	return data, nil
 }
@@ -17,7 +17,7 @@ func ListCinema() ([]model.Cinema, error) {
 func GetCinema(id int32) (model.Cinema, error) {
 	data, err := db.Queries.GetCinema(ctx.Background(), id)
 	if err != nil {
-		return model.Cinema{}, err
+		return model.Cinema{}, db.Fatal(err)
 	}
 	return data, nil
 }
@@ -25,7 +25,7 @@ func GetCinema(id int32) (model.Cinema, error) {
 func CreateCinema(body model.CreateCinemaParams) (model.Cinema, error) {
 	data, err := db.Queries.CreateCinema(ctx.Background(), body)
 	if err != nil {
-		return model.Cinema{}, err
+		return model.Cinema{}, db.Fatal(err)
 	}
 	return data, nil
 }
@@ -35,12 +35,12 @@ func UpdateCinema(id int32, body model.UpdateCinemaParams) (model.Cinema, error)
 
 	id_cinema, err := db.Queries.UpdateCinema(ctx.Background(), body)
 	if err != nil {
-		return model.Cinema{}, err
+		return model.Cinema{}, db.Fatal(err)
 	}
 
 	data, err := db.Queries.GetCinema(ctx.Background(), id_cinema)
 	if err != nil {
-		return model.Cinema{}, err
+		return model.Cinema{}, db.Fatal(err)
 	}
 
 	return data, err
@@ -49,7 +49,7 @@ func UpdateCinema(id int32, body model.UpdateCinemaParams) (model.Cinema, error)
 
 func DeleteCinema(id int32) error {
 	if err := db.Queries.DeleteCinema(ctx.Background(), id); err != nil {
-		return err
+		return db.Fatal(err)
 	}
 	return nil
 }

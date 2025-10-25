@@ -34,6 +34,15 @@ func (q *Queries) CreateBookingSeat(ctx context.Context, arg CreateBookingSeatPa
 	return booking_id, err
 }
 
+const DeleteBookingSeat = `-- name: DeleteBookingSeat :exec
+DELETE FROM booking_seat WHERE id = $1
+`
+
+func (q *Queries) DeleteBookingSeat(ctx context.Context, id int32) error {
+	_, err := q.db.Exec(ctx, DeleteBookingSeat, id)
+	return err
+}
+
 const ListBookingSeat = `-- name: ListBookingSeat :many
 SELECT booking_seat.id, booking_seat.booking_id, seat.seat_row AS seat_row, seat.seat_number AS seat_number 
 FROM booking_seat 

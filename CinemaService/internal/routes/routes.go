@@ -18,8 +18,8 @@ func Setup(mux *http.ServeMux) {
 	r.Delete("/genre/delete/", handler.DeleteGenre)
 
 	// film
-	r.Get("/films", handler.ListGenre)
-	r.Get("/film/", handler.GetGenre)
+	r.Get("/films", handler.ListFilm)
+	r.Get("/film/", handler.GetFilm)
 	r.Get("/film/search", handler.SearchFilm)
 	r.Get("/film/genre/", handler.SearchFilmGenre)
 	r.Post("/film/create", handler.CreateFilm)

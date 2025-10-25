@@ -20,13 +20,15 @@ func GetGenre(w http.ResponseWriter, r *http.Request) {
 	id, err := parser.Params(r, "/genre/")
 	if err != nil {
 		response.Error(w, err)
+		return
 	}
 
 	genre, err := service.GetGenre(id)
 	if err != nil {
 		response.Error(w, err)
+		return
 	}
-
+	
 	response.Success(w, genre)
 }
 func CreateGenre(w http.ResponseWriter, r *http.Request) {
