@@ -46,7 +46,6 @@ func CreateBookingSeat(w http.ResponseWriter, r *http.Request) {
 	response.Success(w, data)
 }
 
-
 func DeleteBookingSeat(w http.ResponseWriter, r *http.Request) {
 	id, err := parser.Params(r, "/booking/seat/delete/")
 	if err != nil {

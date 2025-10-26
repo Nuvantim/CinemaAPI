@@ -20,6 +20,11 @@ func CreateBookingSeat(body model.CreateBookingSeatParams) ([]model.ListBookingS
 	if err != nil {
 		return []model.ListBookingSeatRow{}, db.Fatal(err)
 	}
+
+	// update booking amount
+	if err := db.Queries.UpdateBookingAmount(ctx.Background(), body.BookingID); err != nil {
+		return []model.ListBookingSeatRow{}, db.Fatal(err)
+	}
 	data, err := db.Queries.ListBookingSeat(ctx.Background(), booking_id)
 	if err != nil {
 		return []model.ListBookingSeatRow{}, db.Fatal(err)
@@ -29,6 +34,10 @@ func CreateBookingSeat(body model.CreateBookingSeatParams) ([]model.ListBookingS
 
 func DeleteBookingSeat(id int32) error {
 	if err := db.Queries.DeleteBookingSeat(ctx.Background(), id); err != nil {
+		return db.Fatal(err)
+	}
+	// update booking amount
+	if err := db.Queries.UpdateBookingAmount(ctx.Background(), id); err != nil {
 		return db.Fatal(err)
 	}
 	return nil

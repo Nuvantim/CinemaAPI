@@ -28,7 +28,7 @@ func GetGenre(w http.ResponseWriter, r *http.Request) {
 		response.Error(w, err)
 		return
 	}
-	
+
 	response.Success(w, genre)
 }
 func CreateGenre(w http.ResponseWriter, r *http.Request) {

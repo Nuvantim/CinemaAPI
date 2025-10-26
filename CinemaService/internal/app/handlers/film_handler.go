@@ -5,6 +5,7 @@ import (
 	"cinema/internal/app/services"
 	"cinema/pkgs/parser"
 	"cinema/pkgs/response"
+	"cinema/pkgs/validator"
 	"net/http"
 )
 
@@ -68,6 +69,12 @@ func CreateFilm(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	// duration validation
+	if err := validator.DurationValid(body.Duration); err != nil {
+		response.Error(w, err)
+		return
+	}
+
 	data, err := service.CreateFilm(body)
 	if err != nil {
 		response.Error(w, err)
@@ -87,6 +94,12 @@ func UpdateFilm(w http.ResponseWriter, r *http.Request) {
 
 	body, err := parser.Body(r.Body, film)
 	if err != nil {
+		response.Error(w, err)
+		return
+	}
+
+	// duration validation
+	if err := validator.DurationValid(body.Duration); err != nil {
 		response.Error(w, err)
 		return
 	}
