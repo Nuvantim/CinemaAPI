@@ -19,7 +19,7 @@ func ListSeat(w http.ResponseWriter, r *http.Request) {
 }
 
 func GetSeat(w http.ResponseWriter, r *http.Request) {
-	id, err := parser.Params(r, "/seat/")
+	id, err := parser.ParamsInt(r, "/seat/")
 	if err != nil {
 		response.Error(w, err)
 		return
@@ -52,7 +52,7 @@ func CreateSeat(w http.ResponseWriter, r *http.Request) {
 }
 
 func UpdateSeat(w http.ResponseWriter, r *http.Request) {
-	id, err := parser.Params(r, "/seat/update/")
+	id, err := parser.ParamsInt(r, "/seat/update/")
 	if err != nil {
 		response.Error(w, err)
 		return
@@ -76,7 +76,7 @@ func UpdateSeat(w http.ResponseWriter, r *http.Request) {
 }
 
 func DeleteSeat(w http.ResponseWriter, r *http.Request) {
-	id, err := parser.Params(r, "/seat/delete/")
+	id, err := parser.ParamsInt(r, "/seat/delete/")
 	if err != nil {
 		response.Error(w, err)
 		return

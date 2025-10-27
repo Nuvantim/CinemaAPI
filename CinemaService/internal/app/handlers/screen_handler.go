@@ -18,7 +18,7 @@ func ListScreen(w http.ResponseWriter, r *http.Request) {
 }
 
 func GetScreen(w http.ResponseWriter, r *http.Request) {
-	id, err := parser.Params(r, "/screen/")
+	id, err := parser.ParamsInt(r, "/screen/")
 	if err != nil {
 		response.Error(w, err)
 		return
@@ -51,7 +51,7 @@ func CreateScreen(w http.ResponseWriter, r *http.Request) {
 }
 
 func UpdateScreen(w http.ResponseWriter, r *http.Request) {
-	id, err := parser.Params(r, "/screen/update/")
+	id, err := parser.ParamsInt(r, "/screen/update/")
 	if err != nil {
 		response.Error(w, err)
 		return
@@ -75,7 +75,7 @@ func UpdateScreen(w http.ResponseWriter, r *http.Request) {
 }
 
 func DeleteScreen(w http.ResponseWriter, r *http.Request) {
-	id, err := parser.Params(r, "/screen/delete/")
+	id, err := parser.ParamsInt(r, "/screen/delete/")
 	if err != nil {
 		response.Error(w, err)
 		return

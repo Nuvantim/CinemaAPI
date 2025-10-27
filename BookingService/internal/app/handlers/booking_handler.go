@@ -44,7 +44,7 @@ func CreateBooking(w http.ResponseWriter, r *http.Request) {
 }
 
 func DeleteBooking(w http.ResponseWriter, r *http.Request) {
-	id, err := parser.Params(r, "/booking/delete/")
+	id, err := parser.ParamsInt(r, "/booking/delete/")
 	if err != nil {
 		response.Error(w, err)
 		return

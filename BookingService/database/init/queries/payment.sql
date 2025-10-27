@@ -3,7 +3,7 @@ INSERT INTO payment (booking_id, payment_method, payment_status, transaction_amo
 SELECT 
     b.id,
     $2 AS payment_method,
-    $3 AS payment_status,
+    "Success" AS payment_status,
     b.total_amount AS transaction_amount,
     NOW() AS payment_time
 FROM booking b

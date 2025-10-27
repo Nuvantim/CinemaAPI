@@ -19,7 +19,7 @@ func ListCinema(w http.ResponseWriter, r *http.Request) {
 }
 
 func GetCinema(w http.ResponseWriter, r *http.Request) {
-	id, err := parser.Params(r, "/cinema/")
+	id, err := parser.ParamsInt(r, "/cinema/")
 	if err != nil {
 		response.Error(w, err)
 		return
@@ -51,7 +51,7 @@ func CreateCinema(w http.ResponseWriter, r *http.Request) {
 }
 
 func UpdateCinema(w http.ResponseWriter, r *http.Request) {
-	id, err := parser.Params(r, "/cinema/update/")
+	id, err := parser.ParamsInt(r, "/cinema/update/")
 	if err != nil {
 		response.Error(w, err)
 		return
@@ -74,7 +74,7 @@ func UpdateCinema(w http.ResponseWriter, r *http.Request) {
 }
 
 func DeleteCinema(w http.ResponseWriter, r *http.Request) {
-	id, err := parser.Params(r, "/cinema/delete/")
+	id, err := parser.ParamsInt(r, "/cinema/delete/")
 	if err != nil {
 		response.Error(w, err)
 		return

@@ -18,7 +18,7 @@ func ListScreenType(w http.ResponseWriter, r *http.Request) {
 }
 
 func GetScreenType(w http.ResponseWriter, r *http.Request) {
-	id, err := parser.Params(r, "/screen/type/")
+	id, err := parser.ParamsInt(r, "/screen/type/")
 	if err != nil {
 		response.Error(w, err)
 		return
@@ -51,7 +51,7 @@ func CreateScreenType(w http.ResponseWriter, r *http.Request) {
 }
 
 func UpdateScreenType(w http.ResponseWriter, r *http.Request) {
-	id, err := parser.Params(r, "/screen/type/update/")
+	id, err := parser.ParamsInt(r, "/screen/type/update/")
 	if err != nil {
 		response.Error(w, err)
 		return
@@ -74,7 +74,7 @@ func UpdateScreenType(w http.ResponseWriter, r *http.Request) {
 }
 
 func DeleteScreenType(w http.ResponseWriter, r *http.Request) {
-	id, err := parser.Params(r, "/scree/type/delete/")
+	id, err := parser.ParamsInt(r, "/scree/type/delete/")
 	if err != nil {
 		response.Error(w, err)
 		return

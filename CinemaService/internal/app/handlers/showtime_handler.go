@@ -19,7 +19,7 @@ func ListShowTime(w http.ResponseWriter, r *http.Request) {
 }
 
 func GetShowTime(w http.ResponseWriter, r *http.Request) {
-	id, err := parser.Params(r, "/showtime/")
+	id, err := parser.ParamsInt(r, "/showtime/")
 	if err != nil {
 		response.Error(w, err)
 		return
@@ -52,7 +52,7 @@ func CreateShowTime(w http.ResponseWriter, r *http.Request) {
 }
 
 func UpdateShowTime(w http.ResponseWriter, r *http.Request) {
-	id, err := parser.Params(r, "/showtime/update/")
+	id, err := parser.ParamsInt(r, "/showtime/update/")
 	if err != nil {
 		response.Error(w, err)
 		return
@@ -76,7 +76,7 @@ func UpdateShowTime(w http.ResponseWriter, r *http.Request) {
 }
 
 func DeleteShowTime(w http.ResponseWriter, r *http.Request) {
-	id, err := parser.Params(r, "/showtime/delete/")
+	id, err := parser.ParamsInt(r, "/showtime/delete/")
 	if err != nil {
 		response.Error(w, err)
 		return

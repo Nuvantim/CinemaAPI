@@ -18,7 +18,7 @@ func ListFilm(w http.ResponseWriter, r *http.Request) {
 	response.Success(w, data)
 }
 func GetFilm(w http.ResponseWriter, r *http.Request) {
-	id, err := parser.Params(r, "/film/")
+	id, err := parser.ParamsInt(r, "/film/")
 	if err != nil {
 		response.Error(w, err)
 		return
@@ -47,7 +47,7 @@ func SearchFilm(w http.ResponseWriter, r *http.Request) {
 	response.Success(w, data)
 }
 func SearchFilmGenre(w http.ResponseWriter, r *http.Request) {
-	id, err := parser.Params(r, "/film/genre/")
+	id, err := parser.ParamsInt(r, "/film/genre/")
 	if err != nil {
 		response.Error(w, err)
 		return
@@ -84,7 +84,7 @@ func CreateFilm(w http.ResponseWriter, r *http.Request) {
 
 }
 func UpdateFilm(w http.ResponseWriter, r *http.Request) {
-	id, err := parser.Params(r, "/film/update/")
+	id, err := parser.ParamsInt(r, "/film/update/")
 	if err != nil {
 		response.Error(w, err)
 		return
@@ -113,7 +113,7 @@ func UpdateFilm(w http.ResponseWriter, r *http.Request) {
 	response.Success(w, data)
 }
 func DeleteFilm(w http.ResponseWriter, r *http.Request) {
-	id, err := parser.Params(r, "/film/delete/")
+	id, err := parser.ParamsInt(r, "/film/delete/")
 	if err != nil {
 		response.Error(w, err)
 		return

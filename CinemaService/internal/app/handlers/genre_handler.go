@@ -17,7 +17,7 @@ func ListGenre(w http.ResponseWriter, r *http.Request) {
 }
 
 func GetGenre(w http.ResponseWriter, r *http.Request) {
-	id, err := parser.Params(r, "/genre/")
+	id, err := parser.ParamsInt(r, "/genre/")
 	if err != nil {
 		response.Error(w, err)
 		return
@@ -50,7 +50,7 @@ func CreateGenre(w http.ResponseWriter, r *http.Request) {
 func UpdateGenre(w http.ResponseWriter, r *http.Request) {
 	var genre model.Genre
 
-	id, err := parser.Params(r, "/genre/update/")
+	id, err := parser.ParamsInt(r, "/genre/update/")
 	if err != nil {
 		response.Error(w, err)
 	}
@@ -68,7 +68,7 @@ func UpdateGenre(w http.ResponseWriter, r *http.Request) {
 	response.Success(w, data)
 }
 func DeleteGenre(w http.ResponseWriter, r *http.Request) {
-	id, err := parser.Params(r, "/genre/delete/")
+	id, err := parser.ParamsInt(r, "/genre/delete/")
 	if err != nil {
 		response.Error(w, err)
 	}
