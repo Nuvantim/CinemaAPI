@@ -30,11 +30,8 @@ func CreateGenre(name string) (model.Genre, error) {
 	return genre, nil
 }
 
-func UpdateGenre(id int32, body model.Genre) (model.Genre, error) {
-	GenreID, err := db.Queries.UpdateGenre(ctx.Background(), model.UpdateGenreParams{
-		ID:   id,
-		Name: body.Name,
-	})
+func UpdateGenre(body model.UpdateGenreParams) (model.Genre, error) {
+	GenreID, err := db.Queries.UpdateGenre(ctx.Background(), body)
 	if err != nil {
 		return model.Genre{}, db.Fatal(err)
 	}

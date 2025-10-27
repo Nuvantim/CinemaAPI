@@ -48,19 +48,14 @@ func CreateGenre(w http.ResponseWriter, r *http.Request) {
 
 }
 func UpdateGenre(w http.ResponseWriter, r *http.Request) {
-	var genre model.Genre
-
-	id, err := parser.ParamsInt(r, "/genre/update/")
-	if err != nil {
-		response.Error(w, err)
-	}
+	var genre model.UpdateGenreParams
 
 	body, err := parser.Body(r.Body, genre)
 	if err != nil {
 		response.Error(w, err)
 	}
 
-	data, err := service.UpdateGenre(id, body)
+	data, err := service.UpdateGenre(body)
 	if err != nil {
 		response.Error(w, err)
 	}

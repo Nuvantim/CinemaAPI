@@ -36,9 +36,7 @@ func CreateShowTime(body model.CreateShowTimeParams) (model.GetShowTimeRow, erro
 	return data, nil
 }
 
-func UpdateShowTime(id int32, body model.UpdateShowTimeParams) (model.GetShowTimeRow, error) {
-	body.ID = id
-
+func UpdateShowTime(body model.UpdateShowTimeParams) (model.GetShowTimeRow, error) {
 	screen_id, err := db.Queries.UpdateShowTime(ctx.Background(), body)
 	if err != nil {
 		return model.GetShowTimeRow{}, db.Fatal(err)

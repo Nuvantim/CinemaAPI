@@ -38,9 +38,7 @@ func CreateScreenType(name string) (model.ScreenType, error) {
 	return data, nil
 }
 
-func UpdateScreenType(id int32, body model.UpdateScreenTypeParams) (model.ScreenType, error) {
-	body.ID = id
-
+func UpdateScreenType(body model.UpdateScreenTypeParams) (model.ScreenType, error) {
 	screen_type_id, err := db.Queries.UpdateScreenType(ctx.Background(), body)
 	if err != nil {
 		return model.ScreenType{}, db.Fatal(err)

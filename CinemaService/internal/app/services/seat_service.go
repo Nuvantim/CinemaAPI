@@ -37,9 +37,7 @@ func CreateSeat(body model.CreateSeatParams) (model.GetSeatRow, error) {
 	return data, nil
 }
 
-func UpdateSeat(id int32, body model.UpdateSeatParams) (model.GetSeatRow, error) {
-	body.ID = id
-
+func UpdateSeat(body model.UpdateSeatParams) (model.GetSeatRow, error) {
 	seat_id, err := db.Queries.UpdateSeat(ctx.Background(), body)
 	if err != nil {
 		return model.GetSeatRow{}, db.Fatal(err)

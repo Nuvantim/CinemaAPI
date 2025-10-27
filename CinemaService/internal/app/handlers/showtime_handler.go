@@ -52,12 +52,6 @@ func CreateShowTime(w http.ResponseWriter, r *http.Request) {
 }
 
 func UpdateShowTime(w http.ResponseWriter, r *http.Request) {
-	id, err := parser.ParamsInt(r, "/showtime/update/")
-	if err != nil {
-		response.Error(w, err)
-		return
-	}
-
 	var showtime model.UpdateShowTimeParams
 	body, err := parser.Body(r.Body, showtime)
 	if err != nil {
@@ -65,7 +59,7 @@ func UpdateShowTime(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	data, err := service.UpdateShowTime(id, body)
+	data, err := service.UpdateShowTime(body)
 	if err != nil {
 		response.Error(w, err)
 		return

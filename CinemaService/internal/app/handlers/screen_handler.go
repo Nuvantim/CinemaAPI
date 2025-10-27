@@ -51,20 +51,15 @@ func CreateScreen(w http.ResponseWriter, r *http.Request) {
 }
 
 func UpdateScreen(w http.ResponseWriter, r *http.Request) {
-	id, err := parser.ParamsInt(r, "/screen/update/")
-	if err != nil {
-		response.Error(w, err)
-		return
-	}
-
 	var screen model.UpdateScreenParams
+
 	body, err := parser.Body(r.Body, screen)
 	if err != nil {
 		response.Error(w, err)
 		return
 	}
 
-	data, err := service.UpdateScreen(id, body)
+	data, err := service.UpdateScreen(body)
 	if err != nil {
 		response.Error(w, err)
 		return

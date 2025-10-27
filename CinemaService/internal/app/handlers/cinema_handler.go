@@ -51,20 +51,15 @@ func CreateCinema(w http.ResponseWriter, r *http.Request) {
 }
 
 func UpdateCinema(w http.ResponseWriter, r *http.Request) {
-	id, err := parser.ParamsInt(r, "/cinema/update/")
-	if err != nil {
-		response.Error(w, err)
-		return
-	}
-
 	var cinema model.UpdateCinemaParams
+	
 	body, err := parser.Body(r.Body, cinema)
 	if err != nil {
 		response.Error(w, err)
 		return
 	}
 
-	data, err := service.UpdateCinema(id, body)
+	data, err := service.UpdateCinema(body)
 	if err != nil {
 		response.Error(w, err)
 		return

@@ -52,12 +52,6 @@ func CreateSeat(w http.ResponseWriter, r *http.Request) {
 }
 
 func UpdateSeat(w http.ResponseWriter, r *http.Request) {
-	id, err := parser.ParamsInt(r, "/seat/update/")
-	if err != nil {
-		response.Error(w, err)
-		return
-	}
-
 	var seat model.UpdateSeatParams
 	body, err := parser.Body(r.Body, seat)
 	if err != nil {
@@ -65,7 +59,7 @@ func UpdateSeat(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	data, err := service.UpdateSeat(id, body)
+	data, err := service.UpdateSeat(body)
 	if err != nil {
 		response.Error(w, err)
 		return

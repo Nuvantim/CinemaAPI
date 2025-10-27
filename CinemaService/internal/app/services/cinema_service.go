@@ -30,9 +30,7 @@ func CreateCinema(body model.CreateCinemaParams) (model.Cinema, error) {
 	return data, nil
 }
 
-func UpdateCinema(id int32, body model.UpdateCinemaParams) (model.Cinema, error) {
-	body.ID = id
-
+func UpdateCinema(body model.UpdateCinemaParams) (model.Cinema, error) {
 	id_cinema, err := db.Queries.UpdateCinema(ctx.Background(), body)
 	if err != nil {
 		return model.Cinema{}, db.Fatal(err)

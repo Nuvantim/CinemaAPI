@@ -52,9 +52,7 @@ func CreateFilm(body model.CreateFilmParams) (model.GetFilmRow, error) {
 	return data, nil
 }
 
-func UpdateFilm(id int32, body model.UpdateFilmParams) (model.GetFilmRow, error) {
-	body.ID = id
-
+func UpdateFilm(body model.UpdateFilmParams) (model.GetFilmRow, error) {
 	id_film, err := db.Queries.UpdateFilm(ctx.Background(), body)
 	if err != nil {
 		return model.GetFilmRow{}, db.Fatal(err)

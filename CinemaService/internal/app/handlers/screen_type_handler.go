@@ -51,12 +51,6 @@ func CreateScreenType(w http.ResponseWriter, r *http.Request) {
 }
 
 func UpdateScreenType(w http.ResponseWriter, r *http.Request) {
-	id, err := parser.ParamsInt(r, "/screen/type/update/")
-	if err != nil {
-		response.Error(w, err)
-		return
-	}
-
 	var screen_type model.UpdateScreenTypeParams
 	body, err := parser.Body(r.Body, screen_type)
 	if err != nil {
@@ -64,7 +58,7 @@ func UpdateScreenType(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	data, err := service.UpdateScreenType(id, body)
+	data, err := service.UpdateScreenType(body)
 	if err != nil {
 		response.Error(w, err)
 		return

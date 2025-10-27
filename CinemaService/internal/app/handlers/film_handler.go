@@ -34,6 +34,7 @@ func GetFilm(w http.ResponseWriter, r *http.Request) {
 }
 func SearchFilm(w http.ResponseWriter, r *http.Request) {
 	var film model.Film
+
 	body, err := parser.Body(r.Body, film)
 	if err != nil {
 		response.Error(w, err)
@@ -84,12 +85,6 @@ func CreateFilm(w http.ResponseWriter, r *http.Request) {
 
 }
 func UpdateFilm(w http.ResponseWriter, r *http.Request) {
-	id, err := parser.ParamsInt(r, "/film/update/")
-	if err != nil {
-		response.Error(w, err)
-		return
-	}
-
 	var film model.UpdateFilmParams
 
 	body, err := parser.Body(r.Body, film)
@@ -104,7 +99,7 @@ func UpdateFilm(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	data, err := service.UpdateFilm(id, body)
+	data, err := service.UpdateFilm(body)
 	if err != nil {
 		response.Error(w, err)
 		return
