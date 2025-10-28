@@ -1,8 +1,10 @@
 package service
 
 import (
+	"fmt"
+	
 	"api/internal/gateway"
-	model "github.com/Nuvantim/CinemaService/internal/app/repository"
+	model "api/internal/app/request"
 )
 
 func ListGenre() ([]model.Genre, error) {

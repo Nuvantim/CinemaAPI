@@ -6,14 +6,15 @@ import (
 	"fmt"
 	"io"
 	"net/http"
+	"errors"
 
-	"test/config"
-	"test/internal/server/client"
+	"api/config"
+	"api/internal/server/client"
 )
 
 var action *http.Client = config.Http2Config()
 
-func GetCinema[T any](endpoint string) (T, error) {
+func GetCinema[T any](endpoint string, res T) (T, error) {
 	var res T
 
 	resp, err := action.Get(client.Cinema + endpoint)
@@ -62,13 +63,13 @@ func DeleteCinema[T any](endpoint string, body T) error {
 	return nil
 }
 
-func PutCinema[Req any, Res any](endpoint string, body Req) (res Res, err error) {
+func PostCinema[Req any, Res any](endpoint string, body Req) (res Res, err error) {
 	data, err := json.Marshal(body)
 	if err != nil {
 		return
 	}
 
-	req, err := http.NewRequest(http.MethodPut, client.Cinema+endpoint, bytes.NewReader(data))
+	req, err := http.NewRequest(http.MethodPost, client.Cinema+endpoint, bytes.NewReader(data))
 	if err != nil {
 		return
 	}

@@ -16,7 +16,7 @@ func Setup(app *fiber.App) {
 	auth.Post("/reset-password", handler.ResetPassword)
 
 	// Set Middleware
-	app.Use(middleware.BearerAuth())
+	// app.Use(middleware.BearerAuth())
 
 	// user
 	account := app.Group("/account")
@@ -46,5 +46,10 @@ func Setup(app *fiber.App) {
 	permission.Post("/store", handler.CreatePermission)
 	permission.Put("/update/:id", handler.UpdatePermission)
 	permission.Delete("/delete/:id", handler.DeletePermission)
+
+	// genre
+	genre := app.Group("/genre/v1")
+	genre.Get("/", handler.ListGenre)
+	genre.Get("/:id", handler.GetGenre)
 
 }
