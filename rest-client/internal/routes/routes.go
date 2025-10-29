@@ -51,5 +51,8 @@ func Setup(app *fiber.App) {
 	genre := app.Group("/genre/v1")
 	genre.Get("/", handler.ListGenre)
 	genre.Get("/:id", handler.GetGenre)
+	genre.Post("/create", handler.CreateGenre)
+	genre.Put("/update/:id", handler.UpdateGenre)
+	genre.Delete("/delete/:id", handler.DeleteGenre)
 
 }

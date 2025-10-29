@@ -37,7 +37,7 @@ func CreateScreen(body model.CreateScreenParams) (model.GetScreenRow, error) {
 }
 
 func UpdateScreen(body model.UpdateScreenParams) (model.GetScreenRow, error) {
-	
+
 	screen_id, err := db.Queries.UpdateScreen(ctx.Background(), body)
 	if err != nil {
 		return model.GetScreenRow{}, db.Fatal(err)

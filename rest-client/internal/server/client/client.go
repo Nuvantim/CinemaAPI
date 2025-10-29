@@ -1,16 +1,16 @@
 package client
 
 import (
+	"api/config"
 	"fmt"
 	"log"
-	"api/config"
 )
 
 var Cinema string
 
 func CinemaService() {
-	srvc,err := config.GetServiceConfig()
-	if err != nil{
+	srvc, err := config.GetServiceConfig()
+	if err != nil {
 		log.Println(err)
 	}
 	var client = config.Http2Config()

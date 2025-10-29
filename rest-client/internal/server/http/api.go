@@ -34,6 +34,6 @@ func ServerGo() *fiber.App {
 	// Star Connect Cinema Service
 	fmt.Print("[ 🎬 ]")
 	client.CinemaService()
-	
+
 	return app
 }

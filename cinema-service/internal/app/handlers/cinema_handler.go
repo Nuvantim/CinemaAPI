@@ -52,7 +52,7 @@ func CreateCinema(w http.ResponseWriter, r *http.Request) {
 
 func UpdateCinema(w http.ResponseWriter, r *http.Request) {
 	var cinema model.UpdateCinemaParams
-	
+
 	body, err := parser.Body(r.Body, cinema)
 	if err != nil {
 		response.Error(w, err)

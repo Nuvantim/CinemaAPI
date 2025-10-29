@@ -27,8 +27,8 @@ type ServerConfig struct {
 	Url     string `envconfig:"URL"`
 }
 
-type ServiceConfig struct{
-	Cinema string `envconfig:"CINEMA_SERVICE"`
+type ServiceConfig struct {
+	Cinema  string `envconfig:"CINEMA_SERVICE"`
 	Booking string `envconfig:"BOOKING_SERVICE"`
 }
 
