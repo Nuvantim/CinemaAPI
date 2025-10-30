@@ -42,3 +42,4 @@ RETURNING id;
 
 -- name: DeleteShowTime :exec
 DELETE FROM showtime WHERE id = $1;
+

@@ -23,7 +23,7 @@ RETURNING id, booking_id, payment_method, payment_status, transaction_amount, pa
 `
 
 type CreatePaymentParams struct {
-	ID            int32  `json:"booking_id"`
+	ID            int32  `json:"id"`
 	PaymentMethod string `json:"payment_method"`
 }
 

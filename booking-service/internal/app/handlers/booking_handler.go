@@ -10,7 +10,7 @@ import (
 )
 
 func ListBooking(w http.ResponseWriter, r *http.Request) {
-	var booking model.Booking
+	var booking model.CreateBookingParams
 
 	body, err := parser.Body(r.Body, booking)
 	if err != nil {

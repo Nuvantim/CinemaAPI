@@ -3,10 +3,10 @@ package handler
 import (
 	"github.com/gofiber/fiber/v2"
 
-	req "api/internal/app/request"
-	"api/internal/app/service"
+	model "cinema/pkgs/monorepo"
 	resp "api/pkgs/utils/responses"
 	val "api/pkgs/utils/validates"
+	"api/internal/app/service"
 )
 
 func ListGenre(c *fiber.Ctx) error {
@@ -33,7 +33,7 @@ func GetGenre(c *fiber.Ctx) error {
 }
 
 func CreateGenre(c *fiber.Ctx) error {
-	var genre req.Genre
+	var genre model.Genre
 
 	if err := c.BodyParser(&genre); err != nil {
 		return c.Status(400).JSON(resp.Error("parser json", err.Error()))
@@ -57,7 +57,7 @@ func UpdateGenre(c *fiber.Ctx) error {
 		return c.Status(400).JSON("parser id", err.Error())
 	}
 
-	var genre req.Genre
+	var genre model.Genre
 	if err := c.BodyParser(&genre); err != nil {
 		return c.Status(400).JSON("parser json", err.Error())
 	}

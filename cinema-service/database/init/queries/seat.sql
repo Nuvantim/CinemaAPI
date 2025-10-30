@@ -37,3 +37,4 @@ RETURNING id;
 
 -- name: DeleteSeat :exec
 DELETE FROM seat WHERE id = $1;
+

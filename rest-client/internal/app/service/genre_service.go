@@ -3,7 +3,7 @@ package service
 import (
 	"fmt"
 
-	model "api/internal/app/request"
+	model "cinema/pkgs/monorepo"
 	"api/internal/gateway"
 )
 

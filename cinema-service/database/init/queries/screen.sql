@@ -60,3 +60,4 @@ RETURNING id;
 
 -- name: DeleteScreen :exec
 DELETE FROM screen WHERE id = $1;
+

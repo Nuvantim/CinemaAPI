@@ -33,7 +33,7 @@ func GetFilm(w http.ResponseWriter, r *http.Request) {
 	response.Success(w, data)
 }
 func SearchFilm(w http.ResponseWriter, r *http.Request) {
-	var film model.Film
+	var film model.SearchFilmRow
 
 	body, err := parser.Body(r.Body, film)
 	if err != nil {

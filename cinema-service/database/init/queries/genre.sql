@@ -12,3 +12,4 @@ UPDATE genre SET name =$2 WHERE id=$1 RETURNING id;
 
 -- name: DeleteGenre :exec
 DELETE FROM genre WHERE id = $1;
+

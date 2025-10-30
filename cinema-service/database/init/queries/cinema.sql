@@ -12,3 +12,4 @@ UPDATE cinema SET name=$2, address=$3, city=$4 WHERE id =$1 RETURNING id;
 
 -- name: DeleteCinema :exec
 DELETE FROM cinema WHERE id = $1;
+
