@@ -14,25 +14,24 @@ import (
 
 var action *http.Client = config.Http2Config()
 
-func GetCinema[T any](endpoint string, res T) (T, error) {
-	var zero T
-
+func GetCinema[T any](endpoint string) (T, error) {
+	var result T
 	resp, err := action.Get(client.Cinema + endpoint)
 	if err != nil {
-		return zero, err
+		return result, err
 	}
 	defer resp.Body.Close()
 
 	if resp.StatusCode != http.StatusOK {
 		bodyByte, _ := io.ReadAll(resp.Body)
-		return zero, errors.New(string(bodyByte))
+		return result, errors.New(string(bodyByte))
 	}
 
-	if err := json.NewDecoder(resp.Body).Decode(&res); err != nil {
-		return zero, fmt.Errorf("failed decode data: %w", err)
+	if err := json.NewDecoder(resp.Body).Decode(&result); err != nil {
+		return result, fmt.Errorf("failed decode data: %w", err)
 	}
 
-	return res, nil
+	return result, nil
 }
 
 func PostCinema[Req any, Res any](endpoint string, body Req) (res Res, err error) {
