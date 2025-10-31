@@ -15,7 +15,7 @@ func ListFilm(c *fiber.Ctx) error {
 		return c.Status(500).JSON(response.Error("list film", err.Error()))
 	}
 
-	return c.Status(200).JSON(response.Pass("list film",data))
+	return c.Status(200).JSON(response.Pass("list film", data))
 }
 
 func GetFilm(c *fiber.Ctx) error {

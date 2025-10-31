@@ -61,4 +61,3 @@ func DeleteCinema(id int32) error {
 	return nil
 
 }
-

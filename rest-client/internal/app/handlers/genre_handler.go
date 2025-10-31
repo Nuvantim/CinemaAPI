@@ -15,7 +15,7 @@ func ListGenre(c *fiber.Ctx) error {
 		return c.Status(500).JSON(response.Error("list genre", err.Error()))
 	}
 
-	return c.Status(200).JSON(response.Pass("list genre",data))
+	return c.Status(200).JSON(response.Pass("list genre", data))
 }
 
 func GetGenre(c *fiber.Ctx) error {
@@ -34,7 +34,7 @@ func GetGenre(c *fiber.Ctx) error {
 		return c.Status(500).JSON(response.Error("get genre", err.Error()))
 	}
 
-	return c.Status(200).JSON(response.Pass("get genre",data))
+	return c.Status(200).JSON(response.Pass("get genre", data))
 }
 
 func CreateGenre(c *fiber.Ctx) error {
