@@ -34,11 +34,12 @@ func CreatePermission(data req.Permission) ([]repo.Permission, error) {
 	return permission, nil
 }
 func UpdatePermission(data repo.UpdatePermissionParams) (repo.GetPermissionRow, error) {
-
-	if err := db.Queries.UpdatePermission(ctx.Background(), permission_data); err != nil {
-		return repo.GetPermissionRow{}, db.Fatal(err)
+	id_permission, error := db.Queries.UpdatePermission(ctx.Background(), data)
+	if error != nil {
+		return repo.GetPermissionRow{}, db.Fatal(error)
 	}
-	var permission, err = GetPermission(id)
+
+	var permission, err = GetPermission(id_permission)
 	if err != nil {
 		return repo.GetPermissionRow{}, db.Fatal(err)
 	}

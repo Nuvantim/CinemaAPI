@@ -98,7 +98,7 @@ func PutCinema[Req any, Res any](endpoint string, body Req) (res Res, err error)
 
 func DeleteCinema(endpoint string) error {
 	url := client.Cinema + endpoint
-	req, err := http.NewRequest(http.MethodDelete, url,nil)
+	req, err := http.NewRequest(http.MethodDelete, url, nil)
 	if err != nil {
 		return err
 	}

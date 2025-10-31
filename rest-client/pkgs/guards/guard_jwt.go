@@ -37,6 +37,7 @@ type RefreshClaims struct {
 
 // loadKey membaca dan memproses file kunci RSA
 func loadKey(filename string, isPrivate bool) (interface{}, error) {
+
 	keyBytes, err := os.ReadFile(filename)
 	if err != nil {
 		return nil, err
@@ -73,7 +74,7 @@ func loadKey(filename string, isPrivate bool) (interface{}, error) {
 
 // LoadPrivateKey memuat kunci privat dari file
 func LoadPrivateKey() (*rsa.PrivateKey, error) {
-	key, err := loadKey("screet-key/private.pem", true)
+	key, err := loadKey(RSAKeyPath+"/private.pem", true)
 	if err != nil {
 		return nil, err
 	}
@@ -82,7 +83,7 @@ func LoadPrivateKey() (*rsa.PrivateKey, error) {
 
 // LoadPublicKey memuat kunci publik dari file
 func LoadPublicKey() (*rsa.PublicKey, error) {
-	key, err := loadKey("screet-key/public.pem", false)
+	key, err := loadKey(RSAKeyPath+"/public.pem", false)
 	if err != nil {
 		return nil, err
 	}

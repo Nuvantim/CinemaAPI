@@ -20,7 +20,7 @@ func Setup(mux *http.ServeMux) {
 	// film
 	r.Get("/films", handler.ListFilm)
 	r.Get("/film/", handler.GetFilm)
-	r.Get("/film/search", handler.SearchFilm)
+	r.Post("/film/search", handler.SearchFilm)
 	r.Get("/film/genre/", handler.SearchFilmGenre)
 	r.Post("/film/create", handler.CreateFilm)
 	r.Put("/film/update", handler.UpdateFilm)

@@ -11,12 +11,12 @@ import (
 	"path/filepath"
 )
 
-var rsaKeyPath = "./screet-key"
+var RSAKeyPath = "./screet-key"
 
 // GenRSA generates an RSA key pair if the key files don't exist.
 func GenRSA() {
 	// Create folder if not exists
-	if err := os.MkdirAll(rsaKeyPath, 0700); err != nil {
+	if err := os.MkdirAll(RSAKeyPath, 0700); err != nil {
 		log.Println("Failed to create directory:", err)
 		return
 	}
@@ -24,9 +24,9 @@ func GenRSA() {
 	privateKeyPath := "private.pem"
 	publicKeyPath := "public.pem"
 
-	root,err := os.OpenRoot(rsaKeyPath)
-	if err != nil{
-		log.Println("Failed open root :",err)
+	root, err := os.OpenRoot(RSAKeyPath)
+	if err != nil {
+		log.Println("Failed open root :", err)
 	}
 
 	_, errPublic := root.Stat(publicKeyPath)
