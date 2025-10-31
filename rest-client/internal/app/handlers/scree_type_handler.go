@@ -9,17 +9,17 @@ import(
 	"api/internal/app/service"
 )
 
-func ListCinema(c *fiber.Ctx)error{
+func ListScreenType(c *fiber.Ctx)error{
 	// start service
-	data,err := service.ListCinema()
+	data,err := service.ListScreenType()
 	if err != nil{
-		return c.Status(500).JSON(response.Error("list cinema",err.Error()))
+		return c.Status(500).JSON(response.Error("list screen type",err.Error()))
 	}
 	// return json data
-	return c.Status(200).JSON(response.Pass("list cinema", data))
+	return c.Status(200).JSON(response.Pass("list screen type", data))
 }
 
-func GetCinema(c *fiber.Ctx)error{
+func GetScreenType(c *fiber.Ctx)error{
 	// get params id
 	params,err := c.ParamsInt("id")
 	if err != nil{
@@ -33,38 +33,38 @@ func GetCinema(c *fiber.Ctx)error{
 	}
 
 	// start service
-	data,err := service.GetCinema(id)
+	data,err := service.GetScreenType(id)
 	if err != nil{
-		return c.Status(500).JSON(response.Error("get cinema", err.Error()))
+		return c.Status(500).JSON(response.Error("get screen type", err.Error()))
 	}
 
 	// return json data
-	return c.Status(200).JSON(response.Pass("get cinema",data))
+	return c.Status(200).JSON(response.Pass("get screen type",data))
 }
-func CreateCinema(c *fiber.Ctx)error{
+func CreateScreenType(c *fiber.Ctx)error{
 	// declared model
-	var cinema model.CreateCinemaParams
+	var screen_type model.ScreenType
 
 	// parser body data to json
-	if err := c.BodyParser(&cinema);err != nil{
+	if err := c.BodyParser(&screen_type);err != nil{
 		return c.Status(400).JSON(response.Error("parser json", err.Error()))
 	}
 
 	// validate json
-	if err := validate.BodyStructs(cinema);err != nil{
+	if err := validate.BodyStructs(screen_type);err != nil{
 		return c.Status(422).JSON(response.Error("validate data", err.Error()))
 	}
 
 	// start service
-	data,err := service.CreateCinema(cinema)
+	data,err := service.CreateScreenType(screen_type)
 	if err != nil{
-		return c.Status(500).JSON(response.Error("create cinema",err.Error()))
+		return c.Status(500).JSON(response.Error("create screen type",err.Error()))
 	}
 
 	// returning json data
-	return c.Status(200).JSON(response.Pass("create cinema",data))
+	return c.Status(200).JSON(response.Pass("create screen type",data))
 }
-func UpdateCinema(c *fiber.Ctx)error{
+func UpdateScreenType(c *fiber.Ctx)error{
 	// get params id
 	params,err := c.ParamsInt("id")
 	if err != nil{
@@ -78,30 +78,30 @@ func UpdateCinema(c *fiber.Ctx)error{
 	}
 
 	// declared model
-	var cinema model.UpdateCinemaParams
+	var screen_type model.ScreenType
 
 	// parser body data to json
-	if err := c.BodyParser(&cinema);err != nil{
+	if err := c.BodyParser(&screen_type);err != nil{
 		return c.Status(400).JSON(response.Error("parser json",err.Error()))
 	}
 	// add id to data
-	cinema.ID = id
+	screen_type.ID = id
 
 	// validate json
-	if err := validate.BodyStructs(cinema);err != nil{
+	if err := validate.BodyStructs(screen_type);err != nil{
 		return c.Status(422).JSON(response.Error("validate data", err.Error()))
 	}
 
 	// start service
-	data,err := service.UpdateCinema(cinema)
+	data,err := service.UpdateScreenType(screen_type)
 	if err != nil{
-		return c.Status(500).JSON(response.Error("update cinema",err.Error()))
+		return c.Status(500).JSON(response.Error("update screen type",err.Error()))
 	}
 
 	// returning json data
-	return c.Status(200).JSON(response.Pass("update cinema",data))
+	return c.Status(200).JSON(response.Pass("update screen type",data))
 }
-func DeleteCinema(c *fiber.Ctx)error{
+func DeleteScreenType(c *fiber.Ctx)error{
 	// get params id
 	params,err := c.ParamsInt("id")
 	if err != nil{
@@ -115,10 +115,10 @@ func DeleteCinema(c *fiber.Ctx)error{
 	}
 
 	// start service
-	if err := service.DeleteCinema(id);err != nil{
-		return c.Status(500).JSON(response.Error("delete cinema",err.Error()))
+	if err := service.DeleteScreenType(id);err != nil{
+		return c.Status(500).JSON(response.Error("delete screen type",err.Error()))
 	}
 
 	// return json data
-	return c.Status(200).JSON(response.Pass("delete cinema",struct{}{}))
+	return c.Status(200).JSON(response.Pass("delete screen type",struct{}{}))
 }

@@ -9,17 +9,17 @@ import(
 	"api/internal/app/service"
 )
 
-func ListCinema(c *fiber.Ctx)error{
+func ListShowTime(c *fiber.Ctx)error{
 	// start service
-	data,err := service.ListCinema()
+	data,err := service.ListShowTime()
 	if err != nil{
-		return c.Status(500).JSON(response.Error("list cinema",err.Error()))
+		return c.Status(500).JSON(response.Error("list showtime",err.Error()))
 	}
 	// return json data
-	return c.Status(200).JSON(response.Pass("list cinema", data))
+	return c.Status(200).JSON(response.Pass("list showtime", data))
 }
 
-func GetCinema(c *fiber.Ctx)error{
+func GetShowTime(c *fiber.Ctx)error{
 	// get params id
 	params,err := c.ParamsInt("id")
 	if err != nil{
@@ -33,38 +33,38 @@ func GetCinema(c *fiber.Ctx)error{
 	}
 
 	// start service
-	data,err := service.GetCinema(id)
+	data,err := service.GetShowTime(id)
 	if err != nil{
-		return c.Status(500).JSON(response.Error("get cinema", err.Error()))
+		return c.Status(500).JSON(response.Error("get showtime", err.Error()))
 	}
 
 	// return json data
-	return c.Status(200).JSON(response.Pass("get cinema",data))
+	return c.Status(200).JSON(response.Pass("get showtime",data))
 }
-func CreateCinema(c *fiber.Ctx)error{
+func CreateShowTime(c *fiber.Ctx)error{
 	// declared model
-	var cinema model.CreateCinemaParams
+	var showtime model.CreateShowTimeParams
 
 	// parser body data to json
-	if err := c.BodyParser(&cinema);err != nil{
+	if err := c.BodyParser(&showtime);err != nil{
 		return c.Status(400).JSON(response.Error("parser json", err.Error()))
 	}
 
 	// validate json
-	if err := validate.BodyStructs(cinema);err != nil{
+	if err := validate.BodyStructs(showtime);err != nil{
 		return c.Status(422).JSON(response.Error("validate data", err.Error()))
 	}
 
 	// start service
-	data,err := service.CreateCinema(cinema)
+	data,err := service.CreateShowTime(showtime)
 	if err != nil{
-		return c.Status(500).JSON(response.Error("create cinema",err.Error()))
+		return c.Status(500).JSON(response.Error("create showtime",err.Error()))
 	}
 
 	// returning json data
-	return c.Status(200).JSON(response.Pass("create cinema",data))
+	return c.Status(200).JSON(response.Pass("create showtime",data))
 }
-func UpdateCinema(c *fiber.Ctx)error{
+func UpdateShowTime(c *fiber.Ctx)error{
 	// get params id
 	params,err := c.ParamsInt("id")
 	if err != nil{
@@ -78,30 +78,30 @@ func UpdateCinema(c *fiber.Ctx)error{
 	}
 
 	// declared model
-	var cinema model.UpdateCinemaParams
+	var showtime model.UpdateShowTimeParams
 
 	// parser body data to json
-	if err := c.BodyParser(&cinema);err != nil{
+	if err := c.BodyParser(&showtime);err != nil{
 		return c.Status(400).JSON(response.Error("parser json",err.Error()))
 	}
 	// add id to data
-	cinema.ID = id
+	showtime.ID = id
 
 	// validate json
-	if err := validate.BodyStructs(cinema);err != nil{
+	if err := validate.BodyStructs(showtime);err != nil{
 		return c.Status(422).JSON(response.Error("validate data", err.Error()))
 	}
 
 	// start service
-	data,err := service.UpdateCinema(cinema)
+	data,err := service.UpdateShowTime(showtime)
 	if err != nil{
-		return c.Status(500).JSON(response.Error("update cinema",err.Error()))
+		return c.Status(500).JSON(response.Error("update showtime",err.Error()))
 	}
 
 	// returning json data
-	return c.Status(200).JSON(response.Pass("update cinema",data))
+	return c.Status(200).JSON(response.Pass("update showtime",data))
 }
-func DeleteCinema(c *fiber.Ctx)error{
+func DeleteShowTime(c *fiber.Ctx)error{
 	// get params id
 	params,err := c.ParamsInt("id")
 	if err != nil{
@@ -115,10 +115,10 @@ func DeleteCinema(c *fiber.Ctx)error{
 	}
 
 	// start service
-	if err := service.DeleteCinema(id);err != nil{
-		return c.Status(500).JSON(response.Error("delete cinema",err.Error()))
+	if err := service.DeleteShowTime(id);err != nil{
+		return c.Status(500).JSON(response.Error("delete showtime",err.Error()))
 	}
 
 	// return json data
-	return c.Status(200).JSON(response.Pass("delete cinema",struct{}{}))
+	return c.Status(200).JSON(response.Pass("delete showtime",struct{}{}))
 }

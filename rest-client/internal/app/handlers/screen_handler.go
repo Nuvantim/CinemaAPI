@@ -9,17 +9,17 @@ import(
 	"api/internal/app/service"
 )
 
-func ListCinema(c *fiber.Ctx)error{
+func ListScreen(c *fiber.Ctx)error{
 	// start service
-	data,err := service.ListCinema()
+	data,err := service.ListScreen()
 	if err != nil{
-		return c.Status(500).JSON(response.Error("list cinema",err.Error()))
+		return c.Status(500).JSON(response.Error("list screen",err.Error()))
 	}
 	// return json data
-	return c.Status(200).JSON(response.Pass("list cinema", data))
+	return c.Status(200).JSON(response.Pass("list screen", data))
 }
 
-func GetCinema(c *fiber.Ctx)error{
+func GetScreen(c *fiber.Ctx)error{
 	// get params id
 	params,err := c.ParamsInt("id")
 	if err != nil{
@@ -33,38 +33,38 @@ func GetCinema(c *fiber.Ctx)error{
 	}
 
 	// start service
-	data,err := service.GetCinema(id)
+	data,err := service.GetScreen(id)
 	if err != nil{
-		return c.Status(500).JSON(response.Error("get cinema", err.Error()))
+		return c.Status(500).JSON(response.Error("get screen", err.Error()))
 	}
 
 	// return json data
-	return c.Status(200).JSON(response.Pass("get cinema",data))
+	return c.Status(200).JSON(response.Pass("get screen",data))
 }
-func CreateCinema(c *fiber.Ctx)error{
+func CreateScreen(c *fiber.Ctx)error{
 	// declared model
-	var cinema model.CreateCinemaParams
+	var screen model.CreateScreenParams
 
 	// parser body data to json
-	if err := c.BodyParser(&cinema);err != nil{
+	if err := c.BodyParser(&screen);err != nil{
 		return c.Status(400).JSON(response.Error("parser json", err.Error()))
 	}
 
 	// validate json
-	if err := validate.BodyStructs(cinema);err != nil{
+	if err := validate.BodyStructs(screen);err != nil{
 		return c.Status(422).JSON(response.Error("validate data", err.Error()))
 	}
 
 	// start service
-	data,err := service.CreateCinema(cinema)
+	data,err := service.CreateScreen(screen)
 	if err != nil{
-		return c.Status(500).JSON(response.Error("create cinema",err.Error()))
+		return c.Status(500).JSON(response.Error("create screen",err.Error()))
 	}
 
 	// returning json data
-	return c.Status(200).JSON(response.Pass("create cinema",data))
+	return c.Status(200).JSON(response.Pass("create screen",data))
 }
-func UpdateCinema(c *fiber.Ctx)error{
+func UpdateScreen(c *fiber.Ctx)error{
 	// get params id
 	params,err := c.ParamsInt("id")
 	if err != nil{
@@ -78,30 +78,30 @@ func UpdateCinema(c *fiber.Ctx)error{
 	}
 
 	// declared model
-	var cinema model.UpdateCinemaParams
+	var screen model.UpdateScreenParams
 
 	// parser body data to json
-	if err := c.BodyParser(&cinema);err != nil{
+	if err := c.BodyParser(&screen);err != nil{
 		return c.Status(400).JSON(response.Error("parser json",err.Error()))
 	}
 	// add id to data
-	cinema.ID = id
+	screen.ID = id
 
 	// validate json
-	if err := validate.BodyStructs(cinema);err != nil{
+	if err := validate.BodyStructs(screen);err != nil{
 		return c.Status(422).JSON(response.Error("validate data", err.Error()))
 	}
 
 	// start service
-	data,err := service.UpdateCinema(cinema)
+	data,err := service.UpdateScreen(screen)
 	if err != nil{
-		return c.Status(500).JSON(response.Error("update cinema",err.Error()))
+		return c.Status(500).JSON(response.Error("update screen",err.Error()))
 	}
 
 	// returning json data
-	return c.Status(200).JSON(response.Pass("update cinema",data))
+	return c.Status(200).JSON(response.Pass("update screen",data))
 }
-func DeleteCinema(c *fiber.Ctx)error{
+func DeleteScreen(c *fiber.Ctx)error{
 	// get params id
 	params,err := c.ParamsInt("id")
 	if err != nil{
@@ -115,10 +115,10 @@ func DeleteCinema(c *fiber.Ctx)error{
 	}
 
 	// start service
-	if err := service.DeleteCinema(id);err != nil{
-		return c.Status(500).JSON(response.Error("delete cinema",err.Error()))
+	if err := service.DeleteScreen(id);err != nil{
+		return c.Status(500).JSON(response.Error("delete screen",err.Error()))
 	}
 
 	// return json data
-	return c.Status(200).JSON(response.Pass("delete cinema",struct{}{}))
+	return c.Status(200).JSON(response.Pass("delete screen",struct{}{}))
 }
