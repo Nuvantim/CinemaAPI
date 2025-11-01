@@ -8,9 +8,24 @@ import (
 	"github.com/jackc/pgx/v5/pgtype"
 )
 
+type Booking struct {
+	ID          int64            `json:"id"`
+	UserID      int32            `json:"user_id"`
+	ShowtimeID  int32            `json:"showtime_id"`
+	BookingTime pgtype.Timestamp `json:"booking_time"`
+	TotalAmount pgtype.Float8    `json:"total_amount"`
+}
+
+type BookingSeat struct {
+	ID        int32   `json:"id"`
+	BookingID int64   `json:"booking_id"`
+	SeatID    int32   `json:"seat_id"`
+	PricePaid float64 `json:"price_paid"`
+}
+
 type Payment struct {
 	ID                int32       `json:"id"`
-	BookingID         int32       `json:"booking_id"`
+	BookingID         int64       `json:"booking_id"`
 	PaymentMethod     string      `json:"payment_method"`
 	PaymentStatus     pgtype.Text `json:"payment_status"`
 	TransactionAmount float64     `json:"transaction_amount"`

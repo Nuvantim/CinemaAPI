@@ -11,7 +11,7 @@ func Setup(mux *http.ServeMux) {
 	r.Get("/", handler.GetTest)
 
 	// booking
-	r.Get("/bookings", handler.ListBooking)
+	r.Post("/bookings", handler.ListBooking)
 	r.Post("/booking/create", handler.CreateBooking)
 	r.Delete("/booking/delete/", handler.DeleteBooking)
 
@@ -23,5 +23,4 @@ func Setup(mux *http.ServeMux) {
 	// payment
 	r.Post("/payment/create", handler.CreatePayment)
 	r.Get("/payment/", handler.ListPayment)
-	r.Get("/report/profit", handler.ReportProfit)
 }

@@ -11,7 +11,7 @@ type Cinema struct {
 	City    string `json:"city" validate:"required"`
 }
 
-type Film struct{
+type Film struct {
 	Title string `json:"title" validate:"required"`
 }
 type Genre struct {

@@ -10,25 +10,17 @@ import (
 )
 
 const CreateBookingSeat = `-- name: CreateBookingSeat :one
-INSERT INTO booking_seat (booking_id, seat_id, price_paid) SELECT $1,$2,$3
-WHERE EXISTS (SELECT id FROM booking WHERE id = $1 AND user_id = $4) 
-RETURNING booking_id
+INSERT INTO booking_seat (booking_id, seat_id, price_paid) VALUES($1,$2,$3) RETURNING booking_id
 `
 
 type CreateBookingSeatParams struct {
-	BookingID int32   `json:"booking_id"`
+	BookingID int64   `json:"booking_id"`
 	SeatID    int32   `json:"seat_id"`
 	PricePaid float64 `json:"price_paid"`
-	UserID    int32   `json:"user_id"`
 }
 
 func (q *Queries) CreateBookingSeat(ctx context.Context, arg CreateBookingSeatParams) (int32, error) {
-	row := q.db.QueryRow(ctx, CreateBookingSeat,
-		arg.BookingID,
-		arg.SeatID,
-		arg.PricePaid,
-		arg.UserID,
-	)
+	row := q.db.QueryRow(ctx, CreateBookingSeat, arg.BookingID, arg.SeatID, arg.PricePaid)
 	var booking_id int32
 	err := row.Scan(&booking_id)
 	return booking_id, err
@@ -44,33 +36,23 @@ func (q *Queries) DeleteBookingSeat(ctx context.Context, id int32) error {
 }
 
 const ListBookingSeat = `-- name: ListBookingSeat :many
-SELECT booking_seat.id, booking_seat.booking_id, seat.seat_row AS seat_row, seat.seat_number AS seat_number 
-FROM booking_seat 
-INNER JOIN seat ON booking_seat.seat_id = seat.id
-WHERE booking_seat.booking_id = (SELECT id FROM booking WHERE user_id = $1)
+SELECT id, booking_id, seat_id, price_paid FROM booking_seat WHERE booking_id = $1
 `
 
-type ListBookingSeatRow struct {
-	ID         int32  `json:"id"`
-	BookingID  int32  `json:"booking_id"`
-	SeatRow    string `json:"seat_row"`
-	SeatNumber int32  `json:"seat_number"`
-}
-
-func (q *Queries) ListBookingSeat(ctx context.Context, userID int32) ([]ListBookingSeatRow, error) {
-	rows, err := q.db.Query(ctx, ListBookingSeat, userID)
+func (q *Queries) ListBookingSeat(ctx context.Context, bookingID int64) ([]BookingSeat, error) {
+	rows, err := q.db.Query(ctx, ListBookingSeat, bookingID)
 	if err != nil {
 		return nil, err
 	}
 	defer rows.Close()
-	items := []ListBookingSeatRow{}
+	items := []BookingSeat{}
 	for rows.Next() {
-		var i ListBookingSeatRow
+		var i BookingSeat
 		if err := rows.Scan(
 			&i.ID,
 			&i.BookingID,
-			&i.SeatRow,
-			&i.SeatNumber,
+			&i.SeatID,
+			&i.PricePaid,
 		); err != nil {
 			return nil, err
 		}

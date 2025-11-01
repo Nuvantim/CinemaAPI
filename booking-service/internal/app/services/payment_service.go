@@ -24,13 +24,13 @@ func CreatePayment(body model.CreatePaymentParams) (model.Payment, error) {
 	return data, nil
 }
 
-func ReportProfit() ([]model.ReportProfitRow, error) {
-	data, err := db.Queries.ReportProfit(ctx.Background())
-	if err != nil {
-		return []model.ReportProfitRow{}, db.Fatal(err)
-	}
-	return data, nil
-}
+// func ReportProfit() ([]model.ReportProfitRow, error) {
+// 	data, err := db.Queries.ReportProfit(ctx.Background())
+// 	if err != nil {
+// 		return []model.ReportProfitRow{}, db.Fatal(err)
+// 	}
+// 	return data, nil
+// }
 
 // result, err := db.Queries.UpdateBooking(ctx.Background(), body.BookingID)
 // 	if err != nil {

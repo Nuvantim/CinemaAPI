@@ -17,13 +17,13 @@ SELECT
     "Success" AS payment_status,
     b.total_amount AS transaction_amount,
     NOW() AS payment_time
-FROM booking b
-WHERE b.id = $1
+FROM booking
+WHERE booking.id = $1
 RETURNING id, booking_id, payment_method, payment_status, transaction_amount, payment_time
 `
 
 type CreatePaymentParams struct {
-	ID            int32  `json:"id"`
+	ID            int64  `json:"id"`
 	PaymentMethod string `json:"payment_method"`
 }
 
@@ -61,64 +61,6 @@ func (q *Queries) ListPayment(ctx context.Context, userID int32) ([]Payment, err
 			&i.PaymentStatus,
 			&i.TransactionAmount,
 			&i.PaymentTime,
-		); err != nil {
-			return nil, err
-		}
-		items = append(items, i)
-	}
-	if err := rows.Err(); err != nil {
-		return nil, err
-	}
-	return items, nil
-}
-
-const ReportProfit = `-- name: ReportProfit :many
-SELECT
-    F.title AS Film,
-    C.city AS Kota,
-    COUNT(B.id) AS Total_Tiket_Terjual,
-    SUM(P.transaction_amount) AS Total_Pendapatan
-FROM
-    booking B
-JOIN
-    payment P ON B.id = P.booking_id
-JOIN
-    showtime ST ON B.showtime_id = ST.id
-JOIN
-    film F ON ST.film_id = F.id
-JOIN
-    screen S ON ST.screen_id = S.id
-JOIN
-    cinema C ON S.cinema_id = C.id
-WHERE
-    P.payment_status = 'Success'
-GROUP BY
-    F.title, C.city
-ORDER BY
-    Total_Pendapatan DESC
-`
-
-type ReportProfitRow struct {
-	Film              string `json:"film"`
-	Kota              string `json:"kota"`
-	TotalTiketTerjual int64  `json:"total_tiket_terjual"`
-	TotalPendapatan   int64  `json:"total_pendapatan"`
-}
-
-func (q *Queries) ReportProfit(ctx context.Context) ([]ReportProfitRow, error) {
-	rows, err := q.db.Query(ctx, ReportProfit)
-	if err != nil {
-		return nil, err
-	}
-	defer rows.Close()
-	items := []ReportProfitRow{}
-	for rows.Next() {
-		var i ReportProfitRow
-		if err := rows.Scan(
-			&i.Film,
-			&i.Kota,
-			&i.TotalTiketTerjual,
-			&i.TotalPendapatan,
 		); err != nil {
 			return nil, err
 		}

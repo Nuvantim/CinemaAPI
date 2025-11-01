@@ -7,25 +7,21 @@ package repository
 
 import (
 	"context"
-
-	"github.com/jackc/pgx/v5/pgtype"
 )
 
 const CreateBooking = `-- name: CreateBooking :one
-INSERT INTO booking (user_id, showtime_id, total_amount)
-SELECT $1, $2, 0
-WHERE EXISTS (SELECT id FROM user_account WHERE id = $1)
-  AND EXISTS (SELECT id FROM showtime WHERE id = $2)
-RETURNING user_id
+INSERT INTO booking (id, user_id, showtime_id, total_amount)
+VALUES($1, $2, $3, 0) RETURNING user_id
 `
 
 type CreateBookingParams struct {
+	ID         int64 `json:"id"`
 	UserID     int32 `json:"user_id"`
 	ShowtimeID int32 `json:"showtime_id"`
 }
 
 func (q *Queries) CreateBooking(ctx context.Context, arg CreateBookingParams) (int32, error) {
-	row := q.db.QueryRow(ctx, CreateBooking, arg.UserID, arg.ShowtimeID)
+	row := q.db.QueryRow(ctx, CreateBooking, arg.ID, arg.UserID, arg.ShowtimeID)
 	var user_id int32
 	err := row.Scan(&user_id)
 	return user_id, err
@@ -41,43 +37,22 @@ func (q *Queries) DeleteBooking(ctx context.Context, id int32) error {
 }
 
 const ListBooking = `-- name: ListBooking :many
-SELECT
-    booking.id,
-    user_account.name AS user_name,
-    film.title AS film_name,
-    showtime.start_time,
-    booking.booking_time,
-    booking.total_amount
-FROM booking
-INNER JOIN user_account ON booking.user_id = user_account.id
-INNER JOIN showtime ON booking.showtime_id = showtime.id
-INNER JOIN film ON showtime.film_id = film.id
-WHERE user_id = $1
+SELECT id, user_id, showtime_id, booking_time, total_amount FROM booking WHERE user_id = $1
 `
 
-type ListBookingRow struct {
-	ID          int32              `json:"id"`
-	UserName    string             `json:"user_name"`
-	FilmName    string             `json:"film_name"`
-	StartTime   string             `json:"start_time"`
-	BookingTime pgtype.Timestamptz `json:"booking_time"`
-	TotalAmount pgtype.Float8      `json:"total_amount"`
-}
-
-func (q *Queries) ListBooking(ctx context.Context, userID int32) ([]ListBookingRow, error) {
+func (q *Queries) ListBooking(ctx context.Context, userID int32) ([]Booking, error) {
 	rows, err := q.db.Query(ctx, ListBooking, userID)
 	if err != nil {
 		return nil, err
 	}
 	defer rows.Close()
-	items := []ListBookingRow{}
+	items := []Booking{}
 	for rows.Next() {
-		var i ListBookingRow
+		var i Booking
 		if err := rows.Scan(
 			&i.ID,
-			&i.UserName,
-			&i.FilmName,
-			&i.StartTime,
+			&i.UserID,
+			&i.ShowtimeID,
 			&i.BookingTime,
 			&i.TotalAmount,
 		); err != nil {

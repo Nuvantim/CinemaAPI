@@ -1,124 +1,124 @@
 package handler
 
-import(
+import (
 	"github.com/gofiber/fiber/v2"
 
-	model"cinema/pkgs/monorepo"
+	"api/internal/app/service"
 	"api/pkgs/utils/responses"
 	"api/pkgs/utils/validates"
-	"api/internal/app/service"
+	model "cinema/pkgs/monorepo"
 )
 
-func ListScreenType(c *fiber.Ctx)error{
+func ListScreenType(c *fiber.Ctx) error {
 	// start service
-	data,err := service.ListScreenType()
-	if err != nil{
-		return c.Status(500).JSON(response.Error("list screen type",err.Error()))
+	data, err := service.ListScreenType()
+	if err != nil {
+		return c.Status(500).JSON(response.Error("list screen type", err.Error()))
 	}
 	// return json data
 	return c.Status(200).JSON(response.Pass("list screen type", data))
 }
 
-func GetScreenType(c *fiber.Ctx)error{
+func GetScreenType(c *fiber.Ctx) error {
 	// get params id
-	params,err := c.ParamsInt("id")
-	if err != nil{
+	params, err := c.ParamsInt("id")
+	if err != nil {
 		return c.Status(400).JSON(response.Error("get id", err.Error()))
 	}
 
 	// id validation
-	id,err := validate.ValID(params)
-	if err != nil{
-		return c.Status(400).JSON(response.Error("validation",err.Error()))
+	id, err := validate.ValID(params)
+	if err != nil {
+		return c.Status(400).JSON(response.Error("validation", err.Error()))
 	}
 
 	// start service
-	data,err := service.GetScreenType(id)
-	if err != nil{
+	data, err := service.GetScreenType(id)
+	if err != nil {
 		return c.Status(500).JSON(response.Error("get screen type", err.Error()))
 	}
 
 	// return json data
-	return c.Status(200).JSON(response.Pass("get screen type",data))
+	return c.Status(200).JSON(response.Pass("get screen type", data))
 }
-func CreateScreenType(c *fiber.Ctx)error{
+func CreateScreenType(c *fiber.Ctx) error {
 	// declared model
 	var screen_type model.ScreenType
 
 	// parser body data to json
-	if err := c.BodyParser(&screen_type);err != nil{
+	if err := c.BodyParser(&screen_type); err != nil {
 		return c.Status(400).JSON(response.Error("parser json", err.Error()))
 	}
 
 	// validate json
-	if err := validate.BodyStructs(screen_type);err != nil{
+	if err := validate.BodyStructs(screen_type); err != nil {
 		return c.Status(422).JSON(response.Error("validate data", err.Error()))
 	}
 
 	// start service
-	data,err := service.CreateScreenType(screen_type)
-	if err != nil{
-		return c.Status(500).JSON(response.Error("create screen type",err.Error()))
+	data, err := service.CreateScreenType(screen_type)
+	if err != nil {
+		return c.Status(500).JSON(response.Error("create screen type", err.Error()))
 	}
 
 	// returning json data
-	return c.Status(200).JSON(response.Pass("create screen type",data))
+	return c.Status(200).JSON(response.Pass("create screen type", data))
 }
-func UpdateScreenType(c *fiber.Ctx)error{
+func UpdateScreenType(c *fiber.Ctx) error {
 	// get params id
-	params,err := c.ParamsInt("id")
-	if err != nil{
-		return c.Status(400).JSON(response.Error("get id",err.Error()))
+	params, err := c.ParamsInt("id")
+	if err != nil {
+		return c.Status(400).JSON(response.Error("get id", err.Error()))
 	}
-	
+
 	// id validation
-	id,err := validate.ValID(params)
-	if err != nil{
-		return c.Status(400).JSON(response.Error("valdation",err.Error()))
+	id, err := validate.ValID(params)
+	if err != nil {
+		return c.Status(400).JSON(response.Error("valdation", err.Error()))
 	}
 
 	// declared model
 	var screen_type model.ScreenType
 
 	// parser body data to json
-	if err := c.BodyParser(&screen_type);err != nil{
-		return c.Status(400).JSON(response.Error("parser json",err.Error()))
+	if err := c.BodyParser(&screen_type); err != nil {
+		return c.Status(400).JSON(response.Error("parser json", err.Error()))
 	}
 	// add id to data
 	screen_type.ID = id
 
 	// validate json
-	if err := validate.BodyStructs(screen_type);err != nil{
+	if err := validate.BodyStructs(screen_type); err != nil {
 		return c.Status(422).JSON(response.Error("validate data", err.Error()))
 	}
 
 	// start service
-	data,err := service.UpdateScreenType(screen_type)
-	if err != nil{
-		return c.Status(500).JSON(response.Error("update screen type",err.Error()))
+	data, err := service.UpdateScreenType(screen_type)
+	if err != nil {
+		return c.Status(500).JSON(response.Error("update screen type", err.Error()))
 	}
 
 	// returning json data
-	return c.Status(200).JSON(response.Pass("update screen type",data))
+	return c.Status(200).JSON(response.Pass("update screen type", data))
 }
-func DeleteScreenType(c *fiber.Ctx)error{
+func DeleteScreenType(c *fiber.Ctx) error {
 	// get params id
-	params,err := c.ParamsInt("id")
-	if err != nil{
-		return c.Status(400).JSON(response.Error("get id",err.Error()))
+	params, err := c.ParamsInt("id")
+	if err != nil {
+		return c.Status(400).JSON(response.Error("get id", err.Error()))
 	}
 
 	// id validation
-	id,err := validate.ValID(params)
-	if err != nil{
-		return c.Status(400).JSON(response.Error("validation",err.Error()))
+	id, err := validate.ValID(params)
+	if err != nil {
+		return c.Status(400).JSON(response.Error("validation", err.Error()))
 	}
 
 	// start service
-	if err := service.DeleteScreenType(id);err != nil{
-		return c.Status(500).JSON(response.Error("delete screen type",err.Error()))
+	if err := service.DeleteScreenType(id); err != nil {
+		return c.Status(500).JSON(response.Error("delete screen type", err.Error()))
 	}
 
 	// return json data
-	return c.Status(200).JSON(response.Pass("delete screen type",struct{}{}))
+	return c.Status(200).JSON(response.Pass("delete screen type", struct{}{}))
 }

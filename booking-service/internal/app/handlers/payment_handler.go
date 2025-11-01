@@ -43,11 +43,11 @@ func CreatePayment(w http.ResponseWriter, r *http.Request) {
 	response.Success(w, data)
 }
 
-func ReportProfit(w http.ResponseWriter, r *http.Request) {
-	data, err := service.ReportProfit()
-	if err != nil {
-		response.Error(w, err)
-		return
-	}
-	response.Success(w, data)
-}
+// func ReportProfit(w http.ResponseWriter, r *http.Request) {
+// 	data, err := service.ReportProfit()
+// 	if err != nil {
+// 		response.Error(w, err)
+// 		return
+// 	}
+// 	response.Success(w, data)
+// }
