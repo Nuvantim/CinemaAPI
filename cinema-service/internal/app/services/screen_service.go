@@ -14,7 +14,7 @@ func ListScreen() ([]model.ListScreenRow, error) {
 	return data, nil
 }
 
-func GetScreen(id int32) (model.GetScreenRow, error) {
+func GetScreen(id int64) (model.GetScreenRow, error) {
 	data, err := db.Queries.GetScreen(ctx.Background(), id)
 	if err != nil {
 		return model.GetScreenRow{}, db.Fatal(err)
@@ -51,7 +51,7 @@ func UpdateScreen(body model.UpdateScreenParams) (model.GetScreenRow, error) {
 	return data, nil
 }
 
-func DeleteScreen(id int32) error {
+func DeleteScreen(id int64) error {
 	if err := db.Queries.DeleteScreen(ctx.Background(), id); err != nil {
 		return db.Fatal(err)
 	}

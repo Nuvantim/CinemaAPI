@@ -11,17 +11,12 @@ import (
 
 func GetPermission(c *fiber.Ctx) error {
 	// Get id
-	params, err := c.ParamsInt("id")
+	id, err := c.ParamsInt("id")
 	if err != nil {
 		return c.Status(400).JSON(response.Error("get id", err.Error()))
 	}
-	// ID Validation
-	id, err := validate.ValID(params)
-	if err != nil {
-		return c.Status(500).JSON(response.Error("validation", err.Error()))
-	}
 
-	permission, err := service.GetPermission(id)
+	permission, err := service.GetPermission(int64(id))
 	if err != nil {
 		return c.Status(500).JSON(response.Error("get permission", err.Error()))
 	}
@@ -59,20 +54,15 @@ func CreatePermission(c *fiber.Ctx) error {
 func UpdatePermission(c *fiber.Ctx) error {
 	var data model.UpdatePermissionParams
 	// Get id
-	params, err := c.ParamsInt("id")
+	id, err := c.ParamsInt("id")
 	if err != nil {
 		return c.Status(400).JSON(response.Error("get id", err.Error()))
-	}
-	// ID Validation
-	id, err := validate.ValID(params)
-	if err != nil {
-		return c.Status(500).JSON(response.Error("validation", err.Error()))
 	}
 
 	if err := c.BodyParser(&data); err != nil {
 		return c.Status(400).JSON(response.Error("parser json", err.Error()))
 	}
-	data.ID = id
+	data.ID = int64(id)
 
 	// validation data
 	if err := validate.BodyStructs(data); err != nil {
@@ -88,17 +78,12 @@ func UpdatePermission(c *fiber.Ctx) error {
 }
 func DeletePermission(c *fiber.Ctx) error {
 	// Get id
-	params, err := c.ParamsInt("id")
+	id, err := c.ParamsInt("id")
 	if err != nil {
 		return c.Status(400).JSON(response.Error("get id", err.Error()))
 	}
-	// ID Validation
-	id, err := validate.ValID(params)
-	if err != nil {
-		return c.Status(500).JSON(response.Error("validation", err.Error()))
-	}
 
-	message, err := service.DeletePermission(id)
+	message, err := service.DeletePermission(int64(id))
 	if err != nil {
 		return c.Status(500).JSON(response.Error("delete permission", err.Error()))
 	}

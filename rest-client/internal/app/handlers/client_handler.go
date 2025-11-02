@@ -10,16 +10,12 @@ import (
 
 func GetClient(c *fiber.Ctx) error {
 	// Get id
-	params, err := c.ParamsInt("id")
+	id, err := c.ParamsInt("id")
 	if err != nil {
 		return c.Status(400).JSON(response.Error("get id", err.Error()))
 	}
-	// ID Validation
-	id, err := validate.ValID(params)
-	if err != nil {
-		return c.Status(500).JSON(response.Error("validation", err.Error()))
-	}
-	client, err := service.GetClient(id)
+
+	client, err := service.GetClient(int64(id))
 	if err != nil {
 		return c.Status(500).JSON(response.Error("get client data", err.Error()))
 	}
@@ -36,15 +32,11 @@ func ListClient(c *fiber.Ctx) error {
 
 func UpdateClient(c *fiber.Ctx) error {
 	// Get id
-	params, err := c.ParamsInt("id")
+	id, err := c.ParamsInt("id")
 	if err != nil {
 		return c.Status(400).JSON(response.Error("get id", err.Error()))
 	}
-	// ID Validation
-	id, err := validate.ValID(params)
-	if err != nil {
-		return c.Status(500).JSON(response.Error("validation", err.Error()))
-	}
+
 	var data request.UpdateClient
 
 	if err := c.BodyParser(&data); err != nil {
@@ -55,7 +47,7 @@ func UpdateClient(c *fiber.Ctx) error {
 		return c.Status(422).JSON(response.Error("validation data", err.Error()))
 	}
 
-	client, err := service.UpdateClient(id, data)
+	client, err := service.UpdateClient(int64(id), data)
 	if err != nil {
 		return c.Status(500).JSON(response.Error("update client", err.Error()))
 	}
@@ -64,16 +56,12 @@ func UpdateClient(c *fiber.Ctx) error {
 
 func DeleteClient(c *fiber.Ctx) error {
 	// Get id
-	params, err := c.ParamsInt("id")
+	id, err := c.ParamsInt("id")
 	if err != nil {
 		return c.Status(400).JSON(response.Error("get id", err.Error()))
 	}
-	// ID Validation
-	id, err := validate.ValID(params)
-	if err != nil {
-		return c.Status(500).JSON(response.Error("validation", err.Error()))
-	}
-	message, err := service.DeleteClient(id)
+
+	message, err := service.DeleteClient(int64(id))
 	if err != nil {
 		return c.Status(500).JSON(response.Error("delete client", err.Error()))
 	}

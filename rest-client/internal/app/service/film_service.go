@@ -16,7 +16,7 @@ func ListFilm() ([]model.ListFilmRow, error) {
 	return data, nil
 }
 
-func GetFilm(id int32) (model.GetFilmRow, error) {
+func GetFilm(id int64) (model.GetFilmRow, error) {
 	url := fmt.Sprintf("/film/%d", id)
 
 	data, err := gateway.GetCinema[model.GetFilmRow](url)
@@ -35,7 +35,7 @@ func SearchFilm(body model.Film) ([]model.SearchFilmRow, error) {
 	return data, nil
 }
 
-func SearchFilmGenre(id int32) ([]model.SearchGenreFilmRow, error) {
+func SearchFilmGenre(id int64) ([]model.SearchGenreFilmRow, error) {
 	url := fmt.Sprintf("/film/genre/%d", id)
 	data, err := gateway.GetCinema[[]model.SearchGenreFilmRow](url)
 	if err != nil {
@@ -62,7 +62,7 @@ func UpdateFilm(body model.UpdateFilmParams) (model.GetFilmRow, error) {
 	return data, nil
 }
 
-func DeleteFilm(id int32) error {
+func DeleteFilm(id int64) error {
 	url := fmt.Sprintf("/film/delete/%d", id)
 	if err := gateway.DeleteCinema(url); err != nil {
 		return err

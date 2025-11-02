@@ -14,7 +14,7 @@ func ListFilm() ([]model.ListFilmRow, error) {
 	return data, nil
 }
 
-func GetFilm(id int32) (model.GetFilmRow, error) {
+func GetFilm(id int64) (model.GetFilmRow, error) {
 	data, err := db.Queries.GetFilm(ctx.Background(), id)
 	if err != nil {
 		return model.GetFilmRow{}, db.Fatal(err)
@@ -31,7 +31,7 @@ func SearchFilm(title string) ([]model.SearchFilmRow, error) {
 	return data, nil
 }
 
-func SearchFilmGenre(id int32) ([]model.SearchGenreFilmRow, error) {
+func SearchFilmGenre(id int64) ([]model.SearchGenreFilmRow, error) {
 	data, err := db.Queries.SearchGenreFilm(ctx.Background(), id)
 	if err != nil {
 		return []model.SearchGenreFilmRow{}, db.Fatal(err)
@@ -67,7 +67,7 @@ func UpdateFilm(body model.UpdateFilmParams) (model.GetFilmRow, error) {
 
 }
 
-func DeleteFilm(id int32) error {
+func DeleteFilm(id int64) error {
 	if err := db.Queries.DeleteFilm(ctx.Background(), id); err != nil {
 		return db.Fatal(err)
 	}

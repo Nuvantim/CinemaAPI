@@ -19,17 +19,12 @@ func ListFilm(c *fiber.Ctx) error {
 }
 
 func GetFilm(c *fiber.Ctx) error {
-	params, err := c.ParamsInt("id")
+	id, err := c.ParamsInt("id")
 	if err != nil {
 		return c.Status(400).JSON("get id", err.Error())
 	}
 
-	id, err := validate.ValID(params)
-	if err != nil {
-		return c.Status(500).JSON(response.Error("validation", err.Error()))
-	}
-
-	data, err := service.GetFilm(id)
+	data, err := service.GetFilm(int64(id))
 	if err != nil {
 		return c.Status(500).JSON(response.Error("get film", err.Error()))
 	}
@@ -57,17 +52,12 @@ func SearchFilm(c *fiber.Ctx) error {
 }
 
 func SearchFilmGenre(c *fiber.Ctx) error {
-	params, err := c.ParamsInt("id")
+	id, err := c.ParamsInt("id")
 	if err != nil {
 		return c.Status(400).JSON("get id", err.Error())
 	}
 
-	id, err := validate.ValID(params)
-	if err != nil {
-		return c.Status(500).JSON(response.Error("validation", err.Error()))
-	}
-
-	data, err := service.SearchFilmGenre(id)
+	data, err := service.SearchFilmGenre(int64(id))
 	if err != nil {
 		return c.Status(500).JSON(response.Error("search film genre", err.Error()))
 	}
@@ -95,14 +85,9 @@ func CreateFilm(c *fiber.Ctx) error {
 }
 
 func UpdateFilm(c *fiber.Ctx) error {
-	params, err := c.ParamsInt("id")
+	id, err := c.ParamsInt("id")
 	if err != nil {
 		return c.Status(400).JSON("get id", err.Error())
-	}
-
-	id, err := validate.ValID(params)
-	if err != nil {
-		return c.Status(500).JSON(response.Error("validation", err.Error()))
 	}
 
 	var film model.UpdateFilmParams
@@ -110,7 +95,7 @@ func UpdateFilm(c *fiber.Ctx) error {
 		return c.Status(400).JSON("parser json", err.Error())
 	}
 
-	film.ID = id
+	film.ID = int64(id)
 
 	if err := validate.BodyStructs(film); err != nil {
 		return c.Status(400).JSON("validate data", err.Error())
@@ -125,16 +110,12 @@ func UpdateFilm(c *fiber.Ctx) error {
 }
 
 func DeleteFilm(c *fiber.Ctx) error {
-	params, err := c.ParamsInt("id")
+	id, err := c.ParamsInt("id")
 	if err != nil {
 		return c.Status(400).JSON(response.Error("get id", err.Error()))
 	}
-	id, err := validate.ValID(params)
-	if err != nil {
-		return c.Status(500).JSON(response.Error("validation", err.Error()))
-	}
 
-	if err := service.DeleteFilm(id); err != nil {
+	if err := service.DeleteFilm(int64(id)); err != nil {
 		return c.Status(500).JSON(response.Error("delete film", err.Error()))
 	}
 

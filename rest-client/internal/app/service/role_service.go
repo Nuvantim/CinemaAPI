@@ -9,7 +9,7 @@ import (
 	"errors"
 )
 
-func GetRole(id int32) (req.GetRole, error) {
+func GetRole(id int64) (req.GetRole, error) {
 	role, err := db.Queries.GetRole(ctx.Background(), id)
 	if err != nil {
 		return req.GetRole{}, db.Fatal(err)
@@ -70,7 +70,7 @@ func CreateRole(data req.Role) ([]repo.ListRoleRow, error) {
 	return role, nil
 }
 
-func UpdateRole(data req.Role, id int32) (req.GetRole, error) {
+func UpdateRole(data req.Role, id int64) (req.GetRole, error) {
 	// Update Role
 	var role_data = repo.UpdateRoleParams{
 		ID:   id,
@@ -110,7 +110,7 @@ func UpdateRole(data req.Role, id int32) (req.GetRole, error) {
 	return roles, nil
 }
 
-func DeleteRole(id int32) (string, error) {
+func DeleteRole(id int64) (string, error) {
 	if err := db.Queries.DeleteRole(ctx.Background(), id); err != nil {
 		return "", db.Fatal(err)
 	}

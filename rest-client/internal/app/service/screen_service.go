@@ -17,7 +17,7 @@ func ListScreen() ([]model.ListScreenRow, error) {
 	return data, nil
 }
 
-func GetScreen(id int32) (model.GetScreenRow, error) {
+func GetScreen(id int64) (model.GetScreenRow, error) {
 	url := fmt.Sprintf("/screen/%d", id)
 
 	data, err := gateway.GetCinema[model.GetScreenRow](url)
@@ -47,7 +47,7 @@ func UpdateScreen(body model.UpdateScreenParams) (model.GetScreenRow, error) {
 	return data, nil
 }
 
-func DeleteScreen(id int32) error {
+func DeleteScreen(id int64) error {
 	url := fmt.Sprintf("/screen/delete/%d", id)
 	if err := gateway.DeleteCinema(url); err != nil {
 		return err

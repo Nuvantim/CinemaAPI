@@ -18,7 +18,7 @@ func ListSeat() ([]model.ListSeatRow, error) {
 	return data, nil
 }
 
-func GetSeat(id int32) (model.GetSeatRow, error) {
+func GetSeat(id int64) (model.GetSeatRow, error) {
 	url := fmt.Sprintf("/seat/%d", id)
 
 	data, err := gateway.GetCinema[model.GetSeatRow](url)
@@ -48,7 +48,7 @@ func UpdateSeat(body model.UpdateSeatParams) (model.GetSeatRow, error) {
 	return data, nil
 }
 
-func DeleteSeat(id int32) error {
+func DeleteSeat(id int64) error {
 	url := fmt.Sprintf("/seat/delete/%d", id)
 
 	if err := gateway.DeleteCinema(url); err != nil {

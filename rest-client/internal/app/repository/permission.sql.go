@@ -22,7 +22,7 @@ const DeletePermission = `-- name: DeletePermission :exec
 DELETE FROM permission WHERE id=$1
 `
 
-func (q *Queries) DeletePermission(ctx context.Context, id int32) error {
+func (q *Queries) DeletePermission(ctx context.Context, id int64) error {
 	_, err := q.db.Exec(ctx, DeletePermission, id)
 	return err
 }
@@ -32,11 +32,11 @@ SELECT id, name FROM permission WHERE id = $1
 `
 
 type GetPermissionRow struct {
-	ID   int32  `json:"id" validate:"required"`
+	ID   int64  `json:"id" validate:"required"`
 	Name string `json:"name" validate:"required"`
 }
 
-func (q *Queries) GetPermission(ctx context.Context, id int32) (GetPermissionRow, error) {
+func (q *Queries) GetPermission(ctx context.Context, id int64) (GetPermissionRow, error) {
 	row := q.db.QueryRow(ctx, GetPermission, id)
 	var i GetPermissionRow
 	err := row.Scan(&i.ID, &i.Name)
@@ -72,13 +72,13 @@ UPDATE permission SET name=$2 WHERE id=$1 RETURNING id
 `
 
 type UpdatePermissionParams struct {
-	ID   int32  `json:"id" validate:"required"`
+	ID   int64  `json:"id" validate:"required"`
 	Name string `json:"name" validate:"required"`
 }
 
-func (q *Queries) UpdatePermission(ctx context.Context, arg UpdatePermissionParams) (int32, error) {
+func (q *Queries) UpdatePermission(ctx context.Context, arg UpdatePermissionParams) (int64, error) {
 	row := q.db.QueryRow(ctx, UpdatePermission, arg.ID, arg.Name)
-	var id int32
+	var id int64
 	err := row.Scan(&id)
 	return id, err
 }
@@ -87,15 +87,15 @@ const VerifyPermission = `-- name: VerifyPermission :many
 SELECT DISTINCT id FROM permission WHERE id = ANY($1:: int[])
 `
 
-func (q *Queries) VerifyPermission(ctx context.Context, dollar_1 []int32) ([]int32, error) {
+func (q *Queries) VerifyPermission(ctx context.Context, dollar_1 []int64) ([]int64, error) {
 	rows, err := q.db.Query(ctx, VerifyPermission, dollar_1)
 	if err != nil {
 		return nil, err
 	}
 	defer rows.Close()
-	items := []int32{}
+	items := []int64{}
 	for rows.Next() {
-		var id int32
+		var id int64
 		if err := rows.Scan(&id); err != nil {
 			return nil, err
 		}

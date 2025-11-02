@@ -21,19 +21,13 @@ func ListScreen(c *fiber.Ctx) error {
 
 func GetScreen(c *fiber.Ctx) error {
 	// get params id
-	params, err := c.ParamsInt("id")
+	id, err := c.ParamsInt("id")
 	if err != nil {
 		return c.Status(400).JSON(response.Error("get id", err.Error()))
 	}
 
-	// id validation
-	id, err := validate.ValID(params)
-	if err != nil {
-		return c.Status(400).JSON(response.Error("validation", err.Error()))
-	}
-
 	// start service
-	data, err := service.GetScreen(id)
+	data, err := service.GetScreen(int64(id))
 	if err != nil {
 		return c.Status(500).JSON(response.Error("get screen", err.Error()))
 	}
@@ -66,15 +60,9 @@ func CreateScreen(c *fiber.Ctx) error {
 }
 func UpdateScreen(c *fiber.Ctx) error {
 	// get params id
-	params, err := c.ParamsInt("id")
+	id, err := c.ParamsInt("id")
 	if err != nil {
 		return c.Status(400).JSON(response.Error("get id", err.Error()))
-	}
-
-	// id validation
-	id, err := validate.ValID(params)
-	if err != nil {
-		return c.Status(400).JSON(response.Error("valdation", err.Error()))
 	}
 
 	// declared model
@@ -85,7 +73,7 @@ func UpdateScreen(c *fiber.Ctx) error {
 		return c.Status(400).JSON(response.Error("parser json", err.Error()))
 	}
 	// add id to data
-	screen.ID = id
+	screen.ID = int64(id)
 
 	// validate json
 	if err := validate.BodyStructs(screen); err != nil {
@@ -103,19 +91,13 @@ func UpdateScreen(c *fiber.Ctx) error {
 }
 func DeleteScreen(c *fiber.Ctx) error {
 	// get params id
-	params, err := c.ParamsInt("id")
+	id, err := c.ParamsInt("id")
 	if err != nil {
 		return c.Status(400).JSON(response.Error("get id", err.Error()))
 	}
 
-	// id validation
-	id, err := validate.ValID(params)
-	if err != nil {
-		return c.Status(400).JSON(response.Error("validation", err.Error()))
-	}
-
 	// start service
-	if err := service.DeleteScreen(id); err != nil {
+	if err := service.DeleteScreen(int64(id)); err != nil {
 		return c.Status(500).JSON(response.Error("delete screen", err.Error()))
 	}
 

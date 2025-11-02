@@ -9,7 +9,7 @@ import (
 )
 
 func GetProfile(c *fiber.Ctx) error {
-	var id = c.Locals("user_id").(int32)
+	var id = c.Locals("user_id").(int64)
 	if id == 0 {
 		return c.Status(401).JSON(response.Error("get user_id", "unauthorized"))
 	}
@@ -22,7 +22,7 @@ func GetProfile(c *fiber.Ctx) error {
 }
 
 func UpdateAccount(c *fiber.Ctx) error {
-	var id = c.Locals("user_id").(int32)
+	var id = c.Locals("user_id").(int64)
 	if id == 0 {
 		return c.Status(401).JSON(response.Error("get user_id", "unauthorized"))
 	}
@@ -45,7 +45,7 @@ func UpdateAccount(c *fiber.Ctx) error {
 }
 
 func DeleteAccount(c *fiber.Ctx) error {
-	var id = c.Locals("user_id").(int32)
+	var id = c.Locals("user_id").(int64)
 	if id == 0 {
 		return c.Status(401).JSON(response.Error("get user_id", "unauthorized"))
 	}

@@ -6,7 +6,7 @@ import (
 	ctx "context"
 )
 
-func ListPayment(user_id int32) ([]model.Payment, error) {
+func ListPayment(user_id int64) ([]model.Payment, error) {
 	data, err := db.Queries.ListPayment(ctx.Background(), user_id)
 	if err != nil {
 		return []model.Payment{}, db.Fatal(err)

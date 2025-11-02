@@ -16,7 +16,7 @@ INSERT INTO user_profile (user_id)
 VALUES ($1)
 `
 
-func (q *Queries) CreateProfile(ctx context.Context, userID int32) error {
+func (q *Queries) CreateProfile(ctx context.Context, userID int64) error {
 	_, err := q.db.Exec(ctx, CreateProfile, userID)
 	return err
 }
@@ -33,9 +33,9 @@ type CreateUserParams struct {
 	Password string `json:"password" validate:"required"`
 }
 
-func (q *Queries) CreateUser(ctx context.Context, arg CreateUserParams) (int32, error) {
+func (q *Queries) CreateUser(ctx context.Context, arg CreateUserParams) (int64, error) {
 	row := q.db.QueryRow(ctx, CreateUser, arg.Name, arg.Email, arg.Password)
-	var id int32
+	var id int64
 	err := row.Scan(&id)
 	return id, err
 }
@@ -44,7 +44,7 @@ const DeleteAccount = `-- name: DeleteAccount :exec
 DELETE FROM user_account WHERE id = $1
 `
 
-func (q *Queries) DeleteAccount(ctx context.Context, id int32) error {
+func (q *Queries) DeleteAccount(ctx context.Context, id int64) error {
 	_, err := q.db.Exec(ctx, DeleteAccount, id)
 	return err
 }
@@ -54,7 +54,7 @@ SELECT id, email,password FROM user_account WHERE email = $1
 `
 
 type FindEmailRow struct {
-	ID       int32  `json:"id" validate:"required"`
+	ID       int64  `json:"id" validate:"required"`
 	Email    string `json:"email" validate:"required"`
 	Password string `json:"password" validate:"required"`
 }
@@ -77,7 +77,7 @@ type GetProfileRow struct {
 	UserProfile UserProfile `json:"user_profile"`
 }
 
-func (q *Queries) GetProfile(ctx context.Context, id int32) (GetProfileRow, error) {
+func (q *Queries) GetProfile(ctx context.Context, id int64) (GetProfileRow, error) {
 	row := q.db.QueryRow(ctx, GetProfile, id)
 	var i GetProfileRow
 	err := row.Scan(
@@ -121,7 +121,7 @@ WHERE user_id = $1
 `
 
 type UpdateAccountParams struct {
-	UserID   int32       `json:"user_id" validate:"required"`
+	UserID   int64       `json:"user_id" validate:"required"`
 	Name     string      `json:"name" validate:"required"`
 	Age      pgtype.Int4 `json:"age" validate:"required"`
 	Phone    pgtype.Int4 `json:"phone" validate:"required"`
@@ -148,7 +148,7 @@ UPDATE user_account SET password=$2 WHERE id=$1
 `
 
 type UpdatePasswordParams struct {
-	ID       int32  `json:"id" validate:"required"`
+	ID       int64  `json:"id" validate:"required"`
 	Password string `json:"password" validate:"required"`
 }
 

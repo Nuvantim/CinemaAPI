@@ -9,7 +9,7 @@ import (
 	"errors"
 )
 
-func GetPermission(id int32) (repo.GetPermissionRow, error) {
+func GetPermission(id int64) (repo.GetPermissionRow, error) {
 	permission, err := db.Queries.GetPermission(ctx.Background(), id)
 	if err != nil {
 		return repo.GetPermissionRow{}, errors.New("permission not found")
@@ -46,7 +46,7 @@ func UpdatePermission(data repo.UpdatePermissionParams) (repo.GetPermissionRow, 
 	return permission, nil
 }
 
-func DeletePermission(id int32) (string, error) {
+func DeletePermission(id int64) (string, error) {
 	if err := db.Queries.DeletePermission(ctx.Background(), id); err != nil {
 		return "", db.Fatal(err)
 	}

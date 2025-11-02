@@ -17,7 +17,7 @@ func ListCinema() ([]model.Cinema, error) {
 	return data, nil
 }
 
-func GetCinema(id int32) (model.Cinema, error) {
+func GetCinema(id int64) (model.Cinema, error) {
 	url := fmt.Sprintf("/cinema/%d", id)
 
 	data, err := gateway.GetCinema[model.Cinema](url)
@@ -52,7 +52,7 @@ func UpdateCinema(body model.UpdateCinemaParams) (model.Cinema, error) {
 
 }
 
-func DeleteCinema(id int32) error {
+func DeleteCinema(id int64) error {
 	url := fmt.Sprintf("/cinema/delete/%d", id)
 
 	if err := gateway.DeleteCinema(url); err != nil {

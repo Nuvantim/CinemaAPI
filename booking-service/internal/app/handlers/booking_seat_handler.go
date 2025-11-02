@@ -10,7 +10,7 @@ import (
 )
 
 type ReqUserBooking struct {
-	UserID int32 `json:"user_id"`
+	UserID int64 `json:"user_id"`
 }
 
 func ListBookingSeat(w http.ResponseWriter, r *http.Request) {

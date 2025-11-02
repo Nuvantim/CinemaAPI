@@ -14,7 +14,7 @@ func ListCinema() ([]model.Cinema, error) {
 	return data, nil
 }
 
-func GetCinema(id int32) (model.Cinema, error) {
+func GetCinema(id int64) (model.Cinema, error) {
 	data, err := db.Queries.GetCinema(ctx.Background(), id)
 	if err != nil {
 		return model.Cinema{}, db.Fatal(err)
@@ -45,7 +45,7 @@ func UpdateCinema(body model.UpdateCinemaParams) (model.Cinema, error) {
 
 }
 
-func DeleteCinema(id int32) error {
+func DeleteCinema(id int64) error {
 	if err := db.Queries.DeleteCinema(ctx.Background(), id); err != nil {
 		return db.Fatal(err)
 	}

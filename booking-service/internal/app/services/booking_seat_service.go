@@ -32,7 +32,7 @@ func CreateBookingSeat(body model.CreateBookingSeatParams) ([]model.BookingSeat,
 	return data, nil
 }
 
-func DeleteBookingSeat(id int32) error {
+func DeleteBookingSeat(id int64) error {
 	if err := db.Queries.DeleteBookingSeat(ctx.Background(), id); err != nil {
 		return db.Fatal(err)
 	}

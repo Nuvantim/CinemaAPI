@@ -27,16 +27,12 @@ func CreateRole(c *fiber.Ctx) error {
 }
 func GetRole(c *fiber.Ctx) error {
 	// Get id
-	params, err := c.ParamsInt("id")
+	id, err := c.ParamsInt("id")
 	if err != nil {
 		return c.Status(400).JSON(response.Error("get id", err.Error()))
 	}
-	// ID Validation
-	id, err := validate.ValID(params)
-	if err != nil {
-		return c.Status(500).JSON(response.Error("validation", err.Error()))
-	}
-	role, err := service.GetRole(id)
+
+	role, err := service.GetRole(int64(id))
 	if err != nil {
 		return c.Status(500).JSON(response.Error("get role", err.Error()))
 	}
@@ -52,16 +48,12 @@ func ListRole(c *fiber.Ctx) error {
 func UpdateRole(c *fiber.Ctx) error {
 	var data request.Role
 	// Get id
-	params, err := c.ParamsInt("id")
+	id, err := c.ParamsInt("id")
 	if err != nil {
 		return c.Status(400).JSON(response.Error("get id", err.Error()))
 	}
-	// ID Validation
-	id, err := validate.ValID(params)
-	if err != nil {
-		return c.Status(500).JSON(response.Error("validation", err.Error()))
-	}
-	//
+
+	// parser json
 	if err := c.BodyParser(&data); err != nil {
 		return c.Status(400).JSON(response.Error("parser json", err.Error()))
 	}
@@ -70,7 +62,7 @@ func UpdateRole(c *fiber.Ctx) error {
 		return c.Status(422).JSON(response.Error("validation data", err.Error()))
 	}
 
-	role, err := service.UpdateRole(data, id)
+	role, err := service.UpdateRole(data, int64(id))
 	if err != nil {
 		return c.Status(500).JSON(response.Error("update password", err.Error()))
 	}
@@ -80,16 +72,12 @@ func UpdateRole(c *fiber.Ctx) error {
 }
 func DeleteRole(c *fiber.Ctx) error {
 	// Get id
-	params, err := c.ParamsInt("id")
+	id, err := c.ParamsInt("id")
 	if err != nil {
 		return c.Status(400).JSON(response.Error("get id", err.Error()))
 	}
-	// ID Validation
-	id, err := validate.ValID(params)
-	if err != nil {
-		return c.Status(500).JSON(response.Error("validation", err.Error()))
-	}
-	msg, err := service.DeleteRole(id)
+
+	msg, err := service.DeleteRole(int64(id))
 	if err != nil {
 		return c.Status(500).JSON(response.Error("delete role", err.Error()))
 	}

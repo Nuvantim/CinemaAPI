@@ -15,8 +15,8 @@ unnested_permission_id FROM UNNEST($2::int[]) AS unnested_permission_id
 `
 
 type AddPermissionRoleParams struct {
-	IDRole  int32   `json:"id_role"`
-	Column2 []int32 `json:"column_2"`
+	IDRole  int64   `json:"id_role"`
+	Column2 []int64 `json:"column_2"`
 }
 
 func (q *Queries) AddPermissionRole(ctx context.Context, arg AddPermissionRoleParams) error {
@@ -28,9 +28,9 @@ const CreateRole = `-- name: CreateRole :one
 INSERT INTO role (name) VALUES ($1) RETURNING id
 `
 
-func (q *Queries) CreateRole(ctx context.Context, name string) (int32, error) {
+func (q *Queries) CreateRole(ctx context.Context, name string) (int64, error) {
 	row := q.db.QueryRow(ctx, CreateRole, name)
-	var id int32
+	var id int64
 	err := row.Scan(&id)
 	return id, err
 }
@@ -39,7 +39,7 @@ const DeletePermissionRole = `-- name: DeletePermissionRole :exec
 DELETE FROM role_permission WHERE id_role = $1
 `
 
-func (q *Queries) DeletePermissionRole(ctx context.Context, idRole int32) error {
+func (q *Queries) DeletePermissionRole(ctx context.Context, idRole int64) error {
 	_, err := q.db.Exec(ctx, DeletePermissionRole, idRole)
 	return err
 }
@@ -48,7 +48,7 @@ const DeleteRole = `-- name: DeleteRole :exec
 DELETE FROM role WHERE id = $1
 `
 
-func (q *Queries) DeleteRole(ctx context.Context, id int32) error {
+func (q *Queries) DeleteRole(ctx context.Context, id int64) error {
 	_, err := q.db.Exec(ctx, DeleteRole, id)
 	return err
 }
@@ -58,11 +58,11 @@ SELECT id,name FROM permission WHERE id IN (SELECT id_permission FROM role_permi
 `
 
 type GetPermissionRoleRow struct {
-	ID   int32  `json:"id" validate:"required"`
+	ID   int64  `json:"id" validate:"required"`
 	Name string `json:"name" validate:"required"`
 }
 
-func (q *Queries) GetPermissionRole(ctx context.Context, idRole int32) ([]GetPermissionRoleRow, error) {
+func (q *Queries) GetPermissionRole(ctx context.Context, idRole int64) ([]GetPermissionRoleRow, error) {
 	rows, err := q.db.Query(ctx, GetPermissionRole, idRole)
 	if err != nil {
 		return nil, err
@@ -87,11 +87,11 @@ SELECT id,name FROM role WHERE id = $1
 `
 
 type GetRoleRow struct {
-	ID   int32  `json:"id"`
+	ID   int64  `json:"id"`
 	Name string `json:"name"`
 }
 
-func (q *Queries) GetRole(ctx context.Context, id int32) (GetRoleRow, error) {
+func (q *Queries) GetRole(ctx context.Context, id int64) (GetRoleRow, error) {
 	row := q.db.QueryRow(ctx, GetRole, id)
 	var i GetRoleRow
 	err := row.Scan(&i.ID, &i.Name)
@@ -121,10 +121,10 @@ ORDER BY
 type ListPermissionRoleRow struct {
 	RoleName       interface{} `json:"role_name"`
 	PermissionName string      `json:"permission_name" validate:"required"`
-	PermissionID   int32       `json:"permission_id" validate:"required"`
+	PermissionID   int64       `json:"permission_id" validate:"required"`
 }
 
-func (q *Queries) ListPermissionRole(ctx context.Context, dollar_1 []int32) ([]ListPermissionRoleRow, error) {
+func (q *Queries) ListPermissionRole(ctx context.Context, dollar_1 []int64) ([]ListPermissionRoleRow, error) {
 	rows, err := q.db.Query(ctx, ListPermissionRole, dollar_1)
 	if err != nil {
 		return nil, err
@@ -162,7 +162,7 @@ ORDER BY
 `
 
 type ListRoleRow struct {
-	ID          int32       `json:"id"`
+	ID          int64       `json:"id"`
 	Name        string      `json:"name"`
 	Permissions interface{} `json:"permissions"`
 }
@@ -197,8 +197,8 @@ SELECT $1,UNNEST($2::int[])
 `
 
 type UpdatePermissionRoleParams struct {
-	IDRole  int32   `json:"id_role"`
-	Column2 []int32 `json:"column_2"`
+	IDRole  int64   `json:"id_role"`
+	Column2 []int64 `json:"column_2"`
 }
 
 func (q *Queries) UpdatePermissionRole(ctx context.Context, arg UpdatePermissionRoleParams) error {
@@ -211,7 +211,7 @@ UPDATE role SET name = $2 WHERE id = $1
 `
 
 type UpdateRoleParams struct {
-	ID   int32  `json:"id"`
+	ID   int64  `json:"id"`
 	Name string `json:"name"`
 }
 
@@ -224,15 +224,15 @@ const VerifyRole = `-- name: VerifyRole :many
 SELECT DISTINCT id FROM role WHERE id = ANY($1:: int[])
 `
 
-func (q *Queries) VerifyRole(ctx context.Context, dollar_1 []int32) ([]int32, error) {
+func (q *Queries) VerifyRole(ctx context.Context, dollar_1 []int64) ([]int64, error) {
 	rows, err := q.db.Query(ctx, VerifyRole, dollar_1)
 	if err != nil {
 		return nil, err
 	}
 	defer rows.Close()
-	items := []int32{}
+	items := []int64{}
 	for rows.Next() {
-		var id int32
+		var id int64
 		if err := rows.Scan(&id); err != nil {
 			return nil, err
 		}

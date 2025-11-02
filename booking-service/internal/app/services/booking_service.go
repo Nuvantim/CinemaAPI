@@ -10,7 +10,7 @@ import (
 	"log"
 )
 
-func ListBooking(id int32) ([]model.Booking, error) {
+func ListBooking(id int64) ([]model.Booking, error) {
 	data, err := db.Queries.ListBooking(ctx.Background(), id)
 	if err != nil {
 		return []model.Booking{}, db.Fatal(err)
@@ -36,7 +36,7 @@ func CreateBooking(body model.CreateBookingParams) ([]model.Booking, error) {
 	return data, nil
 }
 
-func DeleteBooking(id int32) error {
+func DeleteBooking(id int64) error {
 	if err := db.Queries.DeleteBooking(ctx.Background(), id); err != nil {
 		return db.Fatal(err)
 	}

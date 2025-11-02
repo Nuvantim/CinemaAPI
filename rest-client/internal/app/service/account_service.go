@@ -11,7 +11,7 @@ import (
 	str "strings"
 )
 
-func GetProfile(userID int32) (repo.GetProfileRow, error) {
+func GetProfile(userID int64) (repo.GetProfileRow, error) {
 	data, err := db.Queries.GetProfile(ctx.Background(), userID)
 	if err != nil {
 		return repo.GetProfileRow{}, errors.New("account not found")
@@ -22,7 +22,7 @@ func GetProfile(userID int32) (repo.GetProfileRow, error) {
 	return data, nil
 }
 
-func UpdateAccount(user req.UpdateAccount, userIDs int32) (repo.GetProfileRow, error) {
+func UpdateAccount(user req.UpdateAccount, userIDs int64) (repo.GetProfileRow, error) {
 	// Define update profile
 	var updateAccount = repo.UpdateAccountParams{
 		UserID:   userIDs,
@@ -73,7 +73,7 @@ func UpdateAccount(user req.UpdateAccount, userIDs int32) (repo.GetProfileRow, e
 	return usr, nil
 }
 
-func DeleteAccount(userID int32) (string, error) {
+func DeleteAccount(userID int64) (string, error) {
 	if err := db.Queries.DeleteAccount(ctx.Background(), userID); err != nil {
 		return "", db.Fatal(err)
 	}

@@ -18,7 +18,7 @@ func ListShowTime() ([]model.ListShowTimeRow, error) {
 	return data, nil
 }
 
-func GetShowTime(id int32) (model.GetShowTimeRow, error) {
+func GetShowTime(id int64) (model.GetShowTimeRow, error) {
 	url := fmt.Sprintf("/showtime/%d", id)
 
 	data, err := gateway.GetCinema[model.GetShowTimeRow](url)
@@ -50,7 +50,7 @@ func UpdateShowTime(body model.UpdateShowTimeParams) (model.GetShowTimeRow, erro
 	return data, nil
 }
 
-func DeleteShowTime(id int32) error {
+func DeleteShowTime(id int64) error {
 	url := fmt.Sprintf("/showtime/delete/%d", id)
 
 	if err := gateway.DeleteCinema(url); err != nil {

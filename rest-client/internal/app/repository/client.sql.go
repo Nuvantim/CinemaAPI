@@ -39,12 +39,12 @@ ORDER BY
 `
 
 type AllRoleClientRow struct {
-	ID          int32       `json:"id"`
+	ID          int64       `json:"id"`
 	Name        string      `json:"name"`
 	Permissions interface{} `json:"permissions"`
 }
 
-func (q *Queries) AllRoleClient(ctx context.Context, idUser int32) ([]AllRoleClientRow, error) {
+func (q *Queries) AllRoleClient(ctx context.Context, idUser int64) ([]AllRoleClientRow, error) {
 	rows, err := q.db.Query(ctx, AllRoleClient, idUser)
 	if err != nil {
 		return nil, err
@@ -70,8 +70,8 @@ unnested_role_id FROM UNNEST($2::int[]) AS unnested_role_id
 `
 
 type CreateRoleClientParams struct {
-	IDUser  int32   `json:"id_user"`
-	Column2 []int32 `json:"column_2"`
+	IDUser  int64   `json:"id_user"`
+	Column2 []int64 `json:"column_2"`
 }
 
 func (q *Queries) CreateRoleClient(ctx context.Context, arg CreateRoleClientParams) error {
@@ -83,7 +83,7 @@ const DeleteClient = `-- name: DeleteClient :exec
 DELETE FROM user_account WHERE id = $1
 `
 
-func (q *Queries) DeleteClient(ctx context.Context, id int32) error {
+func (q *Queries) DeleteClient(ctx context.Context, id int64) error {
 	_, err := q.db.Exec(ctx, DeleteClient, id)
 	return err
 }
@@ -92,7 +92,7 @@ const DeleteRoleClient = `-- name: DeleteRoleClient :exec
 DELETE FROM user_role WHERE id_user = $1
 `
 
-func (q *Queries) DeleteRoleClient(ctx context.Context, idUser int32) error {
+func (q *Queries) DeleteRoleClient(ctx context.Context, idUser int64) error {
 	_, err := q.db.Exec(ctx, DeleteRoleClient, idUser)
 	return err
 }
@@ -102,12 +102,12 @@ SELECT id,name,email FROM user_account WHERE id = $1
 `
 
 type GetClientRow struct {
-	ID    int32  `json:"id" validate:"required"`
+	ID    int64  `json:"id" validate:"required"`
 	Name  string `json:"name" validate:"required"`
 	Email string `json:"email" validate:"required"`
 }
 
-func (q *Queries) GetClient(ctx context.Context, id int32) (GetClientRow, error) {
+func (q *Queries) GetClient(ctx context.Context, id int64) (GetClientRow, error) {
 	row := q.db.QueryRow(ctx, GetClient, id)
 	var i GetClientRow
 	err := row.Scan(&i.ID, &i.Name, &i.Email)
@@ -119,11 +119,11 @@ SELECT id,name FROM role WHERE id IN (SELECT id_role FROM user_role WHERE id_use
 `
 
 type GetRoleClientRow struct {
-	ID   int32  `json:"id"`
+	ID   int64  `json:"id"`
 	Name string `json:"name"`
 }
 
-func (q *Queries) GetRoleClient(ctx context.Context, idUser int32) ([]GetRoleClientRow, error) {
+func (q *Queries) GetRoleClient(ctx context.Context, idUser int64) ([]GetRoleClientRow, error) {
 	rows, err := q.db.Query(ctx, GetRoleClient, idUser)
 	if err != nil {
 		return nil, err
@@ -162,7 +162,7 @@ ORDER BY
 `
 
 type ListClientRow struct {
-	ID    int32       `json:"id" validate:"required"`
+	ID    int64       `json:"id" validate:"required"`
 	Name  string      `json:"name" validate:"required"`
 	Email string      `json:"email" validate:"required"`
 	Role  interface{} `json:"role"`
@@ -202,7 +202,7 @@ WHERE id = $1
 `
 
 type UpdateClientParams struct {
-	ID      int32  `json:"id" validate:"required"`
+	ID      int64  `json:"id" validate:"required"`
 	Name    string `json:"name" validate:"required"`
 	Column3 string `json:"column_3"`
 	Column4 string `json:"column_4"`
@@ -228,8 +228,8 @@ SELECT $1, UNNEST($2::int[])
 `
 
 type UpdateRoleClientParams struct {
-	IDUser  int32   `json:"id_user"`
-	Column2 []int32 `json:"column_2"`
+	IDUser  int64   `json:"id_user"`
+	Column2 []int64 `json:"column_2"`
 }
 
 func (q *Queries) UpdateRoleClient(ctx context.Context, arg UpdateRoleClientParams) error {

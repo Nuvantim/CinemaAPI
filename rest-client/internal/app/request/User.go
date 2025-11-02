@@ -16,5 +16,5 @@ type UpdateClient struct {
 	Name     string  `validate:"required,min=2" json:"name"`
 	Email    string  `validate:"omitempty,email" json:"email"`
 	Password string  `validate:"omitempty,min=8" json:"password"`
-	Role     []int32 `validate:"omitempty,dive,gt=0" json:"role_id"`
+	Role     []int64 `validate:"omitempty,dive,gt=0" json:"role_id"`
 }

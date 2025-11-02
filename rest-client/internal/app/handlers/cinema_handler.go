@@ -21,19 +21,13 @@ func ListCinema(c *fiber.Ctx) error {
 
 func GetCinema(c *fiber.Ctx) error {
 	// get params id
-	params, err := c.ParamsInt("id")
+	id, err := c.ParamsInt("id")
 	if err != nil {
 		return c.Status(400).JSON(response.Error("get id", err.Error()))
 	}
 
-	// id validation
-	id, err := validate.ValID(params)
-	if err != nil {
-		return c.Status(400).JSON(response.Error("validation", err.Error()))
-	}
-
 	// start service
-	data, err := service.GetCinema(id)
+	data, err := service.GetCinema(int64(id))
 	if err != nil {
 		return c.Status(500).JSON(response.Error("get cinema", err.Error()))
 	}
@@ -66,15 +60,9 @@ func CreateCinema(c *fiber.Ctx) error {
 }
 func UpdateCinema(c *fiber.Ctx) error {
 	// get params id
-	params, err := c.ParamsInt("id")
+	id, err := c.ParamsInt("id")
 	if err != nil {
 		return c.Status(400).JSON(response.Error("get id", err.Error()))
-	}
-
-	// id validation
-	id, err := validate.ValID(params)
-	if err != nil {
-		return c.Status(400).JSON(response.Error("valdation", err.Error()))
 	}
 
 	// declared model
@@ -85,7 +73,7 @@ func UpdateCinema(c *fiber.Ctx) error {
 		return c.Status(400).JSON(response.Error("parser json", err.Error()))
 	}
 	// add id to data
-	cinema.ID = id
+	cinema.ID = int64(id)
 
 	// validate json
 	if err := validate.BodyStructs(cinema); err != nil {
@@ -103,19 +91,13 @@ func UpdateCinema(c *fiber.Ctx) error {
 }
 func DeleteCinema(c *fiber.Ctx) error {
 	// get params id
-	params, err := c.ParamsInt("id")
+	id, err := c.ParamsInt("id")
 	if err != nil {
 		return c.Status(400).JSON(response.Error("get id", err.Error()))
 	}
 
-	// id validation
-	id, err := validate.ValID(params)
-	if err != nil {
-		return c.Status(400).JSON(response.Error("validation", err.Error()))
-	}
-
 	// start service
-	if err := service.DeleteCinema(id); err != nil {
+	if err := service.DeleteCinema(int64(id)); err != nil {
 		return c.Status(500).JSON(response.Error("delete cinema", err.Error()))
 	}
 

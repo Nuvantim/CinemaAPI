@@ -21,19 +21,13 @@ func ListScreenType(c *fiber.Ctx) error {
 
 func GetScreenType(c *fiber.Ctx) error {
 	// get params id
-	params, err := c.ParamsInt("id")
+	id, err := c.ParamsInt("id")
 	if err != nil {
 		return c.Status(400).JSON(response.Error("get id", err.Error()))
 	}
 
-	// id validation
-	id, err := validate.ValID(params)
-	if err != nil {
-		return c.Status(400).JSON(response.Error("validation", err.Error()))
-	}
-
 	// start service
-	data, err := service.GetScreenType(id)
+	data, err := service.GetScreenType(int64(id))
 	if err != nil {
 		return c.Status(500).JSON(response.Error("get screen type", err.Error()))
 	}
@@ -66,15 +60,9 @@ func CreateScreenType(c *fiber.Ctx) error {
 }
 func UpdateScreenType(c *fiber.Ctx) error {
 	// get params id
-	params, err := c.ParamsInt("id")
+	id, err := c.ParamsInt("id")
 	if err != nil {
 		return c.Status(400).JSON(response.Error("get id", err.Error()))
-	}
-
-	// id validation
-	id, err := validate.ValID(params)
-	if err != nil {
-		return c.Status(400).JSON(response.Error("valdation", err.Error()))
 	}
 
 	// declared model
@@ -85,7 +73,7 @@ func UpdateScreenType(c *fiber.Ctx) error {
 		return c.Status(400).JSON(response.Error("parser json", err.Error()))
 	}
 	// add id to data
-	screen_type.ID = id
+	screen_type.ID = int64(id)
 
 	// validate json
 	if err := validate.BodyStructs(screen_type); err != nil {
@@ -103,19 +91,13 @@ func UpdateScreenType(c *fiber.Ctx) error {
 }
 func DeleteScreenType(c *fiber.Ctx) error {
 	// get params id
-	params, err := c.ParamsInt("id")
+	id, err := c.ParamsInt("id")
 	if err != nil {
 		return c.Status(400).JSON(response.Error("get id", err.Error()))
 	}
 
-	// id validation
-	id, err := validate.ValID(params)
-	if err != nil {
-		return c.Status(400).JSON(response.Error("validation", err.Error()))
-	}
-
 	// start service
-	if err := service.DeleteScreenType(id); err != nil {
+	if err := service.DeleteScreenType(int64(id)); err != nil {
 		return c.Status(500).JSON(response.Error("delete screen type", err.Error()))
 	}
 

@@ -18,7 +18,7 @@ func ListClient() ([]repo.ListClientRow, error) {
 	return data, nil
 }
 
-func GetClient(id int32) (req.GetClient, error) {
+func GetClient(id int64) (req.GetClient, error) {
 	client, err := db.Queries.GetClient(ctx.Background(), id)
 	if err != nil {
 		return req.GetClient{}, db.Fatal(err)
@@ -36,7 +36,7 @@ func GetClient(id int32) (req.GetClient, error) {
 	return data, nil
 }
 
-func UpdateClient(Id int32, client req.UpdateClient) (req.GetClient, error) {
+func UpdateClient(Id int64, client req.UpdateClient) (req.GetClient, error) {
 	var update_data = repo.UpdateClientParams{
 		ID:      Id,
 		Name:    client.Name,
@@ -83,7 +83,7 @@ func UpdateClient(Id int32, client req.UpdateClient) (req.GetClient, error) {
 
 }
 
-func DeleteClient(id int32) (string, error) {
+func DeleteClient(id int64) (string, error) {
 	if err := db.Queries.DeleteClient(ctx.Background(), id); err != nil {
 		return "", db.Fatal(err)
 	}

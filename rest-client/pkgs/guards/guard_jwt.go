@@ -22,7 +22,7 @@ var (
 
 // Claims mendefinisikan struktur untuk token JWT
 type Claims struct {
-	UserID int32                   `json:"user_id"`
+	UserID int64                   `json:"user_id"`
 	Email  string                  `json:"email"`
 	Roles  []repo.AllRoleClientRow `json:"roles,omitempty"`
 	jwt.RegisteredClaims
@@ -30,7 +30,7 @@ type Claims struct {
 
 // RefreshClaims mendefinisikan struktur untuk refresh token
 type RefreshClaims struct {
-	UserID int32  `json:"user_id"`
+	UserID int64  `json:"user_id"`
 	Email  string `json:"email"`
 	jwt.RegisteredClaims
 }
@@ -106,7 +106,7 @@ func CheckRSA() {
 }
 
 // CreateToken membuat access token
-func CreateToken(id int32, email string, role []repo.AllRoleClientRow) (string, error) {
+func CreateToken(id int64, email string, role []repo.AllRoleClientRow) (string, error) {
 	if PrivateKey == nil {
 		return "", errors.New("private key is nil")
 	}
@@ -127,7 +127,7 @@ func CreateToken(id int32, email string, role []repo.AllRoleClientRow) (string, 
 }
 
 // CreateRefreshToken membuat refresh token
-func CreateRefreshToken(id int32, email string) (string, error) {
+func CreateRefreshToken(id int64, email string) (string, error) {
 	if PrivateKey == nil {
 		return "", errors.New("private key is nil")
 	}
@@ -147,7 +147,7 @@ func CreateRefreshToken(id int32, email string) (string, error) {
 }
 
 // AutoRefreshToken memperbarui token secara otomatis
-func AutoRefreshToken(userID int32) (string, error) {
+func AutoRefreshToken(userID int64) (string, error) {
 	user, err := db.Queries.GetClient(context.Background(), userID)
 	if err != nil {
 		return "", err

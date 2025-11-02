@@ -14,7 +14,7 @@ func ListGenre() ([]model.Genre, error) {
 	return genre, nil
 }
 
-func GetGenre(id int32) (model.Genre, error) {
+func GetGenre(id int64) (model.Genre, error) {
 	genre, err := db.Queries.GetGenre(ctx.Background(), id)
 	if err != nil {
 		return model.Genre{}, db.Fatal(err)
@@ -44,7 +44,7 @@ func UpdateGenre(body model.UpdateGenreParams) (model.Genre, error) {
 	return data, nil
 }
 
-func DeleteGenre(id int32) error {
+func DeleteGenre(id int64) error {
 	if err := db.Queries.DeleteGenre(ctx.Background(), id); err != nil {
 		return db.Fatal(err)
 	}

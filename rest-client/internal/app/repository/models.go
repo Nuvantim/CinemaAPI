@@ -11,13 +11,13 @@ import (
 )
 
 type Permission struct {
-	ID        int32     `json:"id" validate:"required"`
+	ID        int64     `json:"id" validate:"required"`
 	Name      string    `json:"name" validate:"required"`
 	CreatedAt time.Time `json:"created_at" validate:"required"`
 }
 
 type UserAccount struct {
-	ID        int32     `json:"id" validate:"required"`
+	ID        int64     `json:"id" validate:"required"`
 	Name      string    `json:"name" validate:"required"`
 	Email     string    `json:"email" validate:"required"`
 	Password  string    `json:"password" validate:"required"`
@@ -25,8 +25,8 @@ type UserAccount struct {
 }
 
 type UserProfile struct {
-	ID        int32       `json:"id" validate:"required"`
-	UserID    int32       `json:"user_id" validate:"required"`
+	ID        int64       `json:"id" validate:"required"`
+	UserID    int64       `json:"user_id" validate:"required"`
 	Age       pgtype.Int4 `json:"age" validate:"required"`
 	Phone     pgtype.Int4 `json:"phone" validate:"required"`
 	District  pgtype.Text `json:"district" validate:"required"`

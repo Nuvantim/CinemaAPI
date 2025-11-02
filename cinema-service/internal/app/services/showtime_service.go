@@ -14,7 +14,7 @@ func ListShowTime() ([]model.ListShowTimeRow, error) {
 	return data, nil
 }
 
-func GetShowTime(id int32) (model.GetShowTimeRow, error) {
+func GetShowTime(id int64) (model.GetShowTimeRow, error) {
 	data, err := db.Queries.GetShowTime(ctx.Background(), id)
 	if err != nil {
 		return model.GetShowTimeRow{}, db.Fatal(err)
@@ -50,7 +50,7 @@ func UpdateShowTime(body model.UpdateShowTimeParams) (model.GetShowTimeRow, erro
 	return data, nil
 }
 
-func DeleteShowTime(id int32) error {
+func DeleteShowTime(id int64) error {
 	if err := db.Queries.DeleteShowTime(ctx.Background(), id); err != nil {
 		return db.Fatal(err)
 	}

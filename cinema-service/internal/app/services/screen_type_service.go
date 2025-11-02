@@ -15,7 +15,7 @@ func ListScreenType() ([]model.ScreenType, error) {
 	return data, nil
 }
 
-func GetScreenType(id int32) (model.ScreenType, error) {
+func GetScreenType(id int64) (model.ScreenType, error) {
 	data, err := db.Queries.GetScreenType(ctx.Background(), id)
 	if err != nil {
 		return model.ScreenType{}, db.Fatal(err)
@@ -52,7 +52,7 @@ func UpdateScreenType(body model.UpdateScreenTypeParams) (model.ScreenType, erro
 	return data, nil
 }
 
-func DeleteScreenType(id int32) error {
+func DeleteScreenType(id int64) error {
 	if err := db.Queries.DeleteScreenType(ctx.Background(), id); err != nil {
 		return db.Fatal(err)
 	}

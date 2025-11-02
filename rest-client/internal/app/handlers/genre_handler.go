@@ -19,17 +19,12 @@ func ListGenre(c *fiber.Ctx) error {
 }
 
 func GetGenre(c *fiber.Ctx) error {
-	params, err := c.ParamsInt("id")
+	id, err := c.ParamsInt("id")
 	if err != nil {
 		return c.Status(400).JSON("get id", err.Error())
 	}
 
-	id, err := validate.ValID(params)
-	if err != nil {
-		return c.Status(500).JSON(response.Error("validation", err.Error()))
-	}
-
-	data, err := service.GetGenre(id)
+	data, err := service.GetGenre(int64(id))
 	if err != nil {
 		return c.Status(500).JSON(response.Error("get genre", err.Error()))
 	}
@@ -57,14 +52,9 @@ func CreateGenre(c *fiber.Ctx) error {
 }
 
 func UpdateGenre(c *fiber.Ctx) error {
-	params, err := c.ParamsInt("id")
+	id, err := c.ParamsInt("id")
 	if err != nil {
 		return c.Status(400).JSON("get id", err.Error())
-	}
-
-	id, err := validate.ValID(params)
-	if err != nil {
-		return c.Status(500).JSON(response.Error("validation", err.Error()))
 	}
 
 	var genre model.Genre
@@ -72,7 +62,7 @@ func UpdateGenre(c *fiber.Ctx) error {
 		return c.Status(400).JSON("parser json", err.Error())
 	}
 
-	genre.ID = id
+	genre.ID = int64(id)
 
 	if err := validate.BodyStructs(genre); err != nil {
 		return c.Status(400).JSON("validate data", err.Error())
@@ -87,16 +77,12 @@ func UpdateGenre(c *fiber.Ctx) error {
 }
 
 func DeleteGenre(c *fiber.Ctx) error {
-	params, err := c.ParamsInt("id")
+	id, err := c.ParamsInt("id")
 	if err != nil {
 		return c.Status(400).JSON(response.Error("get id", err.Error()))
 	}
-	id, err := validate.ValID(params)
-	if err != nil {
-		return c.Status(500).JSON(response.Error("validation", err.Error()))
-	}
 
-	if err := service.DeleteGenre(id); err != nil {
+	if err := service.DeleteGenre(int64(id)); err != nil {
 		return c.Status(500).JSON(response.Error("delete genre", err.Error()))
 	}
 

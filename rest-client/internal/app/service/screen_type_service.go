@@ -16,7 +16,7 @@ func ListScreenType() ([]model.ScreenType, error) {
 	return data, nil
 }
 
-func GetScreenType(id int32) (model.ScreenType, error) {
+func GetScreenType(id int64) (model.ScreenType, error) {
 	url := fmt.Sprintf("/screen/type/%d", id)
 
 	data, err := gateway.GetCinema[model.ScreenType](url)
@@ -46,7 +46,7 @@ func UpdateScreenType(body model.ScreenType) (model.ScreenType, error) {
 	return data, nil
 }
 
-func DeleteScreenType(id int32) error {
+func DeleteScreenType(id int64) error {
 	url := fmt.Sprintf("/screen/type/delete/%d", id)
 
 	if err := gateway.DeleteCinema(url); err != nil {
