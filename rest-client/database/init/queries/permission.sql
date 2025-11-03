@@ -14,7 +14,7 @@ UPDATE permission SET name=$2 WHERE id=$1 RETURNING id;
 DELETE FROM permission WHERE id=$1;
 
 -- name: VerifyPermission :many
-SELECT DISTINCT id FROM permission WHERE id = ANY($1:: int[]);
+SELECT DISTINCT id FROM permission WHERE id = ANY($1:: BIGINT[]);
 
 
 

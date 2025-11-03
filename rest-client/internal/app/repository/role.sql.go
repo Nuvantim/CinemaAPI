@@ -11,7 +11,7 @@ import (
 
 const AddPermissionRole = `-- name: AddPermissionRole :exec
 INSERT INTO role_permission (id_role, id_permission) SELECT $1 AS role_id_params,
-unnested_permission_id FROM UNNEST($2::int[]) AS unnested_permission_id
+unnested_permission_id FROM UNNEST($2::BIGINT[]) AS unnested_permission_id
 `
 
 type AddPermissionRoleParams struct {
@@ -113,7 +113,7 @@ JOIN
 JOIN
     "public".permission AS p ON rp.id_permission = p.id
 WHERE
-    r.id IN ($1::int[])
+    r.id IN ($1::BIGINT[])
 ORDER BY
     r.name, p.name
 `
@@ -193,7 +193,7 @@ WITH delete_permission AS (
   WHERE id_role = $1
 )
 INSERT INTO role_permission (id_role, id_permission)
-SELECT $1,UNNEST($2::int[])
+SELECT $1,UNNEST($2::BIGINT[])
 `
 
 type UpdatePermissionRoleParams struct {
@@ -221,7 +221,7 @@ func (q *Queries) UpdateRole(ctx context.Context, arg UpdateRoleParams) error {
 }
 
 const VerifyRole = `-- name: VerifyRole :many
-SELECT DISTINCT id FROM role WHERE id = ANY($1:: int[])
+SELECT DISTINCT id FROM role WHERE id = ANY($1:: BIGINT[])
 `
 
 func (q *Queries) VerifyRole(ctx context.Context, dollar_1 []int64) ([]int64, error) {

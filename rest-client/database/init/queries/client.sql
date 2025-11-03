@@ -33,7 +33,7 @@ DELETE FROM user_account WHERE id = $1;
 
 -- name: CreateRoleClient :exec
 INSERT INTO user_role (id_user, id_role) SELECT $1 AS user_id_params,
-unnested_role_id FROM UNNEST($2::int[]) AS unnested_role_id;
+unnested_role_id FROM UNNEST($2::BIGINT[]) AS unnested_role_id;
 
 -- name: UpdateRoleClient :exec
 WITH delete_role AS (
@@ -41,7 +41,7 @@ WITH delete_role AS (
   WHERE id_user = $1 
 )
 INSERT INTO user_role (id_user, id_role)
-SELECT $1, UNNEST($2::int[]);
+SELECT $1, UNNEST($2::BIGINT[]);
 
 -- name: AllRoleClient :many
 SELECT

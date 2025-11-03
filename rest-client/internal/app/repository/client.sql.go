@@ -66,7 +66,7 @@ func (q *Queries) AllRoleClient(ctx context.Context, idUser int64) ([]AllRoleCli
 
 const CreateRoleClient = `-- name: CreateRoleClient :exec
 INSERT INTO user_role (id_user, id_role) SELECT $1 AS user_id_params,
-unnested_role_id FROM UNNEST($2::int[]) AS unnested_role_id
+unnested_role_id FROM UNNEST($2::BIGINT[]) AS unnested_role_id
 `
 
 type CreateRoleClientParams struct {
@@ -224,7 +224,7 @@ WITH delete_role AS (
   WHERE id_user = $1 
 )
 INSERT INTO user_role (id_user, id_role)
-SELECT $1, UNNEST($2::int[])
+SELECT $1, UNNEST($2::BIGINT[])
 `
 
 type UpdateRoleClientParams struct {

@@ -16,7 +16,7 @@ func Setup(app *fiber.App) {
 	auth.Post("/reset-password", handler.ResetPassword)
 
 	// Set Middleware
-	// app.Use(middleware.BearerAuth())
+	app.Use(middleware.BearerAuth())
 
 	// user
 	account := app.Group("/account")
@@ -108,7 +108,7 @@ func Setup(app *fiber.App) {
 
 	// booking
 	booking := app.Group("/booking")
-	booking.Post("/", handler.ListBooking)
+	booking.Get("/", handler.ListBooking)
 	booking.Post("/create", handler.CreateBooking)
 	booking.Delete("/delete/:id", handler.DeleteBooking)
 

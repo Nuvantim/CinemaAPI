@@ -10,7 +10,7 @@ import (
 )
 
 func ListBooking(w http.ResponseWriter, r *http.Request) {
-	var booking = struct{
+	var booking = struct {
 		UserID int64 `json:"user_id"`
 	}{}
 

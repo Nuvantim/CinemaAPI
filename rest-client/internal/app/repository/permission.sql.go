@@ -84,7 +84,7 @@ func (q *Queries) UpdatePermission(ctx context.Context, arg UpdatePermissionPara
 }
 
 const VerifyPermission = `-- name: VerifyPermission :many
-SELECT DISTINCT id FROM permission WHERE id = ANY($1:: int[])
+SELECT DISTINCT id FROM permission WHERE id = ANY($1:: BIGINT[])
 `
 
 func (q *Queries) VerifyPermission(ctx context.Context, dollar_1 []int64) ([]int64, error) {

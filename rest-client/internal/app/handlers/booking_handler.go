@@ -8,7 +8,7 @@ import (
 	"api/pkgs/utils/responses"
 	"api/pkgs/utils/validates"
 
-	model "cinema/pkgs/monorepo"
+	model "booking/pkgs/monorepo"
 )
 
 func ListBooking(c *fiber.Ctx) error {
@@ -27,7 +27,6 @@ func ListBooking(c *fiber.Ctx) error {
 	if err != nil {
 		return c.Status(500).JSON(response.Error("list booking", err.Error()))
 	}
-
 
 	return c.Status(200).JSON(response.Pass("list booking", data))
 }

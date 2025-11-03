@@ -10,10 +10,10 @@ import (
 )
 
 func ListPayment(w http.ResponseWriter, r *http.Request) {
-	var user_booking = struct{
+	var user_booking = struct {
 		UserID int64 `json:"user_id"`
 	}{}
-	
+
 	body, err := parser.Body(r.Body, user_booking)
 	if err != nil {
 		response.Error(w, err)

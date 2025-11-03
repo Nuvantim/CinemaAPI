@@ -7,7 +7,7 @@ import (
 )
 
 var (
-	Cinema string
+	Cinema  string
 	Booking string
 )
 

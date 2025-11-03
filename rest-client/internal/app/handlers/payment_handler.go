@@ -7,7 +7,7 @@ import (
 	"api/internal/app/service"
 	"api/pkgs/utils/responses"
 
-	model "cinema/pkgs/monorepo"
+	model "booking/pkgs/monorepo"
 )
 
 func ListPayment(c *fiber.Ctx) error {

@@ -19,16 +19,16 @@ func ListCinema(c *fiber.Ctx) error {
 	return c.Status(200).JSON(response.Pass("list cinema", data))
 }
 
-func ListCinemaSchedule(c *fiber.Ctx)error{
+func ListCinemaSchedule(c *fiber.Ctx) error {
 	// get id
-	id,err := c.ParamsInt("id")
-	if err != nil{
+	id, err := c.ParamsInt("id")
+	if err != nil {
 		return c.Status(400).JSON(response.Error("get id", err.Error()))
 	}
 	// start service
-	data,err := service.ListCinemaSchedule(int64(id))
-	if err != nil{
-		return c.Status(500).JSON(response.Error("list cinema schedule",err.Error()))
+	data, err := service.ListCinemaSchedule(int64(id))
+	if err != nil {
+		return c.Status(500).JSON(response.Error("list cinema schedule", err.Error()))
 	}
 	// return json data
 	return c.Status(200).JSON(response.Pass("list cinema schedule", data))

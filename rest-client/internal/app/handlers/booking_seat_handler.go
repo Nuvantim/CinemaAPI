@@ -18,8 +18,8 @@ func ListBookingSeat(c *fiber.Ctx) error {
 		return c.Status(400).JSON(response.Error("parser json", err.Error()))
 	}
 
-	if err := validate.BodyStructs(booking_seat);err != nil{
-		return c.Status(422).JSON("validate data",err.Error())
+	if err := validate.BodyStructs(booking_seat); err != nil {
+		return c.Status(422).JSON("validate data", err.Error())
 	}
 
 	data, err := service.ListBookingSeat(booking_seat)

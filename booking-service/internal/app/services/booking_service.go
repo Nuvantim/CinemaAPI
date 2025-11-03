@@ -6,8 +6,8 @@ import (
 	ctx "context"
 
 	"fmt"
-	"time"
 	"log"
+	"time"
 )
 
 func ListBooking(id int64) ([]model.Booking, error) {
