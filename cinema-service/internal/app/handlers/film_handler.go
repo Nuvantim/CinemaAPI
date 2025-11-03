@@ -33,7 +33,9 @@ func GetFilm(w http.ResponseWriter, r *http.Request) {
 	response.Success(w, data)
 }
 func SearchFilm(w http.ResponseWriter, r *http.Request) {
-	var film model.SearchFilmRow
+	var film = struct{
+		Title string `json:"title"`
+	}{}
 
 	body, err := parser.Body(r.Body, film)
 	if err != nil {
