@@ -10,7 +10,9 @@ import (
 )
 
 func ListBooking(w http.ResponseWriter, r *http.Request) {
-	var booking model.CreateBookingParams
+	var booking = struct{
+		UserID int64 `json:"user_id"`
+	}{}
 
 	body, err := parser.Body(r.Body, booking)
 	if err != nil {
