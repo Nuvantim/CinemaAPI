@@ -28,6 +28,7 @@ func Setup(mux *http.ServeMux) {
 
 	// cinema
 	r.Get("/cinemas", handler.ListCinema)
+	r.Get("/cinema/schedule/", handler.ListCinemaSchedule)
 	r.Get("/cinema/", handler.GetCinema)
 	r.Post("/cinema/create", handler.CreateCinema)
 	r.Put("/cinema/update", handler.UpdateCinema)

@@ -17,6 +17,16 @@ func ListCinema() ([]model.Cinema, error) {
 	return data, nil
 }
 
+func ListCinemaSchedule(id int64)([]model.ListCinemaSchedule, error){
+	url := fmt.Sprintf("/cinema/schedule/%d",id)
+
+	data, err := gateway.GetCinema[[]model.ListCinemaSchedule](url)
+	if err != nil{
+		return []model.ListCinemaSchedule{},err
+	}
+	return data,nil
+}
+
 func GetCinema(id int64) (model.Cinema, error) {
 	url := fmt.Sprintf("/cinema/%d", id)
 

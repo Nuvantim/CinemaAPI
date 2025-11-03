@@ -6,7 +6,10 @@ import (
 	"log"
 )
 
-var Cinema string
+var (
+	Cinema string
+	Booking string
+)
 
 func CinemaService() {
 	srvc, err := config.GetServiceConfig()
@@ -26,4 +29,24 @@ func CinemaService() {
 	}
 
 	Cinema = url_cinema
+}
+
+func BookingService() {
+	srvc, err := config.GetServiceConfig()
+	if err != nil {
+		log.Println(err)
+	}
+	var client = config.Http2Config()
+	var url_booking = srvc.Booking
+	resp, err := client.Get(url_booking + "/")
+	if err != nil {
+		log.Fatalf("Failed Connect Booking: %v", err)
+	}
+	defer resp.Body.Close()
+
+	if resp.ProtoMajor == 2 {
+		fmt.Println("Booking service connected....")
+	}
+
+	Booking = url_booking
 }

@@ -35,5 +35,8 @@ func ServerGo() *fiber.App {
 	fmt.Print("[ 🎬 ] ")
 	client.CinemaService()
 
+	fmt.Print("[ 🗂️ ] ")
+	client.BookingService()
+
 	return app
 }

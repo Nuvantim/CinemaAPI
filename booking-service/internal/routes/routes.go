@@ -22,5 +22,5 @@ func Setup(mux *http.ServeMux) {
 
 	// payment
 	r.Post("/payment/create", handler.CreatePayment)
-	r.Get("/payment/", handler.ListPayment)
+	r.Post("/payment/", handler.ListPayment)
 }

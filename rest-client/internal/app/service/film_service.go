@@ -26,9 +26,9 @@ func GetFilm(id int64) (model.GetFilmRow, error) {
 	return data, nil
 }
 
-func SearchFilm(body model.Film) ([]model.SearchFilmRow, error) {
+func SearchFilm(body any) ([]model.SearchFilmRow, error) {
 	url := "/film/search"
-	data, err := gateway.PostCinema[model.Film, []model.SearchFilmRow](url, body)
+	data, err := gateway.PostCinema[any, []model.SearchFilmRow](url, body)
 	if err != nil {
 		return []model.SearchFilmRow{}, err
 	}

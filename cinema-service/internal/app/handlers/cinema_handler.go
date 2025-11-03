@@ -18,6 +18,20 @@ func ListCinema(w http.ResponseWriter, r *http.Request) {
 	response.Success(w, data)
 }
 
+func ListCinemaSchedule(w http.ResponseWriter, r *http.Request){
+	id,err := parser.ParamsInt(r, "/cinema/schedules/")
+	if err != nil{
+		response.Error(w, err)
+		return
+	}
+	data,err := service.ListCinemaSchedule(id)
+	if err != nil{
+		response.Error(w, err)
+		return
+	}
+	response.Success(w, data)
+}
+
 func GetCinema(w http.ResponseWriter, r *http.Request) {
 	id, err := parser.ParamsInt(r, "/cinema/")
 	if err != nil {
