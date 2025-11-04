@@ -15,12 +15,12 @@ unnested_permission_id FROM UNNEST($2::BIGINT[]) AS unnested_permission_id
 `
 
 type AddPermissionRoleParams struct {
-	IDRole  int64   `json:"id_role"`
-	Column2 []int64 `json:"column_2"`
+	IDRole       int64   `json:"id_role"`
+	PermissionID []int64 `json:"permission_id"`
 }
 
 func (q *Queries) AddPermissionRole(ctx context.Context, arg AddPermissionRoleParams) error {
-	_, err := q.db.Exec(ctx, AddPermissionRole, arg.IDRole, arg.Column2)
+	_, err := q.db.Exec(ctx, AddPermissionRole, arg.IDRole, arg.PermissionID)
 	return err
 }
 
@@ -124,8 +124,8 @@ type ListPermissionRoleRow struct {
 	PermissionID   int64       `json:"permission_id" validate:"required"`
 }
 
-func (q *Queries) ListPermissionRole(ctx context.Context, dollar_1 []int64) ([]ListPermissionRoleRow, error) {
-	rows, err := q.db.Query(ctx, ListPermissionRole, dollar_1)
+func (q *Queries) ListPermissionRole(ctx context.Context, roleID []int64) ([]ListPermissionRoleRow, error) {
+	rows, err := q.db.Query(ctx, ListPermissionRole, roleID)
 	if err != nil {
 		return nil, err
 	}
@@ -197,12 +197,12 @@ SELECT $1,UNNEST($2::BIGINT[])
 `
 
 type UpdatePermissionRoleParams struct {
-	IDRole  int64   `json:"id_role"`
-	Column2 []int64 `json:"column_2"`
+	IDRole       int64   `json:"id_role"`
+	PermissionID []int64 `json:"permission_id"`
 }
 
 func (q *Queries) UpdatePermissionRole(ctx context.Context, arg UpdatePermissionRoleParams) error {
-	_, err := q.db.Exec(ctx, UpdatePermissionRole, arg.IDRole, arg.Column2)
+	_, err := q.db.Exec(ctx, UpdatePermissionRole, arg.IDRole, arg.PermissionID)
 	return err
 }
 
@@ -224,8 +224,8 @@ const VerifyRole = `-- name: VerifyRole :many
 SELECT DISTINCT id FROM role WHERE id = ANY($1:: BIGINT[])
 `
 
-func (q *Queries) VerifyRole(ctx context.Context, dollar_1 []int64) ([]int64, error) {
-	rows, err := q.db.Query(ctx, VerifyRole, dollar_1)
+func (q *Queries) VerifyRole(ctx context.Context, roleID []int64) ([]int64, error) {
+	rows, err := q.db.Query(ctx, VerifyRole, roleID)
 	if err != nil {
 		return nil, err
 	}

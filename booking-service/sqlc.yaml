@@ -29,6 +29,11 @@ sql:
         output_files_suffix: ""   
         
         overrides:
+          - db_type: "uuid"
+            nullable: false
+            go_type:
+              import: "github.com/google/uuid"
+              type: "UUID"
           - column: "*.created_at"
             go_type: "time.Time"
           - column: "*.updated_at"

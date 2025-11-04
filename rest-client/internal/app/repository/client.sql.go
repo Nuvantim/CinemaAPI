@@ -70,12 +70,12 @@ unnested_role_id FROM UNNEST($2::BIGINT[]) AS unnested_role_id
 `
 
 type CreateRoleClientParams struct {
-	IDUser  int64   `json:"id_user"`
-	Column2 []int64 `json:"column_2"`
+	IDUser int64   `json:"id_user"`
+	RoleID []int64 `json:"role_id"`
 }
 
 func (q *Queries) CreateRoleClient(ctx context.Context, arg CreateRoleClientParams) error {
-	_, err := q.db.Exec(ctx, CreateRoleClient, arg.IDUser, arg.Column2)
+	_, err := q.db.Exec(ctx, CreateRoleClient, arg.IDUser, arg.RoleID)
 	return err
 }
 
@@ -202,18 +202,18 @@ WHERE id = $1
 `
 
 type UpdateClientParams struct {
-	ID      int64  `json:"id" validate:"required"`
-	Name    string `json:"name" validate:"required"`
-	Column3 string `json:"column_3"`
-	Column4 string `json:"column_4"`
+	ID       int64  `json:"id" validate:"required"`
+	Name     string `json:"name" validate:"required"`
+	Email    string `json:"email"`
+	Password string `json:"password"`
 }
 
 func (q *Queries) UpdateClient(ctx context.Context, arg UpdateClientParams) error {
 	_, err := q.db.Exec(ctx, UpdateClient,
 		arg.ID,
 		arg.Name,
-		arg.Column3,
-		arg.Column4,
+		arg.Email,
+		arg.Password,
 	)
 	return err
 }
@@ -228,11 +228,11 @@ SELECT $1, UNNEST($2::BIGINT[])
 `
 
 type UpdateRoleClientParams struct {
-	IDUser  int64   `json:"id_user"`
-	Column2 []int64 `json:"column_2"`
+	IDUser int64   `json:"id_user"`
+	RoleID []int64 `json:"role_id"`
 }
 
 func (q *Queries) UpdateRoleClient(ctx context.Context, arg UpdateRoleClientParams) error {
-	_, err := q.db.Exec(ctx, UpdateRoleClient, arg.IDUser, arg.Column2)
+	_, err := q.db.Exec(ctx, UpdateRoleClient, arg.IDUser, arg.RoleID)
 	return err
 }

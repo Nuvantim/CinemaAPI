@@ -24,11 +24,11 @@ ORDER BY
 UPDATE role SET name = $2 WHERE id = $1;
 
 -- name: VerifyRole :many
-SELECT DISTINCT id FROM role WHERE id = ANY($1:: BIGINT[]);
+SELECT DISTINCT id FROM role WHERE id = ANY(sqlc.arg(role_id):: BIGINT[]);
 
 -- name: AddPermissionRole :exec
 INSERT INTO role_permission (id_role, id_permission) SELECT $1 AS role_id_params,
-unnested_permission_id FROM UNNEST($2::BIGINT[]) AS unnested_permission_id;
+unnested_permission_id FROM UNNEST(sqlc.arg(permission_id)::BIGINT[]) AS unnested_permission_id;
 
 -- name: UpdatePermissionRole :exec
 WITH delete_permission AS (
@@ -36,7 +36,7 @@ WITH delete_permission AS (
   WHERE id_role = $1
 )
 INSERT INTO role_permission (id_role, id_permission)
-SELECT $1,UNNEST($2::BIGINT[]);
+SELECT $1,UNNEST(sqlc.arg(permission_id)::BIGINT[]);
 
 -- name: GetPermissionRole :many
 SELECT id,name FROM permission WHERE id IN (SELECT id_permission FROM role_permission WHERE id_role = $1);
@@ -56,7 +56,7 @@ JOIN
 JOIN
     "public".permission AS p ON rp.id_permission = p.id
 WHERE
-    r.id IN ($1::BIGINT[])
+    r.id IN (sqlc.arg(role_id)::BIGINT[])
 ORDER BY
     r.name, p.name;
 

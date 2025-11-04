@@ -10,18 +10,17 @@ import (
 )
 
 const CreateBooking = `-- name: CreateBooking :one
-INSERT INTO booking (id, user_id, showtime_id, total_amount)
-VALUES($1, $2, $3, 0) RETURNING user_id
+INSERT INTO booking (user_id, showtime_id, total_amount)
+VALUES($1, $2, 0) RETURNING user_id
 `
 
 type CreateBookingParams struct {
-	ID         int64 `json:"id"`
 	UserID     int64 `json:"user_id"`
 	ShowtimeID int64 `json:"showtime_id"`
 }
 
 func (q *Queries) CreateBooking(ctx context.Context, arg CreateBookingParams) (int64, error) {
-	row := q.db.QueryRow(ctx, CreateBooking, arg.ID, arg.UserID, arg.ShowtimeID)
+	row := q.db.QueryRow(ctx, CreateBooking, arg.UserID, arg.ShowtimeID)
 	var user_id int64
 	err := row.Scan(&user_id)
 	return user_id, err

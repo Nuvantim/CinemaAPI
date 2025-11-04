@@ -21,8 +21,8 @@ SELECT id,name,email FROM user_account WHERE id = $1;
 -- name: UpdateClient :exec
 UPDATE user_account SET 
 	name = $2, 
-    email = COALESCE(NULLIF(TRIM($3::varchar),''), email), 
-	password = COALESCE(NULLIF(TRIM($4::varchar),''), password)
+    email = COALESCE(NULLIF(TRIM(sqlc.arg(email)::varchar),''), email), 
+	password = COALESCE(NULLIF(TRIM(sqlc.arg(password)::varchar),''), password)
 WHERE id = $1;
 
 -- name: GetRoleClient :many
@@ -33,7 +33,7 @@ DELETE FROM user_account WHERE id = $1;
 
 -- name: CreateRoleClient :exec
 INSERT INTO user_role (id_user, id_role) SELECT $1 AS user_id_params,
-unnested_role_id FROM UNNEST($2::BIGINT[]) AS unnested_role_id;
+unnested_role_id FROM UNNEST(sqlc.arg(role_id)::BIGINT[]) AS unnested_role_id;
 
 -- name: UpdateRoleClient :exec
 WITH delete_role AS (
@@ -41,7 +41,7 @@ WITH delete_role AS (
   WHERE id_user = $1 
 )
 INSERT INTO user_role (id_user, id_role)
-SELECT $1, UNNEST($2::BIGINT[]);
+SELECT $1, UNNEST(sqlc.arg(role_id)::BIGINT[]);
 
 -- name: AllRoleClient :many
 SELECT
