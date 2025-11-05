@@ -35,6 +35,8 @@ sql:
             go_struct_tag: validate:"required"
           - column: permission.*
             go_struct_tag: validate:"required"
+          - column: role.*
+            go_struct_tag: validate:"required"
           - column: "*.created_at"
             go_type: "time.Time"
           - column: "*.updated_at"

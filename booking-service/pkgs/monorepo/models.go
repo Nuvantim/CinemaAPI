@@ -5,6 +5,7 @@
 package monorepo
 
 import (
+	"github.com/google/uuid"
 	"github.com/jackc/pgx/v5/pgtype"
 )
 
@@ -17,10 +18,10 @@ type Booking struct {
 }
 
 type BookingSeat struct {
-	ID        int64   `json:"id" validate:"required"`
-	BookingID int64   `json:"booking_id" validate:"required"`
-	SeatID    int64   `json:"seat_id" validate:"required"`
-	PricePaid float64 `json:"price_paid" validate:"required"`
+	ID        uuid.UUID `json:"id" validate:"required"`
+	BookingID int64     `json:"booking_id" validate:"required"`
+	SeatID    int64     `json:"seat_id" validate:"required"`
+	PricePaid float64   `json:"price_paid" validate:"required"`
 }
 
 type Payment struct {

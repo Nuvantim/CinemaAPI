@@ -38,14 +38,14 @@ func GetClient(id int64) (req.GetClient, error) {
 
 func UpdateClient(Id int64, client req.UpdateClient) (req.GetClient, error) {
 	var update_data = repo.UpdateClientParams{
-		ID:      Id,
-		Name:    client.Name,
-		Column3: client.Email,
+		ID:    Id,
+		Name:  client.Name,
+		Email: client.Email,
 	}
 
 	if str.TrimSpace(client.Password) != "" {
 		psw := guard.HashBycrypt(client.Password)
-		update_data.Column4 = string(psw)
+		update_data.Password = string(psw)
 	}
 
 	// Update client data
@@ -62,8 +62,8 @@ func UpdateClient(Id int64, client req.UpdateClient) (req.GetClient, error) {
 	if check != 0 {
 		// update client role
 		var client_role = repo.UpdateRoleClientParams{
-			IDUser:  Id,
-			Column2: role,
+			IDUser: Id,
+			RoleID: role,
 		}
 
 		if err := db.Queries.UpdateRoleClient(ctx.Background(), client_role); err != nil {

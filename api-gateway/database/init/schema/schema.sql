@@ -53,3 +53,14 @@ CREATE TABLE "public".user_role (
     CONSTRAINT fk_user_role_user_account FOREIGN KEY (id_user) REFERENCES "public".user_account(id) ON DELETE CASCADE
 );
 
+INSERT INTO "public".permission( id, name, created_at ) VALUES ( 1, 'handle permission', '2025-08-08 05:02:38 PM');
+INSERT INTO "public".permission( id, name, created_at ) VALUES ( 2, 'handle role', '2025-08-08 05:02:48 PM');
+INSERT INTO "public".permission( id, name, created_at ) VALUES ( 4, '', '2025-08-08 05:37:08 PM');
+INSERT INTO "public"."role"( id, name, created_at ) VALUES ( 1, 'admin', '2025-08-08 05:03:16 PM');
+INSERT INTO "public".role_permission( id_role, id_permission ) VALUES ( 1, 1);
+INSERT INTO "public".role_permission( id_role, id_permission ) VALUES ( 1, 2);
+INSERT INTO "public".user_account( id, name, email, "password", created_at ) VALUES ( 1, 'kalveir', 'kalveir@gmail.com', '$2a$10$7CfzVVG0RoADtUxfWRC9COjj01d/fk2vlZTz.TsuFpw3HoOZlwVeG', '2025-08-08 05:06:52 PM');
+INSERT INTO "public".user_account( id, name, email, "password", created_at ) VALUES ( 2, 'aviero', 'aviero@gmail.com', '$2a$10$miCMaaFL3XzqiFo06dV6oeO9z5p5LWvrN0qkxCaqOVA9Ma3Ymns6K', '2025-08-08 05:07:19 PM');
+INSERT INTO "public".user_profile( id, user_id, age, phone, district, city, country, created_at ) VALUES ( 2, 2, null, null, null, null, null, '2025-08-08 05:07:19 PM');
+INSERT INTO "public".user_profile( id, user_id, age, phone, district, city, country, created_at ) VALUES ( 1, 1, null, null, null, null, null, '2025-08-08 05:06:52 PM');
+INSERT INTO "public".user_role( id_user, id_role ) VALUES ( 1, 1);

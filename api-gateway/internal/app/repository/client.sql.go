@@ -39,8 +39,8 @@ ORDER BY
 `
 
 type AllRoleClientRow struct {
-	ID          int64       `json:"id"`
-	Name        string      `json:"name"`
+	ID          int64       `json:"id" validate:"required"`
+	Name        string      `json:"name" validate:"required"`
 	Permissions interface{} `json:"permissions"`
 }
 
@@ -119,8 +119,8 @@ SELECT id,name FROM role WHERE id IN (SELECT id_role FROM user_role WHERE id_use
 `
 
 type GetRoleClientRow struct {
-	ID   int64  `json:"id"`
-	Name string `json:"name"`
+	ID   int64  `json:"id" validate:"required"`
+	Name string `json:"name" validate:"required"`
 }
 
 func (q *Queries) GetRoleClient(ctx context.Context, idUser int64) ([]GetRoleClientRow, error) {

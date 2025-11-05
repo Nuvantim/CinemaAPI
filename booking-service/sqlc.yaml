@@ -66,6 +66,11 @@ sql:
         output_files_suffix: ""
 
         overrides:
+          - db_type: "uuid"
+            nullable: false
+            go_type:
+              import: "github.com/google/uuid"
+              type: "UUID"
           - column: booking.*
             go_struct_tag: validate:"required"
           - column: booking_seat.*

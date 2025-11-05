@@ -1,6 +1,6 @@
 -- name: CreateBooking :one
-INSERT INTO booking (user_id, showtime_id, total_amount)
-VALUES($1, $2, 0) RETURNING user_id;
+INSERT INTO booking (id,user_id, showtime_id, total_amount)
+VALUES($1, $2, $3, 0) RETURNING user_id;
 
 -- name: ListBooking :many
 SELECT * FROM booking WHERE user_id = $1;

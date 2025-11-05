@@ -5,6 +5,7 @@
 package repository
 
 import (
+	"github.com/google/uuid"
 	"github.com/jackc/pgx/v5/pgtype"
 )
 
@@ -17,10 +18,10 @@ type Booking struct {
 }
 
 type BookingSeat struct {
-	ID        int64   `json:"id"`
-	BookingID int64   `json:"booking_id"`
-	SeatID    int64   `json:"seat_id"`
-	PricePaid float64 `json:"price_paid"`
+	ID        uuid.UUID `json:"id"`
+	BookingID int64     `json:"booking_id"`
+	SeatID    int64     `json:"seat_id"`
+	PricePaid float64   `json:"price_paid"`
 }
 
 type Payment struct {

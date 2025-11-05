@@ -7,6 +7,8 @@ package repository
 
 import (
 	"context"
+
+	"github.com/google/uuid"
 )
 
 const CreateBookingSeat = `-- name: CreateBookingSeat :one
@@ -26,13 +28,15 @@ func (q *Queries) CreateBookingSeat(ctx context.Context, arg CreateBookingSeatPa
 	return booking_id, err
 }
 
-const DeleteBookingSeat = `-- name: DeleteBookingSeat :exec
-DELETE FROM booking_seat WHERE id = $1
+const DeleteBookingSeat = `-- name: DeleteBookingSeat :one
+DELETE FROM booking_seat WHERE id = $1 RETURNING booking_id
 `
 
-func (q *Queries) DeleteBookingSeat(ctx context.Context, id int64) error {
-	_, err := q.db.Exec(ctx, DeleteBookingSeat, id)
-	return err
+func (q *Queries) DeleteBookingSeat(ctx context.Context, id uuid.UUID) (int64, error) {
+	row := q.db.QueryRow(ctx, DeleteBookingSeat, id)
+	var booking_id int64
+	err := row.Scan(&booking_id)
+	return booking_id, err
 }
 
 const ListBookingSeat = `-- name: ListBookingSeat :many

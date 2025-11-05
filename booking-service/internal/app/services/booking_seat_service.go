@@ -4,6 +4,8 @@ import (
 	db "booking/database"
 	model "booking/internal/app/repository"
 	ctx "context"
+
+	"github.com/google/uuid"
 )
 
 func ListBookingSeat(booking_id int64) ([]model.BookingSeat, error) {
@@ -32,12 +34,13 @@ func CreateBookingSeat(body model.CreateBookingSeatParams) ([]model.BookingSeat,
 	return data, nil
 }
 
-func DeleteBookingSeat(id int64) error {
-	if err := db.Queries.DeleteBookingSeat(ctx.Background(), id); err != nil {
+func DeleteBookingSeat(id uuid.UUID) error {
+	booking_id, err := db.Queries.DeleteBookingSeat(ctx.Background(), id)
+	if err != nil {
 		return db.Fatal(err)
 	}
 	// update booking amount
-	if err := db.Queries.UpdateBookingAmount(ctx.Background(), id); err != nil {
+	if err := db.Queries.UpdateBookingAmount(ctx.Background(), booking_id); err != nil {
 		return db.Fatal(err)
 	}
 	return nil

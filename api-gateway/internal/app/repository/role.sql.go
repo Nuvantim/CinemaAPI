@@ -87,8 +87,8 @@ SELECT id,name FROM role WHERE id = $1
 `
 
 type GetRoleRow struct {
-	ID   int64  `json:"id"`
-	Name string `json:"name"`
+	ID   int64  `json:"id" validate:"required"`
+	Name string `json:"name" validate:"required"`
 }
 
 func (q *Queries) GetRole(ctx context.Context, id int64) (GetRoleRow, error) {
@@ -162,8 +162,8 @@ ORDER BY
 `
 
 type ListRoleRow struct {
-	ID          int64       `json:"id"`
-	Name        string      `json:"name"`
+	ID          int64       `json:"id" validate:"required"`
+	Name        string      `json:"name" validate:"required"`
 	Permissions interface{} `json:"permissions"`
 }
 
@@ -211,8 +211,8 @@ UPDATE role SET name = $2 WHERE id = $1
 `
 
 type UpdateRoleParams struct {
-	ID   int64  `json:"id"`
-	Name string `json:"name"`
+	ID   int64  `json:"id" validate:"required"`
+	Name string `json:"name" validate:"required"`
 }
 
 func (q *Queries) UpdateRole(ctx context.Context, arg UpdateRoleParams) error {

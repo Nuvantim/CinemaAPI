@@ -7,11 +7,13 @@ package monorepo
 
 import (
 	"context"
+
+	"github.com/google/uuid"
 )
 
 const CreateBooking = `-- name: CreateBooking :one
 INSERT INTO booking (user_id, showtime_id, total_amount)
-VALUES($1, $2, 0) RETURNING user_id
+VALUES($1,$2, 0) RETURNING user_id
 `
 
 type CreateBookingParams struct {
@@ -47,22 +49,22 @@ const CreatePayment = `-- name: CreatePayment :one
 INSERT INTO payment (booking_id, payment_method, payment_status, transaction_amount, payment_time)
 SELECT 
     b.id,
-    $2 AS payment_method,
-    "Success" AS payment_status,
+    $1 AS payment_method,
+    'Success' AS payment_status,
     b.total_amount AS transaction_amount,
     NOW() AS payment_time
-FROM booking
-WHERE booking.id = $1
+FROM booking b
+WHERE b.id = $2
 RETURNING id, booking_id, payment_method, payment_status, transaction_amount, payment_time
 `
 
 type CreatePaymentParams struct {
-	ID            int64  `json:"id" validate:"required"`
 	PaymentMethod string `json:"payment_method" validate:"required"`
+	BookingID     int64  `json:"booking_id" validate:"required"`
 }
 
 func (q *Queries) CreatePayment(ctx context.Context, arg CreatePaymentParams) (Payment, error) {
-	row := q.db.QueryRow(ctx, CreatePayment, arg.ID, arg.PaymentMethod)
+	row := q.db.QueryRow(ctx, CreatePayment, arg.PaymentMethod, arg.BookingID)
 	var i Payment
 	err := row.Scan(
 		&i.ID,
@@ -84,13 +86,15 @@ func (q *Queries) DeleteBooking(ctx context.Context, id int64) error {
 	return err
 }
 
-const DeleteBookingSeat = `-- name: DeleteBookingSeat :exec
-DELETE FROM booking_seat WHERE id = $1
+const DeleteBookingSeat = `-- name: DeleteBookingSeat :one
+DELETE FROM booking_seat WHERE id = $1 RETURNING booking_id
 `
 
-func (q *Queries) DeleteBookingSeat(ctx context.Context, id int64) error {
-	_, err := q.db.Exec(ctx, DeleteBookingSeat, id)
-	return err
+func (q *Queries) DeleteBookingSeat(ctx context.Context, id uuid.UUID) (int64, error) {
+	row := q.db.QueryRow(ctx, DeleteBookingSeat, id)
+	var booking_id int64
+	err := row.Scan(&booking_id)
+	return booking_id, err
 }
 
 const ListBooking = `-- name: ListBooking :many

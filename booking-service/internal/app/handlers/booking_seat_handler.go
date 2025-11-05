@@ -9,18 +9,16 @@ import (
 	"net/http"
 )
 
-type ReqUserBooking struct {
-	UserID int64 `json:"user_id"`
-}
-
 func ListBookingSeat(w http.ResponseWriter, r *http.Request) {
-	var user_booking ReqUserBooking
+	var user_booking = struct {
+		BookingID int64 `json:"booking_id"`
+	}{}
 	body, err := parser.Body(r.Body, user_booking)
 	if err != nil {
 		response.Error(w, err)
 		return
 	}
-	data, err := service.ListBookingSeat(body.UserID)
+	data, err := service.ListBookingSeat(body.BookingID)
 	if err != nil {
 		response.Error(w, err)
 		return
@@ -47,7 +45,7 @@ func CreateBookingSeat(w http.ResponseWriter, r *http.Request) {
 }
 
 func DeleteBookingSeat(w http.ResponseWriter, r *http.Request) {
-	id, err := parser.ParamsInt(r, "/booking/seat/delete/")
+	id, err := parser.ParamsUUID(r, "/booking/seat/delete/")
 	if err != nil {
 		response.Error(w, err)
 		return

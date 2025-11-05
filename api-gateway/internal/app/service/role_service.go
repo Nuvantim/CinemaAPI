@@ -53,8 +53,8 @@ func CreateRole(data req.Role) ([]repo.ListRoleRow, error) {
 	if check != 0 {
 		// Params data Role_Permission
 		role_permission := repo.AddPermissionRoleParams{
-			IDRole:  role_id,
-			Column2: permission_id,
+			IDRole:       role_id,
+			PermissionID: permission_id,
 		}
 
 		// Create Role_Permission
@@ -92,8 +92,8 @@ func UpdateRole(data req.Role, id int64) (req.GetRole, error) {
 	if check > 0 {
 		// UpdatePermissionRole
 		var role_permission = repo.UpdatePermissionRoleParams{
-			IDRole:  id,
-			Column2: data.PermissionID,
+			IDRole:       id,
+			PermissionID: data.PermissionID,
 		}
 
 		if err := db.Queries.UpdatePermissionRole(ctx.Background(), role_permission); err != nil {

@@ -14,12 +14,12 @@ func ListCinema() ([]model.Cinema, error) {
 	return data, nil
 }
 
-func ListCinemaSchedule(id int64)([]model.ListCinemaScheduleRow,error){
-	data,err := db.Queries.ListCinemaSchedule(ctx.Background(), id)
-	if err != nil{
-		return []model.ListCinemaScheduleRow{},db.Fatal(err)
+func ListCinemaSchedule(id int64) ([]model.ListCinemaScheduleRow, error) {
+	data, err := db.Queries.ListCinemaSchedule(ctx.Background(), id)
+	if err != nil {
+		return []model.ListCinemaScheduleRow{}, db.Fatal(err)
 	}
-	return data,nil	
+	return data, nil
 }
 
 func GetCinema(id int64) (model.Cinema, error) {
