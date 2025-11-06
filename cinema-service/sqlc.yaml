@@ -3,7 +3,7 @@ version: "2"
 sql:
   # repository
   - engine: "postgresql"
-    schema: "database/init/schema/"
+    schema: "../pg_schema/cinema.sql"
     queries: "database/init/queries/"
     gen:
       go:
@@ -37,7 +37,7 @@ sql:
 
   # monorepo
   - engine: "postgresql"
-    schema: "database/init/schema/"
+    schema: "../pg_schema/cinema.sql"
     queries: "database/init/mono/monorepo.sql"
     gen:
       go:

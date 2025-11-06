@@ -30,8 +30,8 @@ func CreateBookingSeat(body model.CreateBookingSeatParams) (model.BookingSeat, e
 	return data, nil
 }
 
-func DeleteBookingSeat(id int64) error {
-	url := fmt.Sprintf("/booking/seat/delete/%d", id)
+func DeleteBookingSeat(id string) error {
+	url := fmt.Sprintf("/booking/seat/delete/%s", id)
 
 	if err := gateway.DeleteBooking(url); err != nil {
 		return err

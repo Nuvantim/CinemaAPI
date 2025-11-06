@@ -12,8 +12,8 @@ import (
 )
 
 const CreateBooking = `-- name: CreateBooking :one
-INSERT INTO booking (user_id, showtime_id, total_amount)
-VALUES($1,$2, 0) RETURNING user_id
+INSERT INTO booking (user_id, showtime_id)
+VALUES($1,$2) RETURNING user_id
 `
 
 type CreateBookingParams struct {
@@ -46,28 +46,31 @@ func (q *Queries) CreateBookingSeat(ctx context.Context, arg CreateBookingSeatPa
 }
 
 const CreatePayment = `-- name: CreatePayment :one
-INSERT INTO payment (booking_id, payment_method, payment_status, transaction_amount, payment_time)
+INSERT INTO payment (user_id,booking_id, payment_method, payment_status, transaction_amount, payment_time)
 SELECT 
+    $1 AS user_id,
     b.id,
-    $1 AS payment_method,
+    $2 AS payment_method,
     'Success' AS payment_status,
     b.total_amount AS transaction_amount,
     NOW() AS payment_time
 FROM booking b
-WHERE b.id = $2
-RETURNING id, booking_id, payment_method, payment_status, transaction_amount, payment_time
+WHERE b.id = $3
+RETURNING id, user_id, booking_id, payment_method, payment_status, transaction_amount, payment_time
 `
 
 type CreatePaymentParams struct {
+	UserID        int64  `json:"user_id" validate:"required"`
 	PaymentMethod string `json:"payment_method" validate:"required"`
 	BookingID     int64  `json:"booking_id" validate:"required"`
 }
 
 func (q *Queries) CreatePayment(ctx context.Context, arg CreatePaymentParams) (Payment, error) {
-	row := q.db.QueryRow(ctx, CreatePayment, arg.PaymentMethod, arg.BookingID)
+	row := q.db.QueryRow(ctx, CreatePayment, arg.UserID, arg.PaymentMethod, arg.BookingID)
 	var i Payment
 	err := row.Scan(
 		&i.ID,
+		&i.UserID,
 		&i.BookingID,
 		&i.PaymentMethod,
 		&i.PaymentStatus,
@@ -157,7 +160,7 @@ func (q *Queries) ListBookingSeat(ctx context.Context, bookingID int64) ([]Booki
 }
 
 const ListPayment = `-- name: ListPayment :many
-SELECT id, booking_id, payment_method, payment_status, transaction_amount, payment_time FROM payment WHERE booking_id = (SELECT id FROM booking WHERE user_id = $1)
+SELECT id, user_id, booking_id, payment_method, payment_status, transaction_amount, payment_time FROM payment WHERE user_id = $1
 `
 
 func (q *Queries) ListPayment(ctx context.Context, userID int64) ([]Payment, error) {
@@ -171,6 +174,7 @@ func (q *Queries) ListPayment(ctx context.Context, userID int64) ([]Payment, err
 		var i Payment
 		if err := rows.Scan(
 			&i.ID,
+			&i.UserID,
 			&i.BookingID,
 			&i.PaymentMethod,
 			&i.PaymentStatus,

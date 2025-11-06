@@ -1,7 +1,8 @@
 -- name: CreatePayment :one
-INSERT INTO payment (booking_id, payment_method, payment_status, transaction_amount, payment_time)
+INSERT INTO payment (booking_id, user_id,payment_method, payment_status, transaction_amount, payment_time)
 SELECT 
     b.id,
+    sqlc.arg(user_id) AS user_id,
     sqlc.arg(payment_method) AS payment_method,
     'Success' AS payment_status,
     b.total_amount AS transaction_amount,
@@ -11,4 +12,4 @@ WHERE b.id = sqlc.arg(booking_id)
 RETURNING *;
 
 -- name: ListPayment :many
-SELECT * FROM payment WHERE booking_id = (SELECT id FROM booking WHERE user_id = $1);
+SELECT * FROM payment WHERE user_id = $1;

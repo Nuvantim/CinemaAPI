@@ -1,6 +1,6 @@
 -- name: CreateBooking :one
-INSERT INTO booking (user_id, showtime_id, total_amount)
-VALUES($1,$2, 0) RETURNING user_id;
+INSERT INTO booking (user_id, showtime_id)
+VALUES($1,$2) RETURNING user_id;
 
 -- name: ListBooking :many
 SELECT * FROM booking WHERE user_id = $1;
@@ -21,8 +21,9 @@ SELECT * FROM booking_seat WHERE booking_id = $1;
 DELETE FROM booking_seat WHERE id = $1 RETURNING booking_id;
 
 -- name: CreatePayment :one
-INSERT INTO payment (booking_id, payment_method, payment_status, transaction_amount, payment_time)
+INSERT INTO payment (user_id,booking_id, payment_method, payment_status, transaction_amount, payment_time)
 SELECT 
+    sqlc.arg(user_id) AS user_id,
     b.id,
     sqlc.arg(payment_method) AS payment_method,
     'Success' AS payment_status,
@@ -33,4 +34,4 @@ WHERE b.id = sqlc.arg(booking_id)
 RETURNING *;
 
 -- name: ListPayment :many
-SELECT * FROM payment WHERE booking_id = (SELECT id FROM booking WHERE user_id = $1);
+SELECT * FROM payment WHERE user_id = $1;

@@ -3,7 +3,7 @@ version: "2"
 sql:
   # repository
   - engine: "postgresql"
-    schema: "database/init/schema/"
+    schema: "../pg_schema/auth_user.sql"
     queries: "database/init/queries/"
     gen:
       go:

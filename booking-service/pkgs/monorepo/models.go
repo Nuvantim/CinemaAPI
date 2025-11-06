@@ -26,6 +26,7 @@ type BookingSeat struct {
 
 type Payment struct {
 	ID                int64       `json:"id" validate:"required"`
+	UserID            int64       `json:"user_id" validate:"required"`
 	BookingID         int64       `json:"booking_id" validate:"required"`
 	PaymentMethod     string      `json:"payment_method" validate:"required"`
 	PaymentStatus     pgtype.Text `json:"payment_status" validate:"required"`

@@ -7,11 +7,13 @@ package repository
 
 import (
 	"context"
+
+	"github.com/jackc/pgx/v5/pgtype"
 )
 
 const CreateBooking = `-- name: CreateBooking :one
-INSERT INTO booking (id,user_id, showtime_id, total_amount)
-VALUES($1, $2, $3, 0) RETURNING user_id
+INSERT INTO booking (id,user_id, showtime_id)
+VALUES($1, $2, $3) RETURNING user_id
 `
 
 type CreateBookingParams struct {
@@ -34,6 +36,17 @@ DELETE FROM booking WHERE id = $1
 func (q *Queries) DeleteBooking(ctx context.Context, id int64) error {
 	_, err := q.db.Exec(ctx, DeleteBooking, id)
 	return err
+}
+
+const GetTotalAmmountBooking = `-- name: GetTotalAmmountBooking :one
+SELECT total_amount FROM booking WHERE id = $1
+`
+
+func (q *Queries) GetTotalAmmountBooking(ctx context.Context, id int64) (pgtype.Float8, error) {
+	row := q.db.QueryRow(ctx, GetTotalAmmountBooking, id)
+	var total_amount pgtype.Float8
+	err := row.Scan(&total_amount)
+	return total_amount, err
 }
 
 const ListBooking = `-- name: ListBooking :many

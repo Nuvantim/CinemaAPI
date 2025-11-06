@@ -9,30 +9,32 @@ import (
 func Setup(app *fiber.App) {
 	app.Get("/", handler.Home)
 
-	auth := app.Group("/auth")
+	api := app.Group("/api/v1")
+
+	auth := api.Group("/auth")
 	auth.Post("/send-otp", handler.SendOTP)
 	auth.Post("/register", handler.Register)
 	auth.Post("/login", handler.Login)
 	auth.Post("/reset-password", handler.ResetPassword)
 
 	// Set Middleware
-	app.Use(middleware.BearerAuth())
+	api.Use(middleware.BearerAuth())
 
 	// user
-	account := app.Group("/account")
+	account := api.Group("/account")
 	account.Get("/profile", handler.GetProfile)
 	account.Put("/update", handler.UpdateAccount)
 	account.Delete("/delete", handler.DeleteAccount)
 
 	// client
-	client := app.Group("/client", middleware.Role("admin"))
+	client := api.Group("/client", middleware.Role("admin"))
 	client.Get("/", handler.ListClient)
 	client.Get("/:id", handler.GetClient)
 	client.Put("/update/:id", handler.UpdateClient)
 	client.Delete("/delete/:id", handler.DeleteClient)
 
 	// role
-	role := app.Group("/role", middleware.Permission("handle role"))
+	role := api.Group("/role", middleware.Permission("handle role"))
 	role.Get("/", handler.ListRole)
 	role.Get("/:id", handler.GetRole)
 	role.Post("/store", handler.CreateRole)
@@ -40,7 +42,7 @@ func Setup(app *fiber.App) {
 	role.Delete("/delete/:id", handler.DeleteRole)
 
 	// permission
-	permission := app.Group("/permission", middleware.Permission("handle permission"))
+	permission := api.Group("/permission", middleware.Permission("handle permission"))
 	permission.Get("/", handler.ListPermission)
 	permission.Get("/:id", handler.GetPermission)
 	permission.Post("/store", handler.CreatePermission)
@@ -48,7 +50,7 @@ func Setup(app *fiber.App) {
 	permission.Delete("/delete/:id", handler.DeletePermission)
 
 	// genre
-	genre := app.Group("/genre")
+	genre := api.Group("/genre")
 	genre.Get("/", handler.ListGenre)
 	genre.Get("/:id", handler.GetGenre)
 	genre.Post("/create", handler.CreateGenre)
@@ -56,7 +58,7 @@ func Setup(app *fiber.App) {
 	genre.Delete("/delete/:id", handler.DeleteGenre)
 
 	// film
-	film := app.Group("/film")
+	film := api.Group("/film")
 	film.Get("/", handler.ListFilm)
 	film.Get("/:id", handler.GetFilm)
 	film.Post("/film/search", handler.SearchFilm)
@@ -66,7 +68,7 @@ func Setup(app *fiber.App) {
 	film.Delete("/delete/:id", handler.DeleteFilm)
 
 	// cinema
-	cinema := app.Group("/cinema")
+	cinema := api.Group("/cinema")
 	cinema.Get("/", handler.ListCinema)
 	cinema.Get("/schedule/:id", handler.ListCinemaSchedule)
 	cinema.Get("/:id", handler.GetCinema)
@@ -75,7 +77,7 @@ func Setup(app *fiber.App) {
 	cinema.Delete("/delete/:id", handler.DeleteCinema)
 
 	// screen type
-	screen_type := app.Group("/screen/type")
+	screen_type := api.Group("/screen/type")
 	screen_type.Get("/", handler.ListScreenType)
 	screen_type.Get("/:id", handler.GetScreenType)
 	screen_type.Post("/create", handler.CreateScreenType)
@@ -83,7 +85,7 @@ func Setup(app *fiber.App) {
 	screen_type.Delete("/delete/:id", handler.DeleteScreenType)
 
 	// screen
-	screen := app.Group("/screen")
+	screen := api.Group("/screen")
 	screen.Get("/", handler.ListScreen)
 	screen.Get("/:id", handler.GetScreen)
 	screen.Post("/create", handler.CreateScreen)
@@ -91,7 +93,7 @@ func Setup(app *fiber.App) {
 	screen.Delete("/delete/:id", handler.DeleteScreen)
 
 	// seat
-	seat := app.Group("/seat")
+	seat := api.Group("/seat")
 	seat.Get("/", handler.ListSeat)
 	seat.Get("/:id", handler.GetSeat)
 	seat.Post("/create", handler.CreateSeat)
@@ -99,7 +101,7 @@ func Setup(app *fiber.App) {
 	seat.Delete("/delete/:id", handler.DeleteSeat)
 
 	// showtime
-	showtime := app.Group("/showtime")
+	showtime := api.Group("/showtime")
 	showtime.Get("/", handler.ListShowTime)
 	showtime.Get("/:id", handler.GetShowTime)
 	showtime.Post("/create", handler.CreateShowTime)
@@ -107,19 +109,19 @@ func Setup(app *fiber.App) {
 	showtime.Delete("/delete/:id", handler.DeleteShowTime)
 
 	// booking
-	booking := app.Group("/booking")
+	booking := api.Group("/booking")
 	booking.Get("/", handler.ListBooking)
 	booking.Post("/create", handler.CreateBooking)
 	booking.Delete("/delete/:id", handler.DeleteBooking)
 
 	// booking seat
-	booking_seat := app.Group("/booking/seat")
+	booking_seat := api.Group("/booking/seat")
 	booking_seat.Get("/", handler.ListBookingSeat)
 	booking_seat.Post("/create", handler.CreateBookingSeat)
 	booking_seat.Delete("/delete/:id", handler.DeleteBookingSeat)
 
 	// payment
-	payment := app.Group("/payment")
+	payment := api.Group("/payment")
 	payment.Post("/", handler.ListPayment)
 	payment.Post("/create", handler.CreatePayment)
 }

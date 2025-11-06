@@ -10,28 +10,31 @@ import (
 )
 
 const CreatePayment = `-- name: CreatePayment :one
-INSERT INTO payment (booking_id, payment_method, payment_status, transaction_amount, payment_time)
+INSERT INTO payment (booking_id, user_id,payment_method, payment_status, transaction_amount, payment_time)
 SELECT 
     b.id,
-    $1 AS payment_method,
+    $1 AS user_id,
+    $2 AS payment_method,
     'Success' AS payment_status,
     b.total_amount AS transaction_amount,
     NOW() AS payment_time
 FROM booking b
-WHERE b.id = $2
-RETURNING id, booking_id, payment_method, payment_status, transaction_amount, payment_time
+WHERE b.id = $3
+RETURNING id, user_id, booking_id, payment_method, payment_status, transaction_amount, payment_time
 `
 
 type CreatePaymentParams struct {
+	UserID        int64  `json:"user_id"`
 	PaymentMethod string `json:"payment_method"`
 	BookingID     int64  `json:"booking_id"`
 }
 
 func (q *Queries) CreatePayment(ctx context.Context, arg CreatePaymentParams) (Payment, error) {
-	row := q.db.QueryRow(ctx, CreatePayment, arg.PaymentMethod, arg.BookingID)
+	row := q.db.QueryRow(ctx, CreatePayment, arg.UserID, arg.PaymentMethod, arg.BookingID)
 	var i Payment
 	err := row.Scan(
 		&i.ID,
+		&i.UserID,
 		&i.BookingID,
 		&i.PaymentMethod,
 		&i.PaymentStatus,
@@ -42,7 +45,7 @@ func (q *Queries) CreatePayment(ctx context.Context, arg CreatePaymentParams) (P
 }
 
 const ListPayment = `-- name: ListPayment :many
-SELECT id, booking_id, payment_method, payment_status, transaction_amount, payment_time FROM payment WHERE booking_id = (SELECT id FROM booking WHERE user_id = $1)
+SELECT id, user_id, booking_id, payment_method, payment_status, transaction_amount, payment_time FROM payment WHERE user_id = $1
 `
 
 func (q *Queries) ListPayment(ctx context.Context, userID int64) ([]Payment, error) {
@@ -56,6 +59,7 @@ func (q *Queries) ListPayment(ctx context.Context, userID int64) ([]Payment, err
 		var i Payment
 		if err := rows.Scan(
 			&i.ID,
+			&i.UserID,
 			&i.BookingID,
 			&i.PaymentMethod,
 			&i.PaymentStatus,
