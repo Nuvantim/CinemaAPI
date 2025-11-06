@@ -28,10 +28,10 @@ func GetGenre(id int64) (model.Genre, error) {
 	return data, nil
 }
 
-func CreateGenre(body model.Genre) (model.Genre, error) {
+func CreateGenre(body any) (model.Genre, error) {
 	var url = "/genre/create"
 
-	data, err := gateway.PostCinema[model.Genre, model.Genre](url, body)
+	data, err := gateway.PostCinema[any, model.Genre](url, body)
 	if err != nil {
 		return model.Genre{}, err
 	}

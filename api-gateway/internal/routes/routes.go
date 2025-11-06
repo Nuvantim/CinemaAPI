@@ -61,10 +61,10 @@ func Setup(app *fiber.App) {
 	film := api.Group("/film")
 	film.Get("/", handler.ListFilm)
 	film.Get("/:id", handler.GetFilm)
-	film.Post("/film/search", handler.SearchFilm)
-	film.Get("/film/genre/:id", handler.SearchFilmGenre)
+	film.Post("/search", handler.SearchFilm)
+	film.Get("/genre/:id", handler.SearchFilmGenre)
 	film.Post("/create", handler.CreateFilm)
-	film.Put("/update", handler.UpdateFilm)
+	film.Put("/update/:id", handler.UpdateFilm)
 	film.Delete("/delete/:id", handler.DeleteFilm)
 
 	// cinema
@@ -73,7 +73,7 @@ func Setup(app *fiber.App) {
 	cinema.Get("/schedule/:id", handler.ListCinemaSchedule)
 	cinema.Get("/:id", handler.GetCinema)
 	cinema.Post("/create", handler.CreateCinema)
-	cinema.Put("/update", handler.UpdateCinema)
+	cinema.Put("/update/:id", handler.UpdateCinema)
 	cinema.Delete("/delete/:id", handler.DeleteCinema)
 
 	// screen type
@@ -81,7 +81,7 @@ func Setup(app *fiber.App) {
 	screen_type.Get("/", handler.ListScreenType)
 	screen_type.Get("/:id", handler.GetScreenType)
 	screen_type.Post("/create", handler.CreateScreenType)
-	screen_type.Put("/update", handler.CreateScreenType)
+	screen_type.Put("/update/:id", handler.UpdateScreenType)
 	screen_type.Delete("/delete/:id", handler.DeleteScreenType)
 
 	// screen
@@ -89,7 +89,7 @@ func Setup(app *fiber.App) {
 	screen.Get("/", handler.ListScreen)
 	screen.Get("/:id", handler.GetScreen)
 	screen.Post("/create", handler.CreateScreen)
-	screen.Put("/update", handler.UpdateScreen)
+	screen.Put("/update/:id", handler.UpdateScreen)
 	screen.Delete("/delete/:id", handler.DeleteScreen)
 
 	// seat
@@ -97,7 +97,7 @@ func Setup(app *fiber.App) {
 	seat.Get("/", handler.ListSeat)
 	seat.Get("/:id", handler.GetSeat)
 	seat.Post("/create", handler.CreateSeat)
-	seat.Put("/update", handler.UpdateSeat)
+	seat.Put("/update/:id", handler.UpdateSeat)
 	seat.Delete("/delete/:id", handler.DeleteSeat)
 
 	// showtime
@@ -105,7 +105,7 @@ func Setup(app *fiber.App) {
 	showtime.Get("/", handler.ListShowTime)
 	showtime.Get("/:id", handler.GetShowTime)
 	showtime.Post("/create", handler.CreateShowTime)
-	showtime.Put("/update", handler.UpdateShowTime)
+	showtime.Put("/update/:id", handler.UpdateShowTime)
 	showtime.Delete("/delete/:id", handler.DeleteShowTime)
 
 	// booking

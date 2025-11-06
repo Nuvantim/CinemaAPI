@@ -118,7 +118,7 @@ func CreateToken(id int64, email string, role []repo.AllRoleClientRow) (string, 
 		Roles:  role,
 		RegisteredClaims: jwt.RegisteredClaims{
 			IssuedAt:  jwt.NewNumericDate(now),
-			ExpiresAt: jwt.NewNumericDate(now.Add(5 * time.Minute)),
+			ExpiresAt: jwt.NewNumericDate(now.Add(5 * time.Hour)),
 		},
 	}
 

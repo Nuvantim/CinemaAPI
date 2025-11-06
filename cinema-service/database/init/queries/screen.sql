@@ -10,10 +10,7 @@ RETURNING id;
 SELECT * FROM screen_type WHERE id = $1;
 
 -- name: UpdateScreenType :one
-UPDATE screen_type
-SET name = $2
-WHERE id = $1
-RETURNING id;
+UPDATE screen_type SET name = $2 WHERE id = $1 RETURNING id;
 
 -- name: DeleteScreenType :exec
 DELETE FROM screen_type WHERE id = $1;

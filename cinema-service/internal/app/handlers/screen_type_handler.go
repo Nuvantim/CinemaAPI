@@ -68,7 +68,7 @@ func UpdateScreenType(w http.ResponseWriter, r *http.Request) {
 }
 
 func DeleteScreenType(w http.ResponseWriter, r *http.Request) {
-	id, err := parser.ParamsInt(r, "/scree/type/delete/")
+	id, err := parser.ParamsInt(r, "/screen/type/delete/")
 	if err != nil {
 		response.Error(w, err)
 		return

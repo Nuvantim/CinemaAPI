@@ -201,10 +201,7 @@ func (q *Queries) UpdateScreen(ctx context.Context, arg UpdateScreenParams) (int
 }
 
 const UpdateScreenType = `-- name: UpdateScreenType :one
-UPDATE screen_type
-SET name = $2
-WHERE id = $1
-RETURNING id
+UPDATE screen_type SET name = $2 WHERE id = $1 RETURNING id
 `
 
 type UpdateScreenTypeParams struct {

@@ -26,10 +26,10 @@ func GetScreenType(id int64) (model.ScreenType, error) {
 	return data, nil
 }
 
-func CreateScreenType(body model.ScreenType) (model.ScreenType, error) {
+func CreateScreenType(body any) (model.ScreenType, error) {
 	url := "/screen/type/create"
 
-	data, err := gateway.PostCinema[model.ScreenType, model.ScreenType](url, body)
+	data, err := gateway.PostCinema[any, model.ScreenType](url, body)
 	if err != nil {
 		return model.ScreenType{}, err
 	}
