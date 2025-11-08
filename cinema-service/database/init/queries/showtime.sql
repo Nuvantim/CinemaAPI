@@ -40,9 +40,6 @@ WHERE showtime.id = $1
   AND EXISTS (SELECT 1 FROM screen WHERE id = $3)
 RETURNING id;
 
---name:ShowtimePrice :one
-SELECT (st.base_price * se.seat_price_modifier) AS ticket_price FROM public.showtime st JOIN public.seat se ON st.screen_id = se.screen_id WHERE st.id = $1 AND se.id = $2;
-
 -- name: DeleteShowTime :exec
 DELETE FROM showtime WHERE id = $1;
 
