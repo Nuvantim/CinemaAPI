@@ -31,6 +31,8 @@ sql:
         overrides:
           - column: user_account.*
             go_struct_tag: validate:"required"
+          - column: user_account.email
+            go_struct_tag: validate:"required,email"
           - column: user_profile.*
             go_struct_tag: validate:"required"
           - column: permission.*

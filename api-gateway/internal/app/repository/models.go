@@ -19,7 +19,7 @@ type Permission struct {
 type UserAccount struct {
 	ID        int64     `json:"id" validate:"required"`
 	Name      string    `json:"name" validate:"required"`
-	Email     string    `json:"email" validate:"required"`
+	Email     string    `json:"email" validate:"required,email"`
 	Password  string    `json:"password" validate:"required"`
 	CreatedAt time.Time `json:"created_at" validate:"required"`
 }

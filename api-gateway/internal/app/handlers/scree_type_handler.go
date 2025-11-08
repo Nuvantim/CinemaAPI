@@ -37,7 +37,7 @@ func GetScreenType(c *fiber.Ctx) error {
 }
 func CreateScreenType(c *fiber.Ctx) error {
 	// declared model
-	var screen_type = struct{
+	var screen_type = struct {
 		Name string `json:"name" validate:"required"`
 	}{}
 

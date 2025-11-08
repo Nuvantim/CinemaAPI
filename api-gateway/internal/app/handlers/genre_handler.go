@@ -38,7 +38,7 @@ func GetGenre(c *fiber.Ctx) error {
 
 func CreateGenre(c *fiber.Ctx) error {
 	// declared model
-	var genre = struct{
+	var genre = struct {
 		Name string `json:"name" validate:"required"`
 	}{}
 

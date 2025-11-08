@@ -14,10 +14,17 @@ import (
 type ListBookingRow struct {
 	ID          int64               `json:"id"`
 	UserID      int64               `json:"user_id"`
-	ShowtimeID  int64               `json:"showtime_id"`
 	ShowTime    dto.ListShowTimeRow `json:"showtime"`
 	BookingTime pgtype.Timestamp    `json:"booking_time"`
 	TotalAmount pgtype.Float8       `json:"total_amount"`
+}
+
+type DataBookingRow struct {
+	ID          int64              `json:"id"`
+	UserID      int64              `json:"user_id"`
+	ShowTime    dto.GetShowTimeRow `json:"showtime"`
+	BookingTime pgtype.Timestamp   `json:"booking_time"`
+	TotalAmount pgtype.Float8      `json:"total_amount"`
 }
 
 func ListBooking(body any) ([]ListBookingRow, error) {
@@ -44,7 +51,6 @@ func ListBooking(body any) ([]ListBookingRow, error) {
 		response := ListBookingRow{
 			ID:          b.ID,
 			UserID:      b.UserID,
-			ShowtimeID:  b.ShowtimeID,
 			ShowTime:    showtime,
 			TotalAmount: b.TotalAmount,
 		}
@@ -55,12 +61,23 @@ func ListBooking(body any) ([]ListBookingRow, error) {
 	return data, nil
 }
 
-func CreateBooking(body model.CreateBookingParams) ([]model.Booking, error) {
+func CreateBooking(body model.CreateBookingParams) (DataBookingRow, error) {
 	var url = "/booking/create"
 
-	data, err := gateway.PostBooking[model.CreateBookingParams, []model.Booking](url, body)
+	booking, err := gateway.PostBooking[model.CreateBookingParams, model.Booking](url, body)
 	if err != nil {
-		return []model.Booking{}, err
+		return DataBookingRow{}, err
+	}
+	showtime, err := GetShowTime(booking.ShowtimeID)
+	if err != nil {
+		return DataBookingRow{}, err
+	}
+
+	data := DataBookingRow{
+		ID:          booking.ID,
+		UserID:      booking.UserID,
+		ShowTime:    showtime,
+		TotalAmount: booking.TotalAmount,
 	}
 
 	return data, nil

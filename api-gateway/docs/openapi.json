@@ -1,0 +1,956 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Cinema-Doc",
+    "description": "",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "{{BASE_URL}}",
+      "description": "Production Server"
+    }
+  ],
+  "paths": {
+    "/": {
+      "get": {
+        "tags": [
+          "Home"
+        ],
+        "summary": "Home",
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          }
+        }
+      }
+    },
+    "/auth/send-otp": {
+      "post": {
+        "tags": [
+          "SendOTP"
+        ],
+        "summary": "SendOTP",
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "example": {
+                  "email": "dimas@gmail.com"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/register": {
+      "post": {
+        "tags": [
+          "Register"
+        ],
+        "summary": "Register",
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "example": {
+                  "name": "dimas",
+                  "email": "dimas@gmail.com",
+                  "password": "12345679",
+                  "otp": "6VH5950"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/login": {
+      "post": {
+        "tags": [
+          "Login"
+        ],
+        "summary": "Login",
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "example": {
+                  "email": "dimas@gmail.com",
+                  "password": "12345678"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/logout": {
+      "post": {
+        "tags": [
+          "Log Out"
+        ],
+        "summary": "Log Out",
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          }
+        }
+      }
+    },
+    "/auth/reset-password": {
+      "post": {
+        "tags": [
+          "UpdatePassword"
+        ],
+        "summary": "UpdatePassword",
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "example": {
+                  "otp": "4X5PNOE",
+                  "password": "12345678"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/client/": {
+      "get": {
+        "tags": [
+          "ListClient"
+        ],
+        "summary": "ListClient",
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          }
+        }
+      }
+    },
+    "/client/1": {
+      "get": {
+        "tags": [
+          "FindClient"
+        ],
+        "summary": "FindClient",
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          }
+        }
+      }
+    },
+    "/client/update/2": {
+      "put": {
+        "tags": [
+          "UpdateClient"
+        ],
+        "summary": "UpdateClient",
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "example": {
+                  "role_id": [
+                    3
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/client/delete/1": {
+      "delete": {
+        "tags": [
+          "New Request"
+        ],
+        "summary": "New Request",
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          }
+        }
+      }
+    },
+    "/role/": {
+      "get": {
+        "tags": [
+          "ListRole"
+        ],
+        "summary": "ListRole",
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          }
+        }
+      }
+    },
+    "/role/1": {
+      "get": {
+        "tags": [
+          "FindRole"
+        ],
+        "summary": "FindRole",
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          }
+        }
+      }
+    },
+    "/role/store": {
+      "post": {
+        "tags": [
+          "CreateRole"
+        ],
+        "summary": "CreateRole",
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "example": {
+                  "name": "role 2",
+                  "permission_id": [
+                    1,
+                    2
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/role/update/1": {
+      "put": {
+        "tags": [
+          "UpdateRole"
+        ],
+        "summary": "UpdateRole",
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "example": {
+                  "name": "new role",
+                  "permission_id": [
+                    1,
+                    2
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/role/delete/5": {
+      "delete": {
+        "tags": [
+          "DeleteRole"
+        ],
+        "summary": "DeleteRole",
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          }
+        }
+      }
+    },
+    "/permission/": {
+      "get": {
+        "tags": [
+          "ListPermission"
+        ],
+        "summary": "ListPermission",
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          }
+        }
+      }
+    },
+    "/permission/1": {
+      "get": {
+        "tags": [
+          "FindPermission"
+        ],
+        "summary": "FindPermission",
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          }
+        }
+      }
+    },
+    "/permission/store": {
+      "post": {
+        "tags": [
+          "CratePermission"
+        ],
+        "summary": "CratePermission",
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "example": {
+                  "name": "manage product"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/permission/update/1": {
+      "put": {
+        "tags": [
+          "UpdatePermission"
+        ],
+        "summary": "UpdatePermission",
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "example": {
+                  "name": "manage product 1"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/permission/delete/1": {
+      "delete": {
+        "tags": [
+          "DeletePermission"
+        ],
+        "summary": "DeletePermission",
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          }
+        }
+      }
+    },
+    "/account/profile": {
+      "get": {
+        "tags": [
+          "Account Profile"
+        ],
+        "summary": "Account Profile",
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          }
+        }
+      }
+    },
+    "/account/update": {
+      "put": {
+        "tags": [
+          "Update Account"
+        ],
+        "summary": "Update Account",
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "example": {
+                  "name": "Firman",
+                  "email": "firman@gmail.com",
+                  "password": "123",
+                  "age": 32,
+                  "phone": 8937839,
+                  "district": "Nguling",
+                  "city": "Pasuruan",
+                  "state": "Jawa Timur",
+                  "country": "indonesia"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/account/delete": {
+      "delete": {
+        "tags": [
+          "Delete Account"
+        ],
+        "summary": "Delete Account",
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          }
+        }
+      }
+    },
+    "/genre/": {
+      "get": {
+        "tags": [
+          "ListGenre"
+        ],
+        "summary": "ListGenre",
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          }
+        }
+      }
+    },
+    "/genre/1": {
+      "get": {
+        "tags": [
+          "GetGenre"
+        ],
+        "summary": "GetGenre",
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          }
+        }
+      }
+    },
+    "/genre/create": {
+      "post": {
+        "tags": [
+          "CreateGenre"
+        ],
+        "summary": "CreateGenre",
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "example": {
+                  "name": "example_genre"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/genre/update/11": {
+      "put": {
+        "tags": [
+          "UpdateGenre"
+        ],
+        "summary": "UpdateGenre",
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "example": {
+                  "name": "example_genre 1"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/genre/delete/11": {
+      "delete": {
+        "tags": [
+          "DeleteScreenType"
+        ],
+        "summary": "DeleteScreenType",
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          }
+        }
+      }
+    },
+    "/film/": {
+      "get": {
+        "tags": [
+          "ListFilm"
+        ],
+        "summary": "ListFilm",
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          }
+        }
+      }
+    },
+    "/film/1": {
+      "get": {
+        "tags": [
+          "GetFilm"
+        ],
+        "summary": "GetFilm",
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          }
+        }
+      }
+    },
+    "/film/genre/1": {
+      "get": {
+        "tags": [
+          "SearchFilmGenre"
+        ],
+        "summary": "SearchFilmGenre",
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          }
+        }
+      }
+    },
+    "/film/search": {
+      "post": {
+        "tags": [
+          "SearchFilm"
+        ],
+        "summary": "SearchFilm",
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "example": {
+                  "title": "The Silent Code"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/film/create": {
+      "post": {
+        "tags": [
+          "CreateFilm"
+        ],
+        "summary": "CreateFilm",
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "example": {
+                  "title": "example_title",
+                  "director": "example_director",
+                  "genre_id": 1,
+                  "Duration": "02:30:09"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/film/update/11": {
+      "put": {
+        "tags": [
+          "UpdateFilm"
+        ],
+        "summary": "UpdateFilm",
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "example": {
+                  "title": "example_title",
+                  "director": "example_director",
+                  "genre_id": 3,
+                  "Duration": "02:20:09"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/film/delete/11": {
+      "delete": {
+        "tags": [
+          "DeleteFilm"
+        ],
+        "summary": "DeleteFilm",
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          }
+        }
+      }
+    },
+    "/cinema/": {
+      "get": {
+        "tags": [
+          "ListCinema"
+        ],
+        "summary": "ListCinema",
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          }
+        }
+      }
+    },
+    "/cinema/1": {
+      "get": {
+        "tags": [
+          "GetCinema"
+        ],
+        "summary": "GetCinema",
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          }
+        }
+      }
+    },
+    "/cinema/schedule/1": {
+      "get": {
+        "tags": [
+          "GetCinemaSchedule"
+        ],
+        "summary": "GetCinemaSchedule",
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          }
+        }
+      }
+    },
+    "/cinema/create": {
+      "post": {
+        "tags": [
+          "CreateCinema"
+        ],
+        "summary": "CreateCinema",
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "example": {
+                  "name": "example_cinema",
+                  "address": "example_address",
+                  "city": "example_city"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/cinema/update/11": {
+      "put": {
+        "tags": [
+          "UpdateCinema"
+        ],
+        "summary": "UpdateCinema",
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "example": {
+                  "name": "example_cinema 1",
+                  "address": "example_address",
+                  "city": "example_city"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/cinema/delete/11": {
+      "delete": {
+        "tags": [
+          "DeleteCinema"
+        ],
+        "summary": "DeleteCinema",
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          }
+        }
+      }
+    },
+    "/screen/type/": {
+      "get": {
+        "tags": [
+          "ListScreenType"
+        ],
+        "summary": "ListScreenType",
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          }
+        }
+      }
+    },
+    "/screen/type/1": {
+      "get": {
+        "tags": [
+          "GetScreenType"
+        ],
+        "summary": "GetScreenType",
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          }
+        }
+      }
+    },
+    "/screen/type/create": {
+      "post": {
+        "tags": [
+          "CreateScreenType"
+        ],
+        "summary": "CreateScreenType",
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "example": {
+                  "name": "example_screen_type"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/screen/type/update/11": {
+      "put": {
+        "tags": [
+          "UpdateScreenType"
+        ],
+        "summary": "UpdateScreenType",
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "example": {
+                  "name": "example_screen_type 2"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {},
+    "securitySchemes": {}
+  }
+}

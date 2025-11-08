@@ -104,7 +104,7 @@ SELECT id,name,email FROM user_account WHERE id = $1
 type GetClientRow struct {
 	ID    int64  `json:"id" validate:"required"`
 	Name  string `json:"name" validate:"required"`
-	Email string `json:"email" validate:"required"`
+	Email string `json:"email" validate:"required,email"`
 }
 
 func (q *Queries) GetClient(ctx context.Context, id int64) (GetClientRow, error) {
@@ -164,7 +164,7 @@ ORDER BY
 type ListClientRow struct {
 	ID    int64       `json:"id" validate:"required"`
 	Name  string      `json:"name" validate:"required"`
-	Email string      `json:"email" validate:"required"`
+	Email string      `json:"email" validate:"required,email"`
 	Role  interface{} `json:"role"`
 }
 

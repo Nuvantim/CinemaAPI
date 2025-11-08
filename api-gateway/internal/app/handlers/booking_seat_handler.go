@@ -38,15 +38,15 @@ func CreateBookingSeat(c *fiber.Ctx) error {
 	}
 
 	// get seat data
-	seat,err := service.GetSeat(booking_seat.SeatID)
-	if err != nil{
-		return c.Status(500).JSON(response.Error("get seat",err.Error()))
+	seat, err := service.GetSeat(booking_seat.SeatID)
+	if err != nil {
+		return c.Status(500).JSON(response.Error("get seat", err.Error()))
 	}
 
 	// add price data
 	booking_seat.PricePaid = seat.SeatPriceModifier
 
-	if err := validate.BodyStructs(booking_seat);err != nil{
+	if err := validate.BodyStructs(booking_seat); err != nil {
 		return c.Status(422).JSON(response.Error("validates data", err.Error()))
 	}
 
@@ -60,7 +60,7 @@ func CreateBookingSeat(c *fiber.Ctx) error {
 
 func DeleteBookingSeat(c *fiber.Ctx) error {
 	id := c.Params("id")
-	
+
 	if err := service.DeleteBookingSeat(id); err != nil {
 		return c.Status(500).JSON(response.Error("delete booking seat", err.Error()))
 	}

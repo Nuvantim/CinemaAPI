@@ -29,7 +29,7 @@ RETURNING id
 
 type CreateUserParams struct {
 	Name     string `json:"name" validate:"required"`
-	Email    string `json:"email" validate:"required"`
+	Email    string `json:"email" validate:"required,email"`
 	Password string `json:"password" validate:"required"`
 }
 
@@ -55,7 +55,7 @@ SELECT id, email,password FROM user_account WHERE email = $1
 
 type FindEmailRow struct {
 	ID       int64  `json:"id" validate:"required"`
-	Email    string `json:"email" validate:"required"`
+	Email    string `json:"email" validate:"required,email"`
 	Password string `json:"password" validate:"required"`
 }
 
@@ -103,7 +103,7 @@ UPDATE user_account SET password=$2 WHERE email=$1
 `
 
 type ResetPasswordParams struct {
-	Email    string `json:"email" validate:"required"`
+	Email    string `json:"email" validate:"required,email"`
 	Password string `json:"password" validate:"required"`
 }
 

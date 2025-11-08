@@ -13,6 +13,9 @@ COPY . .
 RUN mv env.prod .env && \
     mv .env /app
 
+# Move API documentation folder
+RUN mv /source/docs /app
+
 # Move the built binary to the final directory
 RUN mv /source/bin /app
 

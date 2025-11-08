@@ -5,5 +5,7 @@ import (
 )
 
 func Home(c *fiber.Ctx) error {
-	return c.Render("home", fiber.Map{})
+	return c.Render("home", fiber.Map{
+		"URL": "/api/v1/docs/",
+	})
 }
