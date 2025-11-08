@@ -1,19 +1,24 @@
 #!/bin/bash
 
-# Loop semua folder di direktori saat ini
 for dir in */; do
-    # Cek apakah folder berisi Makefile
-    if [ -f "$dir/Makefile" ]; then
-        echo "🔧 Running 'make build' in $dir ..."
+    [ -d "$dir" ] || continue
+
+    if [ -f "${dir}Makefile" ]; then
+        echo "🔧 Running 'make build' in '$dir' ..."
         (
-            cd "$dir" || exit
+            cd "$dir" || { echo "❌ Failed to enter directory: $dir"; echo; exit 1; }
             if make build; then
                 echo "✅ Success: $dir"
+                echo
             else
                 echo "❌ Failed: $dir (skipping...)"
+                echo
             fi
         )
     else
-        echo "⚠️ Skip $dir (no Makefile found)"
+        echo "⚠️ Skipping '$dir' (no Makefile found)"
+        echo
     fi
 done
+
+echo "🏁 All done!"
