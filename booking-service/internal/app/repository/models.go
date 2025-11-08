@@ -10,11 +10,11 @@ import (
 )
 
 type Booking struct {
-	ID          int64            `json:"id"`
-	UserID      int64            `json:"user_id"`
-	ShowtimeID  int64            `json:"showtime_id"`
-	BookingTime pgtype.Timestamp `json:"booking_time"`
-	TotalAmount pgtype.Float8    `json:"total_amount"`
+	ID          int64              `json:"id"`
+	UserID      int64              `json:"user_id"`
+	ShowtimeID  int64              `json:"showtime_id"`
+	BookingTime pgtype.Timestamptz `json:"booking_time"`
+	TotalAmount pgtype.Float8      `json:"total_amount"`
 }
 
 type BookingSeat struct {
@@ -25,11 +25,11 @@ type BookingSeat struct {
 }
 
 type Payment struct {
-	ID                int64       `json:"id"`
-	UserID            int64       `json:"user_id"`
-	BookingID         int64       `json:"booking_id"`
-	PaymentMethod     string      `json:"payment_method"`
-	PaymentStatus     pgtype.Text `json:"payment_status"`
-	TransactionAmount float64     `json:"transaction_amount"`
-	PaymentTime       pgtype.Date `json:"payment_time"`
+	ID                int64              `json:"id"`
+	UserID            int64              `json:"user_id"`
+	BookingID         int64              `json:"booking_id"`
+	PaymentMethod     string             `json:"payment_method"`
+	PaymentStatus     pgtype.Text        `json:"payment_status"`
+	TransactionAmount float64            `json:"transaction_amount"`
+	PaymentTime       pgtype.Timestamptz `json:"payment_time"`
 }

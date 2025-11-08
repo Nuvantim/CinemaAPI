@@ -13,7 +13,7 @@ import (
 
 const CreateBooking = `-- name: CreateBooking :one
 INSERT INTO booking (user_id, showtime_id)
-VALUES($1,$2) RETURNING user_id
+VALUES($1,$2) RETURNING id, user_id, showtime_id, booking_time, total_amount
 `
 
 type CreateBookingParams struct {
@@ -21,15 +21,21 @@ type CreateBookingParams struct {
 	ShowtimeID int64 `json:"showtime_id" validate:"required"`
 }
 
-func (q *Queries) CreateBooking(ctx context.Context, arg CreateBookingParams) (int64, error) {
+func (q *Queries) CreateBooking(ctx context.Context, arg CreateBookingParams) (Booking, error) {
 	row := q.db.QueryRow(ctx, CreateBooking, arg.UserID, arg.ShowtimeID)
-	var user_id int64
-	err := row.Scan(&user_id)
-	return user_id, err
+	var i Booking
+	err := row.Scan(
+		&i.ID,
+		&i.UserID,
+		&i.ShowtimeID,
+		&i.BookingTime,
+		&i.TotalAmount,
+	)
+	return i, err
 }
 
 const CreateBookingSeat = `-- name: CreateBookingSeat :one
-INSERT INTO booking_seat (booking_id, seat_id, price_paid) VALUES($1,$2,$3) RETURNING booking_id
+INSERT INTO booking_seat (booking_id, seat_id, price_paid) VALUES($1,$2,$3) RETURNING id, booking_id, seat_id, price_paid
 `
 
 type CreateBookingSeatParams struct {
@@ -38,11 +44,16 @@ type CreateBookingSeatParams struct {
 	PricePaid float64 `json:"price_paid" validate:"required"`
 }
 
-func (q *Queries) CreateBookingSeat(ctx context.Context, arg CreateBookingSeatParams) (int64, error) {
+func (q *Queries) CreateBookingSeat(ctx context.Context, arg CreateBookingSeatParams) (BookingSeat, error) {
 	row := q.db.QueryRow(ctx, CreateBookingSeat, arg.BookingID, arg.SeatID, arg.PricePaid)
-	var booking_id int64
-	err := row.Scan(&booking_id)
-	return booking_id, err
+	var i BookingSeat
+	err := row.Scan(
+		&i.ID,
+		&i.BookingID,
+		&i.SeatID,
+		&i.PricePaid,
+	)
+	return i, err
 }
 
 const CreatePayment = `-- name: CreatePayment :one

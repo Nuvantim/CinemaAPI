@@ -10,11 +10,11 @@ import (
 )
 
 type Booking struct {
-	ID          int64            `json:"id" validate:"required"`
-	UserID      int64            `json:"user_id" validate:"required"`
-	ShowtimeID  int64            `json:"showtime_id" validate:"required"`
-	BookingTime pgtype.Timestamp `json:"booking_time" validate:"required"`
-	TotalAmount pgtype.Float8    `json:"total_amount" validate:"required"`
+	ID          int64              `json:"id" validate:"required"`
+	UserID      int64              `json:"user_id" validate:"required"`
+	ShowtimeID  int64              `json:"showtime_id" validate:"required"`
+	BookingTime pgtype.Timestamptz `json:"booking_time" validate:"required"`
+	TotalAmount pgtype.Float8      `json:"total_amount" validate:"required"`
 }
 
 type BookingSeat struct {
@@ -25,11 +25,11 @@ type BookingSeat struct {
 }
 
 type Payment struct {
-	ID                int64       `json:"id" validate:"required"`
-	UserID            int64       `json:"user_id" validate:"required"`
-	BookingID         int64       `json:"booking_id" validate:"required"`
-	PaymentMethod     string      `json:"payment_method" validate:"required"`
-	PaymentStatus     pgtype.Text `json:"payment_status" validate:"required"`
-	TransactionAmount float64     `json:"transaction_amount" validate:"required"`
-	PaymentTime       pgtype.Date `json:"payment_time" validate:"required"`
+	ID                int64              `json:"id" validate:"required"`
+	UserID            int64              `json:"user_id" validate:"required"`
+	BookingID         int64              `json:"booking_id" validate:"required"`
+	PaymentMethod     string             `json:"payment_method" validate:"required"`
+	PaymentStatus     pgtype.Text        `json:"payment_status" validate:"required"`
+	TransactionAmount float64            `json:"transaction_amount" validate:"required"`
+	PaymentTime       pgtype.Timestamptz `json:"payment_time" validate:"required"`
 }

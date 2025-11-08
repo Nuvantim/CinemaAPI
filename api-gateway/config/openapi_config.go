@@ -1,5 +1,14 @@
 package config
 
+import (
+	"io/ioutil"
+	"log"
+	"os"
+	"strings"
+
+	"github.com/yokeTH/gofiber-scalar/scalar/v2"
+)
+
 func APIDocs() scalar.Config {
 	root, err := os.OpenRoot("docs")
 	if err != nil {

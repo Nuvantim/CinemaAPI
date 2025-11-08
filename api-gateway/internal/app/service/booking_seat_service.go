@@ -12,10 +12,10 @@ import (
 )
 
 type ListBookingSeatRow struct {
-	ID        uuid.UUID         `json:"id"`
-	BookingID int64             `json:"booking_id"`
+	ID        uuid.UUID       `json:"id"`
+	BookingID int64           `json:"booking_id"`
 	Seat      dto.ListSeatRow `json:"seat"`
-	PricePaid float64           `json:"price_paid"`
+	PricePaid float64         `json:"price_paid"`
 }
 
 type DataBookingSeatRow struct {

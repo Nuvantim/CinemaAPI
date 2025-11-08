@@ -128,16 +128,16 @@ INSERT INTO "public".screen (cinema_id, name, screen_type_id) VALUES
 (9, 'VIP Room', 7);
 
 INSERT INTO "public".seat (screen_id, seat_row, seat_number, seat_price_modifier) VALUES
-(1, 'A', 1, 1.0),
-(1, 'A', 2, 1.0),
-(1, 'B', 1, 1.1),
-(2, 'A', 1, 1.2),
-(2, 'B', 2, 1.2),
-(3, 'C', 3, 1.3),
-(4, 'A', 1, 1.5),
-(5, 'A', 1, 1.0),
-(6, 'B', 2, 1.1),
-(7, 'C', 3, 1.0);
+(1, 'A', 1, 40000),
+(1, 'A', 2, 20000),
+(1, 'B', 1, 80000),
+(2, 'A', 1, 50000),
+(2, 'B', 2, 50000),
+(3, 'C', 3, 65000),
+(4, 'A', 1, 35000),
+(5, 'A', 1, 48000),
+(6, 'B', 2, 79000),
+(7, 'C', 3, 80000),
 
 INSERT INTO "public".showtime (film_id, screen_id, start_time, base_price) VALUES
 (1, 1, '2025-11-05 10:00', 40000),
