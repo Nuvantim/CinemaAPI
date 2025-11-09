@@ -5,6 +5,7 @@ import (
 	"github.com/yokeTH/gofiber-scalar/scalar/v2"
 
 	"api/config"
+	"api/internal/app/handlers"
 	"api/internal/middleware"
 )
 
@@ -88,7 +89,7 @@ func Setup(app *fiber.App) {
 	screen_type.Delete("/delete/:id", handler.DeleteScreenType)
 
 	// screen
-	screen := api.Group("/screen", middleware.Permission("handle screem"))
+	screen := api.Group("/screen", middleware.Permission("handle screen"))
 	api.Get("/screen", handler.ListScreen)
 	api.Get("/screen/:id", handler.GetScreen)
 	screen.Post("/create", handler.CreateScreen)

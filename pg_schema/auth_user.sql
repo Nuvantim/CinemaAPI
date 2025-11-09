@@ -59,8 +59,6 @@ INSERT INTO "public".permission( id, name, created_at ) VALUES ( 4, '', '2025-08
 INSERT INTO "public"."role"( id, name, created_at ) VALUES ( 1, 'admin', '2025-08-08 05:03:16 PM');
 INSERT INTO "public".role_permission( id_role, id_permission ) VALUES ( 1, 1);
 INSERT INTO "public".role_permission( id_role, id_permission ) VALUES ( 1, 2);
-INSERT INTO "public".user_account( id, name, email, "password", created_at ) VALUES ( 1, 'kalveir', 'kalveir@gmail.com', '$2a$10$7CfzVVG0RoADtUxfWRC9COjj01d/fk2vlZTz.TsuFpw3HoOZlwVeG', '2025-08-08 05:06:52 PM');
-INSERT INTO "public".user_account( id, name, email, "password", created_at ) VALUES ( 2, 'aviero', 'aviero@gmail.com', '$2a$10$miCMaaFL3XzqiFo06dV6oeO9z5p5LWvrN0qkxCaqOVA9Ma3Ymns6K', '2025-08-08 05:07:19 PM');
-INSERT INTO "public".user_profile( id, user_id, age, phone, district, city, country, created_at ) VALUES ( 2, 2, null, null, null, null, null, '2025-08-08 05:07:19 PM');
+INSERT INTO "public".user_account( id, name, email, "password", created_at ) VALUES ( 1, 'nuvantim', 'nuvantim@gmail.com', '$2a$10$7CfzVVG0RoADtUxfWRC9COjj01d/fk2vlZTz.TsuFpw3HoOZlwVeG', '2025-08-08 05:06:52 PM');
 INSERT INTO "public".user_profile( id, user_id, age, phone, district, city, country, created_at ) VALUES ( 1, 1, null, null, null, null, null, '2025-08-08 05:06:52 PM');
 INSERT INTO "public".user_role( id_user, id_role ) VALUES ( 1, 1);

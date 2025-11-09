@@ -52,6 +52,7 @@ func ListBooking(body any) ([]ListBookingRow, error) {
 			ID:          b.ID,
 			UserID:      b.UserID,
 			ShowTime:    showtime,
+			BookingTime: b.BookingTime,
 			TotalAmount: b.TotalAmount,
 		}
 
@@ -88,6 +89,7 @@ func CreateBooking(body model.CreateBookingParams) (DataBookingRow, error) {
 		ID:          booking.ID,
 		UserID:      booking.UserID,
 		ShowTime:    showtime,
+		BookingTime: booking.BookingTime,
 		TotalAmount: booking.TotalAmount,
 	}
 

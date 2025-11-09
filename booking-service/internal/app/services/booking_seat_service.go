@@ -17,20 +17,17 @@ func ListBookingSeat(booking_id int64) ([]model.BookingSeat, error) {
 	return data, nil
 }
 
-func CreateBookingSeat(body model.CreateBookingSeatParams) ([]model.BookingSeat, error) {
-	booking_id, err := db.Queries.CreateBookingSeat(ctx.Background(), body)
+func CreateBookingSeat(body model.CreateBookingSeatParams) (model.BookingSeat, error) {
+	data, err := db.Queries.CreateBookingSeat(ctx.Background(), body)
 	if err != nil {
-		return []model.BookingSeat{}, db.Fatal(err)
+		return model.BookingSeat{}, db.Fatal(err)
 	}
 
 	// update booking amount
 	if err := db.Queries.UpdateBookingAmount(ctx.Background(), body.BookingID); err != nil {
-		return []model.BookingSeat{}, db.Fatal(err)
+		return model.BookingSeat{}, db.Fatal(err)
 	}
-	data, err := db.Queries.ListBookingSeat(ctx.Background(), booking_id)
-	if err != nil {
-		return []model.BookingSeat{}, db.Fatal(err)
-	}
+
 	return data, nil
 }
 

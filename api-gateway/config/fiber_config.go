@@ -30,7 +30,7 @@ func FiberConfig() fiber.Config {
 		AppName:       envServ.AppName,
 		CaseSensitive: true,
 		StrictRouting: true,
-		ServerHeader:  "Kalveir Project",
+		ServerHeader:  "Nuvantim Project",
 		Prefork:       false,
 		Views:         engine,
 	}

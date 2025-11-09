@@ -5,7 +5,7 @@ CREATE  TABLE "public".booking (
     id                   bigint  NOT NULL  ,
     user_id              bigint  NOT NULL  ,
     showtime_id          bigint  NOT NULL  ,
-    booking_time         timestamptz DEFAULT CURRENT_TIMESTAMP NOT NULL  ,
+    booking_time         timestamp DEFAULT CURRENT_TIMESTAMP NOT NULL  ,
     total_amount         double precision DEFAULT 0   ,
     CONSTRAINT pk_booking PRIMARY KEY ( id ),
     CONSTRAINT unq_booking UNIQUE ( user_id, showtime_id ) 
@@ -28,7 +28,7 @@ CREATE  TABLE "public".payment (
     payment_method       varchar(100)  NOT NULL  ,
     payment_status       varchar(10)    ,
     transaction_amount   double precision  NOT NULL  ,
-    payment_time         timestamptz DEFAULT CURRENT_TIMESTAMP   ,
+    payment_time         timestamp DEFAULT CURRENT_TIMESTAMP   ,
     CONSTRAINT pk_payment PRIMARY KEY ( id ),
     CONSTRAINT fk_payment_booking FOREIGN KEY ( booking_id ) REFERENCES "public".booking( id ) ON DELETE CASCADE  
  );

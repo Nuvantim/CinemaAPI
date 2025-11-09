@@ -7,7 +7,7 @@ import (
 )
 
 func ListPayment(body any) ([]model.Payment, error) {
-	url := "/payments"
+	url := "/payment/"
 
 	data, err := gateway.PostBooking[any, []model.Payment](url, body)
 	if err != nil {
