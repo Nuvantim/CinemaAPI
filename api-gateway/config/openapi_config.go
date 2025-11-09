@@ -20,7 +20,6 @@ func APIDocs() scalar.Config {
 		log.Fatalf("error membuka file openapi.json: %w", err)
 	}
 	defer file.Close()
-	log.Println(file.Name())
 	data, err := ioutil.ReadFile(file.Name())
 	if err != nil {
 		log.Fatalf("gagal baca template: %v", err)

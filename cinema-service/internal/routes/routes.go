@@ -52,6 +52,7 @@ func Setup(mux *http.ServeMux) {
 	r.Get("/seats", handler.ListSeat)
 	r.Get("/seat/", handler.GetSeat)
 	r.Post("/seat/create", handler.CreateSeat)
+	r.Post("/seat/price", handler.SeatPrice)
 	r.Put("/seat/update", handler.UpdateSeat)
 	r.Delete("/seat/delete/", handler.DeleteSeat)
 

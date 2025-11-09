@@ -61,6 +61,17 @@ func ListBooking(body any) ([]ListBookingRow, error) {
 	return data, nil
 }
 
+func GetBooking(id int64) (model.Booking, error) {
+	url := fmt.Sprintf("/booking/%d", id)
+
+	data, err := gateway.GetBooking[model.Booking](url)
+	if err != nil {
+		return model.Booking{}, err
+	}
+
+	return data, nil
+}
+
 func CreateBooking(body model.CreateBookingParams) (DataBookingRow, error) {
 	var url = "/booking/create"
 

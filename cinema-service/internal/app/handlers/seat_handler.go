@@ -51,6 +51,22 @@ func CreateSeat(w http.ResponseWriter, r *http.Request) {
 	response.Success(w, data)
 }
 
+func SeatPrice(w http.ResponseWriter, r *http.Request) {
+	var seat model.SeatPriceParams
+
+	body, err := parser.Body(r.Body, seat)
+	if err != nil {
+		response.Error(w, err)
+		return
+	}
+	data, err := service.SeatPrice(body)
+	if err != nil {
+		response.Error(w, err)
+		return
+	}
+	response.Success(w, data)
+}
+
 func UpdateSeat(w http.ResponseWriter, r *http.Request) {
 	var seat model.UpdateSeatParams
 	body, err := parser.Body(r.Body, seat)

@@ -13,7 +13,7 @@ import (
 
 func ParamsInt(r *http.Request, prefix string) (int64, error) {
 	idStr := strings.TrimPrefix(r.URL.Path, prefix)
-	val, err := strconv.ParseInt(idStr, 10, 32)
+	val, err := strconv.ParseInt(idStr, 10, 64)
 	if err != nil {
 		return 0, fmt.Errorf("invalid id: %v", err)
 	}

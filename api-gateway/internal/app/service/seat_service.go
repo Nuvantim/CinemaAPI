@@ -48,6 +48,21 @@ func UpdateSeat(body model.UpdateSeatParams) (model.GetSeatRow, error) {
 	return data, nil
 }
 
+func SeatPrice(showtime_id, seat_id int64) (int64, error) {
+	var seat = model.SeatPriceParams{
+		ShowtimeID: showtime_id,
+		SeatID:     seat_id,
+	}
+
+	url := "/seat/price"
+	data, err := gateway.PostCinema[model.SeatPriceParams, int64](url, seat)
+	if err != nil {
+		return 0, err
+	}
+
+	return data, nil
+}
+
 func DeleteSeat(id int64) error {
 	url := fmt.Sprintf("/seat/delete/%d", id)
 

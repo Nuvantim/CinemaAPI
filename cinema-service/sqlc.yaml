@@ -29,6 +29,12 @@ sql:
         output_files_suffix: ""   
         
         overrides:
+          - db_type: "bigint"
+            nullable: false
+            go_type: int64
+          - db_type: "int"
+            nullable: false
+            go_type: int64
           - column: "*.created_at"
             go_type: "time.Time"
           - column: "*.updated_at"
@@ -61,6 +67,12 @@ sql:
         output_files_suffix: ""
 
         overrides:
+          - db_type: "bigint"
+            nullable: false
+            go_type: int64
+          - db_type: "int"
+            nullable: false
+            go_type: int64
           - column: genre.*
             go_struct_tag: validate:"required"
           - column: film.*

@@ -19,18 +19,22 @@ func ListBooking(id int64) ([]model.Booking, error) {
 	return data, nil
 }
 
-func CreateBooking(body model.CreateBookingParams) ([]model.Booking, error) {
+func CreateBooking(body model.CreateBookingParams) (model.Booking, error) {
 	id := GenBookingId()
 
 	body.ID = id
-	booking_id, err := db.Queries.CreateBooking(ctx.Background(), body)
+	data, err := db.Queries.CreateBooking(ctx.Background(), body)
 	if err != nil {
-		return []model.Booking{}, db.Fatal(err)
+		return model.Booking{}, db.Fatal(err)
 	}
 
-	data, err := db.Queries.ListBooking(ctx.Background(), booking_id)
+	return data, nil
+}
+
+func GetBooking(id int64) (model.Booking, error) {
+	data, err := db.Queries.GetBooking(ctx.Background(), id)
 	if err != nil {
-		return []model.Booking{}, db.Fatal(err)
+		return model.Booking{}, db.Fatal(err)
 	}
 
 	return data, nil

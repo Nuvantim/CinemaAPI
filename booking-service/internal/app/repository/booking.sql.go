@@ -13,7 +13,7 @@ import (
 
 const CreateBooking = `-- name: CreateBooking :one
 INSERT INTO booking (id,user_id, showtime_id)
-VALUES($1, $2, $3) RETURNING user_id
+VALUES($1, $2, $3) RETURNING id, user_id, showtime_id, booking_time, total_amount
 `
 
 type CreateBookingParams struct {
@@ -22,11 +22,17 @@ type CreateBookingParams struct {
 	ShowtimeID int64 `json:"showtime_id"`
 }
 
-func (q *Queries) CreateBooking(ctx context.Context, arg CreateBookingParams) (int64, error) {
+func (q *Queries) CreateBooking(ctx context.Context, arg CreateBookingParams) (Booking, error) {
 	row := q.db.QueryRow(ctx, CreateBooking, arg.ID, arg.UserID, arg.ShowtimeID)
-	var user_id int64
-	err := row.Scan(&user_id)
-	return user_id, err
+	var i Booking
+	err := row.Scan(
+		&i.ID,
+		&i.UserID,
+		&i.ShowtimeID,
+		&i.BookingTime,
+		&i.TotalAmount,
+	)
+	return i, err
 }
 
 const DeleteBooking = `-- name: DeleteBooking :exec
@@ -36,6 +42,23 @@ DELETE FROM booking WHERE id = $1
 func (q *Queries) DeleteBooking(ctx context.Context, id int64) error {
 	_, err := q.db.Exec(ctx, DeleteBooking, id)
 	return err
+}
+
+const GetBooking = `-- name: GetBooking :one
+SELECT id, user_id, showtime_id, booking_time, total_amount FROM booking WHERE id =$1
+`
+
+func (q *Queries) GetBooking(ctx context.Context, id int64) (Booking, error) {
+	row := q.db.QueryRow(ctx, GetBooking, id)
+	var i Booking
+	err := row.Scan(
+		&i.ID,
+		&i.UserID,
+		&i.ShowtimeID,
+		&i.BookingTime,
+		&i.TotalAmount,
+	)
+	return i, err
 }
 
 const GetTotalAmmountBooking = `-- name: GetTotalAmmountBooking :one

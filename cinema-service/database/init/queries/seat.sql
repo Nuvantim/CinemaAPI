@@ -35,6 +35,11 @@ WHERE seat.id = $1
   AND EXISTS (SELECT 1 FROM screen WHERE id = $2)
 RETURNING id;
 
+-- name: SeatPrice :one
+SELECT (showtime.base_price * seat.seat_price_modifier) AS seat_price 
+FROM showtime JOIN seat ON showtime.screen_id = seat.screen_id 
+WHERE showtime.id = sqlc.arg(showtime_id) AND seat.id = sqlc.arg(seat_id);
+
 -- name: DeleteSeat :exec
 DELETE FROM seat WHERE id = $1;
 

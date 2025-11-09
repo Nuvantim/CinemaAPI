@@ -34,6 +34,9 @@ sql:
             go_type:
               import: "github.com/google/uuid"
               type: "UUID"
+          - db_type: "bigint"
+            nullable: false
+            go_type: int64
           - column: "*.created_at"
             go_type: "time.Time"
           - column: "*.updated_at"
@@ -71,6 +74,9 @@ sql:
             go_type:
               import: "github.com/google/uuid"
               type: "UUID"
+          - db_type: "bigint"
+            nullable: false
+            go_type: int64
           - column: booking.*
             go_struct_tag: validate:"required"
           - column: booking_seat.*

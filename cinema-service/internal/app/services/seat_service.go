@@ -37,6 +37,15 @@ func CreateSeat(body model.CreateSeatParams) (model.GetSeatRow, error) {
 	return data, nil
 }
 
+func SeatPrice(body model.SeatPriceParams) (int64, error) {
+	data, err := db.Queries.SeatPrice(ctx.Background(), body)
+	if err != nil {
+		return 0, db.Fatal(err)
+	}
+
+	return data, nil
+}
+
 func UpdateSeat(body model.UpdateSeatParams) (model.GetSeatRow, error) {
 	seat_id, err := db.Queries.UpdateSeat(ctx.Background(), body)
 	if err != nil {

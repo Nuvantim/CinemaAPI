@@ -12,11 +12,12 @@ func Setup(mux *http.ServeMux) {
 
 	// booking
 	r.Post("/bookings", handler.ListBooking)
+	r.Get("/booking/", handler.GetBooking)
 	r.Post("/booking/create", handler.CreateBooking)
 	r.Delete("/booking/delete/", handler.DeleteBooking)
 
 	// booking seat
-	r.Get("/booking/seats", handler.ListBookingSeat)
+	r.Post("/booking/seats", handler.ListBookingSeat)
 	r.Post("/booking/seat/create", handler.CreateBookingSeat)
 	r.Delete("/booking/seat/delete/", handler.DeleteBookingSeat)
 

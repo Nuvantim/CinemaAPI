@@ -7,8 +7,6 @@ package monorepo
 
 import (
 	"context"
-
-	"github.com/jackc/pgx/v5/pgtype"
 )
 
 const CreateCinema = `-- name: CreateCinema :one
@@ -110,10 +108,10 @@ RETURNING id
 `
 
 type CreateSeatParams struct {
-	ScreenID          pgtype.Int8 `json:"screen_id" validate:"required"`
-	SeatRow           string      `json:"seat_row" validate:"required"`
-	SeatNumber        int32       `json:"seat_number" validate:"required"`
-	SeatPriceModifier float64     `json:"seat_price_modifier" validate:"required"`
+	ScreenID          int64   `json:"screen_id" validate:"required"`
+	SeatRow           string  `json:"seat_row" validate:"required"`
+	SeatNumber        int32   `json:"seat_number" validate:"required"`
+	SeatPriceModifier float64 `json:"seat_price_modifier" validate:"required"`
 }
 
 func (q *Queries) CreateSeat(ctx context.Context, arg CreateSeatParams) (int64, error) {
@@ -762,6 +760,24 @@ func (q *Queries) SearchGenreFilm(ctx context.Context, id int64) ([]SearchGenreF
 	return items, nil
 }
 
+const SeatPrice = `-- name: SeatPrice :one
+SELECT (showtime.base_price * seat.seat_price_modifier) AS seat_price 
+FROM showtime JOIN seat ON showtime.screen_id = seat.screen_id 
+WHERE showtime.id = $1 AND seat.id = $2
+`
+
+type SeatPriceParams struct {
+	ShowtimeID int64 `json:"showtime_id" validate:"required"`
+	SeatID     int64 `json:"seat_id" validate:"required"`
+}
+
+func (q *Queries) SeatPrice(ctx context.Context, arg SeatPriceParams) (int64, error) {
+	row := q.db.QueryRow(ctx, SeatPrice, arg.ShowtimeID, arg.SeatID)
+	var seat_price int64
+	err := row.Scan(&seat_price)
+	return seat_price, err
+}
+
 const UpdateCinema = `-- name: UpdateCinema :one
 UPDATE cinema SET name=$2, address=$3, city=$4 WHERE id =$1 RETURNING id
 `
@@ -888,11 +904,11 @@ RETURNING id
 `
 
 type UpdateSeatParams struct {
-	ID                int64       `json:"id" validate:"required"`
-	ScreenID          pgtype.Int8 `json:"screen_id" validate:"required"`
-	SeatRow           string      `json:"seat_row" validate:"required"`
-	SeatNumber        int32       `json:"seat_number" validate:"required"`
-	SeatPriceModifier float64     `json:"seat_price_modifier" validate:"required"`
+	ID                int64   `json:"id" validate:"required"`
+	ScreenID          int64   `json:"screen_id" validate:"required"`
+	SeatRow           string  `json:"seat_row" validate:"required"`
+	SeatNumber        int32   `json:"seat_number" validate:"required"`
+	SeatPriceModifier float64 `json:"seat_price_modifier" validate:"required"`
 }
 
 func (q *Queries) UpdateSeat(ctx context.Context, arg UpdateSeatParams) (int64, error) {

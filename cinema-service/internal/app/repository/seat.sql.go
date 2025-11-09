@@ -7,8 +7,6 @@ package repository
 
 import (
 	"context"
-
-	"github.com/jackc/pgx/v5/pgtype"
 )
 
 const CreateSeat = `-- name: CreateSeat :one
@@ -19,10 +17,10 @@ RETURNING id
 `
 
 type CreateSeatParams struct {
-	ScreenID          pgtype.Int8 `json:"screen_id"`
-	SeatRow           string      `json:"seat_row"`
-	SeatNumber        int32       `json:"seat_number"`
-	SeatPriceModifier float64     `json:"seat_price_modifier"`
+	ScreenID          int64   `json:"screen_id"`
+	SeatRow           string  `json:"seat_row"`
+	SeatNumber        int32   `json:"seat_number"`
+	SeatPriceModifier float64 `json:"seat_price_modifier"`
 }
 
 func (q *Queries) CreateSeat(ctx context.Context, arg CreateSeatParams) (int64, error) {
@@ -124,6 +122,24 @@ func (q *Queries) ListSeat(ctx context.Context) ([]ListSeatRow, error) {
 	return items, nil
 }
 
+const SeatPrice = `-- name: SeatPrice :one
+SELECT (showtime.base_price * seat.seat_price_modifier) AS seat_price 
+FROM showtime JOIN seat ON showtime.screen_id = seat.screen_id 
+WHERE showtime.id = $1 AND seat.id = $2
+`
+
+type SeatPriceParams struct {
+	ShowtimeID int64 `json:"showtime_id"`
+	SeatID     int64 `json:"seat_id"`
+}
+
+func (q *Queries) SeatPrice(ctx context.Context, arg SeatPriceParams) (int64, error) {
+	row := q.db.QueryRow(ctx, SeatPrice, arg.ShowtimeID, arg.SeatID)
+	var seat_price int64
+	err := row.Scan(&seat_price)
+	return seat_price, err
+}
+
 const UpdateSeat = `-- name: UpdateSeat :one
 UPDATE seat
 SET screen_id = $2,
@@ -136,11 +152,11 @@ RETURNING id
 `
 
 type UpdateSeatParams struct {
-	ID                int64       `json:"id"`
-	ScreenID          pgtype.Int8 `json:"screen_id"`
-	SeatRow           string      `json:"seat_row"`
-	SeatNumber        int32       `json:"seat_number"`
-	SeatPriceModifier float64     `json:"seat_price_modifier"`
+	ID                int64   `json:"id"`
+	ScreenID          int64   `json:"screen_id"`
+	SeatRow           string  `json:"seat_row"`
+	SeatNumber        int32   `json:"seat_number"`
+	SeatPriceModifier float64 `json:"seat_price_modifier"`
 }
 
 func (q *Queries) UpdateSeat(ctx context.Context, arg UpdateSeatParams) (int64, error) {

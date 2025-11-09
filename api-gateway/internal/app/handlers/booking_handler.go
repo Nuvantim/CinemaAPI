@@ -32,8 +32,8 @@ func ListBooking(c *fiber.Ctx) error {
 }
 
 func CreateBooking(c *fiber.Ctx) error {
-	userID := c.Locals("user_id").(int64)
-	if userID == 0 {
+	userID, ok := c.Locals("user_id").(int64)
+	if !ok || userID == 0 {
 		return c.Status(401).JSON(response.Error("get user_id", "unauthorized"))
 	}
 

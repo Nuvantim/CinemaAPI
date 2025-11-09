@@ -9,11 +9,12 @@ import (
 	"context"
 
 	"github.com/google/uuid"
+	"github.com/jackc/pgx/v5/pgtype"
 )
 
 const CreateBooking = `-- name: CreateBooking :one
 INSERT INTO booking (user_id, showtime_id)
-VALUES($1,$2) RETURNING id, user_id, showtime_id, booking_time, total_amount
+VALUES($1, $2) RETURNING user_id
 `
 
 type CreateBookingParams struct {
@@ -21,21 +22,15 @@ type CreateBookingParams struct {
 	ShowtimeID int64 `json:"showtime_id" validate:"required"`
 }
 
-func (q *Queries) CreateBooking(ctx context.Context, arg CreateBookingParams) (Booking, error) {
+func (q *Queries) CreateBooking(ctx context.Context, arg CreateBookingParams) (int64, error) {
 	row := q.db.QueryRow(ctx, CreateBooking, arg.UserID, arg.ShowtimeID)
-	var i Booking
-	err := row.Scan(
-		&i.ID,
-		&i.UserID,
-		&i.ShowtimeID,
-		&i.BookingTime,
-		&i.TotalAmount,
-	)
-	return i, err
+	var user_id int64
+	err := row.Scan(&user_id)
+	return user_id, err
 }
 
 const CreateBookingSeat = `-- name: CreateBookingSeat :one
-INSERT INTO booking_seat (booking_id, seat_id, price_paid) VALUES($1,$2,$3) RETURNING id, booking_id, seat_id, price_paid
+INSERT INTO booking_seat (booking_id, seat_id, price_paid) VALUES($1,$2,$3) RETURNING booking_id
 `
 
 type CreateBookingSeatParams struct {
@@ -44,23 +39,18 @@ type CreateBookingSeatParams struct {
 	PricePaid float64 `json:"price_paid" validate:"required"`
 }
 
-func (q *Queries) CreateBookingSeat(ctx context.Context, arg CreateBookingSeatParams) (BookingSeat, error) {
+func (q *Queries) CreateBookingSeat(ctx context.Context, arg CreateBookingSeatParams) (int64, error) {
 	row := q.db.QueryRow(ctx, CreateBookingSeat, arg.BookingID, arg.SeatID, arg.PricePaid)
-	var i BookingSeat
-	err := row.Scan(
-		&i.ID,
-		&i.BookingID,
-		&i.SeatID,
-		&i.PricePaid,
-	)
-	return i, err
+	var booking_id int64
+	err := row.Scan(&booking_id)
+	return booking_id, err
 }
 
 const CreatePayment = `-- name: CreatePayment :one
-INSERT INTO payment (user_id,booking_id, payment_method, payment_status, transaction_amount, payment_time)
+INSERT INTO payment (booking_id, user_id,payment_method, payment_status, transaction_amount, payment_time)
 SELECT 
-    $1 AS user_id,
     b.id,
+    $1 AS user_id,
     $2 AS payment_method,
     'Success' AS payment_status,
     b.total_amount AS transaction_amount,
@@ -109,6 +99,34 @@ func (q *Queries) DeleteBookingSeat(ctx context.Context, id uuid.UUID) (int64, e
 	var booking_id int64
 	err := row.Scan(&booking_id)
 	return booking_id, err
+}
+
+const GetBooking = `-- name: GetBooking :one
+SELECT id, user_id, showtime_id, booking_time, total_amount FROM booking WHERE id =$1
+`
+
+func (q *Queries) GetBooking(ctx context.Context, id int64) (Booking, error) {
+	row := q.db.QueryRow(ctx, GetBooking, id)
+	var i Booking
+	err := row.Scan(
+		&i.ID,
+		&i.UserID,
+		&i.ShowtimeID,
+		&i.BookingTime,
+		&i.TotalAmount,
+	)
+	return i, err
+}
+
+const GetTotalAmmountBooking = `-- name: GetTotalAmmountBooking :one
+SELECT total_amount FROM booking WHERE id = $1
+`
+
+func (q *Queries) GetTotalAmmountBooking(ctx context.Context, id int64) (pgtype.Float8, error) {
+	row := q.db.QueryRow(ctx, GetTotalAmmountBooking, id)
+	var total_amount pgtype.Float8
+	err := row.Scan(&total_amount)
+	return total_amount, err
 }
 
 const ListBooking = `-- name: ListBooking :many

@@ -45,6 +45,20 @@ func CreateBooking(w http.ResponseWriter, r *http.Request) {
 
 }
 
+func GetBooking(w http.ResponseWriter, r *http.Request) {
+	id, err := parser.ParamsInt(r, "/booking/")
+	if err != nil {
+		response.Error(w, err)
+		return
+	}
+	data, err := service.GetBooking(id)
+	if err != nil {
+		response.Error(w, err)
+		return
+	}
+	response.Success(w, data)
+}
+
 func DeleteBooking(w http.ResponseWriter, r *http.Request) {
 	id, err := parser.ParamsInt(r, "/booking/delete/")
 	if err != nil {
