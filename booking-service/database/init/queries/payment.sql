@@ -1,7 +1,7 @@
 -- name: CreatePayment :one
 INSERT INTO payment (booking_id, user_id,payment_method, payment_status, transaction_amount, payment_time)
 SELECT 
-    b.id,
+    sqlc.arg(booking_id) AS booking_id,
     sqlc.arg(user_id) AS user_id,
     sqlc.arg(payment_method) AS payment_method,
     'Success' AS payment_status,
