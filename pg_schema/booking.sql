@@ -29,6 +29,5 @@ CREATE  TABLE "public".payment (
     payment_status       varchar(10)    ,
     transaction_amount   double precision  NOT NULL  ,
     payment_time         timestamp DEFAULT CURRENT_TIMESTAMP   ,
-    CONSTRAINT pk_payment PRIMARY KEY ( id ),
-    CONSTRAINT fk_payment_booking FOREIGN KEY ( booking_id ) REFERENCES "public".booking( id ) ON DELETE CASCADE  
+    CONSTRAINT pk_payment PRIMARY KEY ( id ) 
  );
