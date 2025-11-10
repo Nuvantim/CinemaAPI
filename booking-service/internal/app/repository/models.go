@@ -14,7 +14,7 @@ type Booking struct {
 	UserID      int64            `json:"user_id"`
 	ShowtimeID  int64            `json:"showtime_id"`
 	BookingTime pgtype.Timestamp `json:"booking_time"`
-	TotalAmount pgtype.Float8    `json:"total_amount"`
+	TotalAmount float64          `json:"total_amount"`
 }
 
 type BookingSeat struct {

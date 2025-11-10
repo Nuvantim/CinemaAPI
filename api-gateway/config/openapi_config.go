@@ -15,9 +15,9 @@ func APIDocs() scalar.Config {
 		log.Fatalf("error membuka folder docs: %w", err)
 	}
 	defer root.Close()
-	file, err := root.Open("openapi.json")
+	file, err := root.Open("openapi.yaml")
 	if err != nil {
-		log.Fatalf("error membuka file openapi.json: %w", err)
+		log.Fatalf("error membuka file openapi.yaml: %w", err)
 	}
 	defer file.Close()
 	data, err := ioutil.ReadFile(file.Name())

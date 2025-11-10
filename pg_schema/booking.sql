@@ -6,7 +6,7 @@ CREATE  TABLE "public".booking (
     user_id              bigint  NOT NULL  ,
     showtime_id          bigint  NOT NULL  ,
     booking_time         timestamp DEFAULT CURRENT_TIMESTAMP NOT NULL  ,
-    total_amount         double precision DEFAULT 0   ,
+    total_amount         double precision DEFAULT 0 NOT NULL,
     CONSTRAINT pk_booking PRIMARY KEY ( id ),
     CONSTRAINT unq_booking UNIQUE ( user_id, showtime_id ) 
  );

@@ -16,7 +16,7 @@ type ListBookingRow struct {
 	UserID      int64               `json:"user_id"`
 	ShowTime    dto.ListShowTimeRow `json:"showtime"`
 	BookingTime pgtype.Timestamp    `json:"booking_time"`
-	TotalAmount pgtype.Float8       `json:"total_amount"`
+	TotalAmount float64             `json:"total_amount"`
 }
 
 type DataBookingRow struct {
@@ -24,7 +24,7 @@ type DataBookingRow struct {
 	UserID      int64              `json:"user_id"`
 	ShowTime    dto.GetShowTimeRow `json:"showtime"`
 	BookingTime pgtype.Timestamp   `json:"booking_time"`
-	TotalAmount pgtype.Float8      `json:"total_amount"`
+	TotalAmount float64            `json:"total_amount"`
 }
 
 func ListBooking(body any) ([]ListBookingRow, error) {

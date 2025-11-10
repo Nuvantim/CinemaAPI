@@ -21,7 +21,7 @@ func CreatePayment(body model.CreatePaymentParams) (model.Payment, error) {
 	if err != nil {
 		return model.Payment{}, db.Fatal(err)
 	}
-	if booking_paid.Float64 == 0 {
+	if booking_paid == 0 {
 		return model.Payment{}, fmt.Errorf("you haven't booked any seats yet")
 	}
 

@@ -9,7 +9,6 @@ import (
 	"context"
 
 	"github.com/google/uuid"
-	"github.com/jackc/pgx/v5/pgtype"
 )
 
 const CreateBooking = `-- name: CreateBooking :one
@@ -53,26 +52,24 @@ func (q *Queries) CreateBookingSeat(ctx context.Context, arg CreateBookingSeatPa
 
 const CreatePayment = `-- name: CreatePayment :one
 INSERT INTO payment (booking_id, user_id,payment_method, payment_status, transaction_amount, payment_time)
-SELECT 
-    b.id,
-    $1 AS user_id,
-    $2 AS payment_method,
-    'Success' AS payment_status,
-    b.total_amount AS transaction_amount,
-    NOW() AS payment_time
-FROM booking b
-WHERE b.id = $3
+VALUES($1,$2,$3,'Success' ,$4,NOW())
 RETURNING id, user_id, booking_id, payment_method, payment_status, transaction_amount, payment_time
 `
 
 type CreatePaymentParams struct {
-	UserID        int64  `json:"user_id" validate:"required"`
-	PaymentMethod string `json:"payment_method" validate:"required"`
-	BookingID     int64  `json:"booking_id" validate:"required"`
+	BookingID     int64   `json:"booking_id" validate:"required"`
+	UserID        int64   `json:"user_id" validate:"required"`
+	PaymentMethod string  `json:"payment_method" validate:"required"`
+	TotalAmount   float64 `json:"total_amount" validate:"required"`
 }
 
 func (q *Queries) CreatePayment(ctx context.Context, arg CreatePaymentParams) (Payment, error) {
-	row := q.db.QueryRow(ctx, CreatePayment, arg.UserID, arg.PaymentMethod, arg.BookingID)
+	row := q.db.QueryRow(ctx, CreatePayment,
+		arg.BookingID,
+		arg.UserID,
+		arg.PaymentMethod,
+		arg.TotalAmount,
+	)
 	var i Payment
 	err := row.Scan(
 		&i.ID,
@@ -127,9 +124,9 @@ const GetTotalAmmountBooking = `-- name: GetTotalAmmountBooking :one
 SELECT total_amount FROM booking WHERE id = $1
 `
 
-func (q *Queries) GetTotalAmmountBooking(ctx context.Context, id int64) (pgtype.Float8, error) {
+func (q *Queries) GetTotalAmmountBooking(ctx context.Context, id int64) (float64, error) {
 	row := q.db.QueryRow(ctx, GetTotalAmmountBooking, id)
-	var total_amount pgtype.Float8
+	var total_amount float64
 	err := row.Scan(&total_amount)
 	return total_amount, err
 }

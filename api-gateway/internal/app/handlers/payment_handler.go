@@ -2,7 +2,6 @@
 package handler
 
 import (
-	
 	"github.com/gofiber/fiber/v2"
 
 	"api/internal/app/service"
@@ -50,10 +49,19 @@ func CreatePayment(c *fiber.Ctx) error {
 		return c.Status(400).JSON(response.Error("parser json", err.Error()))
 	}
 
+	// get booking
+	booking, err := service.GetBooking(payment.BookingID)
+	if err != nil {
+		return c.Status(500).JSON(response.Error("get booking data", err.Error()))
+	}
+
+	// input data payment
 	payment.UserID = user_id
+	payment.BookingID = booking.ID
+	payment.TotalAmount = booking.TotalAmount
 
 	// validate data
-	if err := validate.BodyStructs(payment);err != nil{
+	if err := validate.BodyStructs(payment); err != nil {
 		return c.Status(422).JSON(response.Error("validate data", err.Error()))
 	}
 

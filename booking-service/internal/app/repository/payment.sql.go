@@ -11,26 +11,24 @@ import (
 
 const CreatePayment = `-- name: CreatePayment :one
 INSERT INTO payment (booking_id, user_id,payment_method, payment_status, transaction_amount, payment_time)
-SELECT 
-    b.id,
-    $1 AS user_id,
-    $2 AS payment_method,
-    'Success' AS payment_status,
-    b.total_amount AS transaction_amount,
-    NOW() AS payment_time
-FROM booking b
-WHERE b.id = $3
+VALUES($1,$2,$3,'Success' ,$4,NOW())
 RETURNING id, user_id, booking_id, payment_method, payment_status, transaction_amount, payment_time
 `
 
 type CreatePaymentParams struct {
-	UserID        int64  `json:"user_id"`
-	PaymentMethod string `json:"payment_method"`
-	BookingID     int64  `json:"booking_id"`
+	BookingID     int64   `json:"booking_id"`
+	UserID        int64   `json:"user_id"`
+	PaymentMethod string  `json:"payment_method"`
+	TotalAmount   float64 `json:"total_amount"`
 }
 
 func (q *Queries) CreatePayment(ctx context.Context, arg CreatePaymentParams) (Payment, error) {
-	row := q.db.QueryRow(ctx, CreatePayment, arg.UserID, arg.PaymentMethod, arg.BookingID)
+	row := q.db.QueryRow(ctx, CreatePayment,
+		arg.BookingID,
+		arg.UserID,
+		arg.PaymentMethod,
+		arg.TotalAmount,
+	)
 	var i Payment
 	err := row.Scan(
 		&i.ID,

@@ -7,8 +7,6 @@ package repository
 
 import (
 	"context"
-
-	"github.com/jackc/pgx/v5/pgtype"
 )
 
 const CreateBooking = `-- name: CreateBooking :one
@@ -65,9 +63,9 @@ const GetTotalAmmountBooking = `-- name: GetTotalAmmountBooking :one
 SELECT total_amount FROM booking WHERE id = $1
 `
 
-func (q *Queries) GetTotalAmmountBooking(ctx context.Context, id int64) (pgtype.Float8, error) {
+func (q *Queries) GetTotalAmmountBooking(ctx context.Context, id int64) (float64, error) {
 	row := q.db.QueryRow(ctx, GetTotalAmmountBooking, id)
-	var total_amount pgtype.Float8
+	var total_amount float64
 	err := row.Scan(&total_amount)
 	return total_amount, err
 }

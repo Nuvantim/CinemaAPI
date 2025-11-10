@@ -1,0 +1,979 @@
+openapi: 3.0.0
+info:
+  title: New Document
+  version: 1.0.0
+  description: ''
+servers:
+  - url: {{BASE_URL}}
+paths:
+  '{{url}}/payment/':
+    post:
+      summary: ListPayment
+      description: ''
+      operationId: postUrlPaymentListpayment
+      tags:
+        - Payment
+      responses:
+        '200':
+          description: Successful
+        '400':
+          description: Bad Request
+        '500':
+          description: Server Error
+  '{{url}}/payment/create':
+    post:
+      summary: CreatePayment
+      description: ''
+      operationId: postUrlPaymentCreateCreatepayment
+      tags:
+        - Payment
+      responses:
+        '200':
+          description: Successful
+        '400':
+          description: Bad Request
+        '500':
+          description: Server Error
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: {}
+  '{{url}}/booking/seat/delete/03d035e0-5b00-4c25-8667-88c16b05f8c5':
+    delete:
+      summary: DeleteBookingSeat
+      description: ''
+      operationId: >-
+        deleteUrlBookingSeatDelete03d035e05b004c25866788c16b05f8c5Deletebookingseat
+      tags:
+        - BookingSeat
+      responses:
+        '200':
+          description: Successful
+        '400':
+          description: Bad Request
+        '500':
+          description: Server Error
+  '{{url}}/booking/seat/create':
+    post:
+      summary: CreateBookingSeat
+      description: ''
+      operationId: postUrlBookingSeatCreateCreatebookingseat
+      tags:
+        - BookingSeat
+      responses:
+        '200':
+          description: Successful
+        '400':
+          description: Bad Request
+        '500':
+          description: Server Error
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: {}
+  '{{url}}/booking/seat/':
+    get:
+      summary: ListBookingSeat
+      description: ''
+      operationId: getUrlBookingSeatListbookingseat
+      tags:
+        - BookingSeat
+      responses:
+        '200':
+          description: Successful
+        '400':
+          description: Bad Request
+        '500':
+          description: Server Error
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: {}
+  '{{url}}/booking/delete/2025110919353297':
+    delete:
+      summary: DeleteBooking
+      description: ''
+      operationId: deleteUrlBookingDelete2025110919353297Deletebooking
+      tags:
+        - Booking
+      responses:
+        '200':
+          description: Successful
+        '400':
+          description: Bad Request
+        '500':
+          description: Server Error
+  '{{url}}/booking/create':
+    post:
+      summary: CreateBooking
+      description: ''
+      operationId: postUrlBookingCreateCreatebooking
+      tags:
+        - Booking
+      responses:
+        '200':
+          description: Successful
+        '400':
+          description: Bad Request
+        '500':
+          description: Server Error
+  '{{url}}/booking/':
+    get:
+      summary: ListBooking
+      description: ''
+      operationId: getUrlBookingListbooking
+      tags:
+        - Booking
+      responses:
+        '200':
+          description: Successful
+        '400':
+          description: Bad Request
+        '500':
+          description: Server Error
+  '{{url}}/showtime/delete/11':
+    delete:
+      summary: DeleteShowTime
+      description: ''
+      operationId: deleteUrlShowtimeDelete11Deleteshowtime
+      tags:
+        - ShowTime
+      responses:
+        '200':
+          description: Successful
+        '400':
+          description: Bad Request
+        '500':
+          description: Server Error
+  '{{url}}/showtime/update/11':
+    put:
+      summary: UpdateShowTime
+      description: ''
+      operationId: putUrlShowtimeUpdate11Updateshowtime
+      tags:
+        - ShowTime
+      responses:
+        '200':
+          description: Successful
+        '400':
+          description: Bad Request
+        '500':
+          description: Server Error
+  '{{url}}/showtime/create':
+    post:
+      summary: CreateShowTime
+      description: ''
+      operationId: postUrlShowtimeCreateCreateshowtime
+      tags:
+        - ShowTime
+      responses:
+        '200':
+          description: Successful
+        '400':
+          description: Bad Request
+        '500':
+          description: Server Error
+  '{{url}}/showtime/1':
+    get:
+      summary: GetShowTime
+      description: ''
+      operationId: getUrlShowtime1Getshowtime
+      tags:
+        - ShowTime
+      responses:
+        '200':
+          description: Successful
+        '400':
+          description: Bad Request
+        '500':
+          description: Server Error
+  '{{url}}/showtime/':
+    get:
+      summary: ListShowTime
+      description: ''
+      operationId: getUrlShowtimeListshowtime
+      tags:
+        - ShowTime
+      responses:
+        '200':
+          description: Successful
+        '400':
+          description: Bad Request
+        '500':
+          description: Server Error
+  '{{url}}/seat/delete/11':
+    delete:
+      summary: DeleteSeat
+      description: ''
+      operationId: deleteUrlSeatDelete11Deleteseat
+      tags:
+        - Seat
+      responses:
+        '200':
+          description: Successful
+        '400':
+          description: Bad Request
+        '500':
+          description: Server Error
+  '{{url}}/seat/update/11':
+    put:
+      summary: UpdateSeat
+      description: ''
+      operationId: putUrlSeatUpdate11Updateseat
+      tags:
+        - Seat
+      responses:
+        '200':
+          description: Successful
+        '400':
+          description: Bad Request
+        '500':
+          description: Server Error
+  '{{url}}/seat/create':
+    post:
+      summary: CreateSeat
+      description: ''
+      operationId: postUrlSeatCreateCreateseat
+      tags:
+        - Seat
+      responses:
+        '200':
+          description: Successful
+        '400':
+          description: Bad Request
+        '500':
+          description: Server Error
+  '{{url}}/seat/1':
+    get:
+      summary: GetSeat
+      description: ''
+      operationId: getUrlSeat1Getseat
+      tags:
+        - Seat
+      responses:
+        '200':
+          description: Successful
+        '400':
+          description: Bad Request
+        '500':
+          description: Server Error
+  '{{url}}/seat/':
+    get:
+      summary: ListSeat
+      description: ''
+      operationId: getUrlSeatListseat
+      tags:
+        - Seat
+      responses:
+        '200':
+          description: Successful
+        '400':
+          description: Bad Request
+        '500':
+          description: Server Error
+  '{{url}}/screen/delete/11':
+    delete:
+      summary: DeleteScreen
+      description: ''
+      operationId: deleteUrlScreenDelete11Deletescreen
+      tags:
+        - Screen
+      responses:
+        '200':
+          description: Successful
+        '400':
+          description: Bad Request
+        '500':
+          description: Server Error
+  '{{url}}/screen/update/11':
+    put:
+      summary: UpdateScreen
+      description: ''
+      operationId: putUrlScreenUpdate11Updatescreen
+      tags:
+        - Screen
+      responses:
+        '200':
+          description: Successful
+        '400':
+          description: Bad Request
+        '500':
+          description: Server Error
+  '{{url}}/screen/create':
+    post:
+      summary: CreateScreen
+      description: ''
+      operationId: postUrlScreenCreateCreatescreen
+      tags:
+        - Screen
+      responses:
+        '200':
+          description: Successful
+        '400':
+          description: Bad Request
+        '500':
+          description: Server Error
+  '{{url}}/screen/1':
+    get:
+      summary: GetScreen
+      description: ''
+      operationId: getUrlScreen1Getscreen
+      tags:
+        - Screen
+      responses:
+        '200':
+          description: Successful
+        '400':
+          description: Bad Request
+        '500':
+          description: Server Error
+  '{{url}}/screen/':
+    get:
+      summary: ListScreen
+      description: ''
+      operationId: getUrlScreenListscreen
+      tags:
+        - Screen
+      responses:
+        '200':
+          description: Successful
+        '400':
+          description: Bad Request
+        '500':
+          description: Server Error
+  '{{url}}/screen/type/delete/11':
+    delete:
+      summary: DeleteScreenType
+      description: ''
+      operationId: deleteUrlScreenTypeDelete11Deletescreentype
+      tags:
+        - Screen Type
+      responses:
+        '200':
+          description: Successful
+        '400':
+          description: Bad Request
+        '500':
+          description: Server Error
+  '{{url}}/screen/type/update/11':
+    put:
+      summary: UpdateScreenType
+      description: ''
+      operationId: putUrlScreenTypeUpdate11Updatescreentype
+      tags:
+        - Screen Type
+      responses:
+        '200':
+          description: Successful
+        '400':
+          description: Bad Request
+        '500':
+          description: Server Error
+  '{{url}}/screen/type/create':
+    post:
+      summary: CreateScreenType
+      description: ''
+      operationId: postUrlScreenTypeCreateCreatescreentype
+      tags:
+        - Screen Type
+      responses:
+        '200':
+          description: Successful
+        '400':
+          description: Bad Request
+        '500':
+          description: Server Error
+  '{{url}}/screen/type/1':
+    get:
+      summary: GetScreenType
+      description: ''
+      operationId: getUrlScreenType1Getscreentype
+      tags:
+        - Screen Type
+      responses:
+        '200':
+          description: Successful
+        '400':
+          description: Bad Request
+        '500':
+          description: Server Error
+  '{{url}}/screen/type/':
+    get:
+      summary: ListScreenType
+      description: ''
+      operationId: getUrlScreenTypeListscreentype
+      tags:
+        - Screen Type
+      responses:
+        '200':
+          description: Successful
+        '400':
+          description: Bad Request
+        '500':
+          description: Server Error
+  '{{url}}/cinema/delete/11':
+    delete:
+      summary: DeleteCinema
+      description: ''
+      operationId: deleteUrlCinemaDelete11Deletecinema
+      tags:
+        - Cinema
+      responses:
+        '200':
+          description: Successful
+        '400':
+          description: Bad Request
+        '500':
+          description: Server Error
+  '{{url}}/cinema/update/11':
+    put:
+      summary: UpdateCinema
+      description: ''
+      operationId: putUrlCinemaUpdate11Updatecinema
+      tags:
+        - Cinema
+      responses:
+        '200':
+          description: Successful
+        '400':
+          description: Bad Request
+        '500':
+          description: Server Error
+  '{{url}}/cinema/create':
+    post:
+      summary: CreateCinema
+      description: ''
+      operationId: postUrlCinemaCreateCreatecinema
+      tags:
+        - Cinema
+      responses:
+        '200':
+          description: Successful
+        '400':
+          description: Bad Request
+        '500':
+          description: Server Error
+  '{{url}}/cinema/schedule/1':
+    get:
+      summary: GetCinemaSchedule
+      description: ''
+      operationId: getUrlCinemaSchedule1Getcinemaschedule
+      tags:
+        - Cinema
+      responses:
+        '200':
+          description: Successful
+        '400':
+          description: Bad Request
+        '500':
+          description: Server Error
+  '{{url}}/cinema/1':
+    get:
+      summary: GetCinema
+      description: ''
+      operationId: getUrlCinema1Getcinema
+      tags:
+        - Cinema
+      responses:
+        '200':
+          description: Successful
+        '400':
+          description: Bad Request
+        '500':
+          description: Server Error
+  '{{url}}/cinema/':
+    get:
+      summary: ListCinema
+      description: ''
+      operationId: getUrlCinemaListcinema
+      tags:
+        - Cinema
+      responses:
+        '200':
+          description: Successful
+        '400':
+          description: Bad Request
+        '500':
+          description: Server Error
+  '{{url}}/film/delete/11':
+    delete:
+      summary: DeleteFilm
+      description: ''
+      operationId: deleteUrlFilmDelete11Deletefilm
+      tags:
+        - Film
+      responses:
+        '200':
+          description: Successful
+        '400':
+          description: Bad Request
+        '500':
+          description: Server Error
+  '{{url}}/film/update/11':
+    put:
+      summary: UpdateFilm
+      description: ''
+      operationId: putUrlFilmUpdate11Updatefilm
+      tags:
+        - Film
+      responses:
+        '200':
+          description: Successful
+        '400':
+          description: Bad Request
+        '500':
+          description: Server Error
+  '{{url}}/film/create':
+    post:
+      summary: CreateFilm
+      description: ''
+      operationId: postUrlFilmCreateCreatefilm
+      tags:
+        - Film
+      responses:
+        '200':
+          description: Successful
+        '400':
+          description: Bad Request
+        '500':
+          description: Server Error
+  '{{url}}/film/search':
+    post:
+      summary: SearchFilm
+      description: ''
+      operationId: postUrlFilmSearchSearchfilm
+      tags:
+        - Film
+      responses:
+        '200':
+          description: Successful
+        '400':
+          description: Bad Request
+        '500':
+          description: Server Error
+  '{{url}}/film/genre/1':
+    get:
+      summary: SearchFilmGenre
+      description: ''
+      operationId: getUrlFilmGenre1Searchfilmgenre
+      tags:
+        - Film
+      responses:
+        '200':
+          description: Successful
+        '400':
+          description: Bad Request
+        '500':
+          description: Server Error
+  '{{url}}/film/1':
+    get:
+      summary: GetFilm
+      description: ''
+      operationId: getUrlFilm1Getfilm
+      tags:
+        - Film
+      responses:
+        '200':
+          description: Successful
+        '400':
+          description: Bad Request
+        '500':
+          description: Server Error
+  '{{url}}/film/':
+    get:
+      summary: ListFilm
+      description: ''
+      operationId: getUrlFilmListfilm
+      tags:
+        - Film
+      responses:
+        '200':
+          description: Successful
+        '400':
+          description: Bad Request
+        '500':
+          description: Server Error
+  '{{url}}/genre/delete/11':
+    delete:
+      summary: DeleteGenre
+      description: ''
+      operationId: deleteUrlGenreDelete11Deletegenre
+      tags:
+        - Genre
+      responses:
+        '200':
+          description: Successful
+        '400':
+          description: Bad Request
+        '500':
+          description: Server Error
+  '{{url}}/genre/update/11':
+    put:
+      summary: UpdateGenre
+      description: ''
+      operationId: putUrlGenreUpdate11Updategenre
+      tags:
+        - Genre
+      responses:
+        '200':
+          description: Successful
+        '400':
+          description: Bad Request
+        '500':
+          description: Server Error
+  '{{url}}/genre/create':
+    post:
+      summary: CreateGenre
+      description: ''
+      operationId: postUrlGenreCreateCreategenre
+      tags:
+        - Genre
+      responses:
+        '200':
+          description: Successful
+        '400':
+          description: Bad Request
+        '500':
+          description: Server Error
+  '{{url}}/genre/1':
+    get:
+      summary: GetGenre
+      description: ''
+      operationId: getUrlGenre1Getgenre
+      tags:
+        - Genre
+      responses:
+        '200':
+          description: Successful
+        '400':
+          description: Bad Request
+        '500':
+          description: Server Error
+  '{{url}}/genre/':
+    get:
+      summary: ListGenre
+      description: ''
+      operationId: getUrlGenreListgenre
+      tags:
+        - Genre
+      responses:
+        '200':
+          description: Successful
+        '400':
+          description: Bad Request
+        '500':
+          description: Server Error
+  '{{url}}/account/delete':
+    delete:
+      summary: Delete Account
+      description: ''
+      operationId: deleteUrlAccountDeleteDeleteAccount
+      tags:
+        - User
+      responses:
+        '200':
+          description: Successful
+        '400':
+          description: Bad Request
+        '500':
+          description: Server Error
+  '{{url}}/account/update':
+    put:
+      summary: Update Account
+      description: ''
+      operationId: putUrlAccountUpdateUpdateAccount
+      tags:
+        - User
+      responses:
+        '200':
+          description: Successful
+        '400':
+          description: Bad Request
+        '500':
+          description: Server Error
+  '{{url}}/account/profile':
+    get:
+      summary: Account Profile
+      description: ''
+      operationId: getUrlAccountProfileAccountProfile
+      tags:
+        - User
+      responses:
+        '200':
+          description: Successful
+        '400':
+          description: Bad Request
+        '500':
+          description: Server Error
+  '{{url}}/permission/delete/4':
+    delete:
+      summary: DeletePermission
+      description: ''
+      operationId: deleteUrlPermissionDelete4Deletepermission
+      tags:
+        - Permission
+      responses:
+        '200':
+          description: Successful
+        '400':
+          description: Bad Request
+        '500':
+          description: Server Error
+  '{{url}}/permission/update/1':
+    put:
+      summary: UpdatePermission
+      description: ''
+      operationId: putUrlPermissionUpdate1Updatepermission
+      tags:
+        - Permission
+      responses:
+        '200':
+          description: Successful
+        '400':
+          description: Bad Request
+        '500':
+          description: Server Error
+  '{{url}}/permission/store':
+    post:
+      summary: CratePermission
+      description: ''
+      operationId: postUrlPermissionStoreCratepermission
+      tags:
+        - Permission
+      responses:
+        '200':
+          description: Successful
+        '400':
+          description: Bad Request
+        '500':
+          description: Server Error
+  '{{url}}/permission/1':
+    get:
+      summary: FindPermission
+      description: ''
+      operationId: getUrlPermission1Findpermission
+      tags:
+        - Permission
+      responses:
+        '200':
+          description: Successful
+        '400':
+          description: Bad Request
+        '500':
+          description: Server Error
+  '{{url}}/permission/':
+    get:
+      summary: ListPermission
+      description: ''
+      operationId: getUrlPermissionListpermission
+      tags:
+        - Permission
+      responses:
+        '200':
+          description: Successful
+        '400':
+          description: Bad Request
+        '500':
+          description: Server Error
+  '{{url}}/role/delete/5':
+    delete:
+      summary: DeleteRole
+      description: ''
+      operationId: deleteUrlRoleDelete5Deleterole
+      tags:
+        - Role
+      responses:
+        '200':
+          description: Successful
+        '400':
+          description: Bad Request
+        '500':
+          description: Server Error
+  '{{url}}/role/update/1':
+    put:
+      summary: UpdateRole
+      description: ''
+      operationId: putUrlRoleUpdate1Updaterole
+      tags:
+        - Role
+      responses:
+        '200':
+          description: Successful
+        '400':
+          description: Bad Request
+        '500':
+          description: Server Error
+  '{{url}}/role/store':
+    post:
+      summary: CreateRole
+      description: ''
+      operationId: postUrlRoleStoreCreaterole
+      tags:
+        - Role
+      responses:
+        '200':
+          description: Successful
+        '400':
+          description: Bad Request
+        '500':
+          description: Server Error
+  '{{url}}/role/1':
+    get:
+      summary: FindRole
+      description: ''
+      operationId: getUrlRole1Findrole
+      tags:
+        - Role
+      responses:
+        '200':
+          description: Successful
+        '400':
+          description: Bad Request
+        '500':
+          description: Server Error
+  '{{url}}/role/':
+    get:
+      summary: ListRole
+      description: ''
+      operationId: getUrlRoleListrole
+      tags:
+        - Role
+      responses:
+        '200':
+          description: Successful
+        '400':
+          description: Bad Request
+        '500':
+          description: Server Error
+  '{{url}}/client/delete/1':
+    delete:
+      summary: New Request
+      description: ''
+      operationId: deleteUrlClientDelete1NewRequest
+      tags:
+        - Client
+      responses:
+        '200':
+          description: Successful
+        '400':
+          description: Bad Request
+        '500':
+          description: Server Error
+  '{{url}}/client/update/2':
+    put:
+      summary: UpdateClient
+      description: ''
+      operationId: putUrlClientUpdate2Updateclient
+      tags:
+        - Client
+      responses:
+        '200':
+          description: Successful
+        '400':
+          description: Bad Request
+        '500':
+          description: Server Error
+  '{{url}}/client/1':
+    get:
+      summary: FindClient
+      description: ''
+      operationId: getUrlClient1Findclient
+      tags:
+        - Client
+      responses:
+        '200':
+          description: Successful
+        '400':
+          description: Bad Request
+        '500':
+          description: Server Error
+  '{{url}}/client/':
+    get:
+      summary: ListClient
+      description: ''
+      operationId: getUrlClientListclient
+      tags:
+        - Client
+      responses:
+        '200':
+          description: Successful
+        '400':
+          description: Bad Request
+        '500':
+          description: Server Error
+  '{{url}}/auth/reset-password':
+    post:
+      summary: UpdatePassword
+      description: ''
+      operationId: postUrlAuthResetpasswordUpdatepassword
+      tags:
+        - Auth
+      responses:
+        '200':
+          description: Successful
+        '400':
+          description: Bad Request
+        '500':
+          description: Server Error
+  '{{url}}/auth/logout':
+    post:
+      summary: Log Out
+      description: ''
+      operationId: postUrlAuthLogoutLogOut
+      tags:
+        - Auth
+      responses:
+        '200':
+          description: Successful
+        '400':
+          description: Bad Request
+        '500':
+          description: Server Error
+  '{{url}}/auth/login':
+    post:
+      summary: Login
+      description: ''
+      operationId: postUrlAuthLoginLogin
+      tags:
+        - Auth
+      responses:
+        '200':
+          description: Successful
+        '400':
+          description: Bad Request
+        '500':
+          description: Server Error
+  '{{url}}/auth/register':
+    post:
+      summary: Register
+      description: ''
+      operationId: postUrlAuthRegisterRegister
+      tags:
+        - Auth
+      responses:
+        '200':
+          description: Successful
+        '400':
+          description: Bad Request
+        '500':
+          description: Server Error
+  '{{url}}/auth/send-otp':
+    post:
+      summary: SendOTP
+      description: ''
+      operationId: postUrlAuthSendotpSendotp
+      tags:
+        - Auth
+      responses:
+        '200':
+          description: Successful
+        '400':
+          description: Bad Request
+        '500':
+          description: Server Error

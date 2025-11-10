@@ -37,12 +37,12 @@ sql:
           - db_type: "bigint"
             nullable: false
             go_type: int64
-          - column: "*.created_at"
-            go_type: "time.Time"
-          - column: "*.updated_at"
-            go_type: "time.Time"
-
-
+          - db_type: "double"
+            nullable: false
+            go_type: float64
+          - db_type: "timestamp"
+            nullable: false
+            go_type: time.Time
   # monorepo
   - engine: "postgresql"
     schema: "../pg_schema/booking.sql"
@@ -77,6 +77,12 @@ sql:
           - db_type: "bigint"
             nullable: false
             go_type: int64
+          - db_type: "double"
+            nullable: false
+            go_type: float64
+          - db_type: "timestamp"
+            nullable: false
+            go_type: time.Time
           - column: booking.*
             go_struct_tag: validate:"required"
           - column: booking_seat.*
