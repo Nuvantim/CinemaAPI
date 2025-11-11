@@ -42,7 +42,9 @@ func CreatePayment(c *fiber.Ctx) error {
 	if err := c.BodyParser(&payment); err != nil {
 		return c.Status(400).JSON(response.Error("parser json", err.Error()))
 	}
-	payment.PaymentStatus.String = "Success"
+	
+	// input payment status
+	payment.PaymentStatus.Scan("Success")
 
 	// validate data
 	if err := validate.BodyStructs(payment); err != nil {
