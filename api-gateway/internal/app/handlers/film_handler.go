@@ -13,7 +13,7 @@ func ListFilm(c *fiber.Ctx) error {
 	// start service
 	data, err := service.ListFilm()
 	if err != nil {
-		return c.Status(500).JSON(response.Error("list film", err.Error()))
+		return c.Status(500).JSON(response.Error("unable to list film", err.Error()))
 	}
 
 	// return json data
@@ -30,11 +30,11 @@ func GetFilm(c *fiber.Ctx) error {
 	// start service
 	data, err := service.GetFilm(int64(id))
 	if err != nil {
-		return c.Status(500).JSON(response.Error("get film", err.Error()))
+		return c.Status(500).JSON(response.Error("failed get film", err.Error()))
 	}
 
 	// return json data
-	return c.Status(200).JSON(response.Pass("get film", data))
+	return c.Status(200).JSON(response.Pass("success get film", data))
 }
 
 func SearchFilm(c *fiber.Ctx) error {
@@ -45,12 +45,12 @@ func SearchFilm(c *fiber.Ctx) error {
 
 	// parser body to json
 	if err := c.BodyParser(&film); err != nil {
-		return c.Status(400).JSON(response.Error("parser json", err.Error()))
+		return c.Status(400).JSON(response.Error("unable to parse request body", err.Error()))
 	}
 
 	// validate data
 	if err := validate.BodyStructs(film); err != nil {
-		return c.Status(400).JSON(response.Error("validate data", err.Error()))
+		return c.Status(400).JSON(response.Error("invalid or incomplete data", err.Error()))
 	}
 
 	// start service
@@ -86,22 +86,22 @@ func CreateFilm(c *fiber.Ctx) error {
 
 	// parser body to json
 	if err := c.BodyParser(&film); err != nil {
-		return c.Status(400).JSON(response.Error("parser json", err.Error()))
+		return c.Status(400).JSON(response.Error("unable to parse request body", err.Error()))
 	}
 
 	// validate data
 	if err := validate.BodyStructs(film); err != nil {
-		return c.Status(400).JSON(response.Error("validate data", err.Error()))
+		return c.Status(400).JSON(response.Error("invalid or incomplete data", err.Error()))
 	}
 
 	// start service
 	data, err := service.CreateFilm(film)
 	if err != nil {
-		return c.Status(500).JSON(response.Error("create film", err.Error()))
+		return c.Status(500).JSON(response.Error("failed create film", err.Error()))
 	}
 
 	// return json data
-	return c.Status(200).JSON(response.Pass("create film", data))
+	return c.Status(200).JSON(response.Pass("success create film", data))
 }
 
 func UpdateFilm(c *fiber.Ctx) error {
@@ -134,19 +134,19 @@ func UpdateFilm(c *fiber.Ctx) error {
 	}
 
 	// return json data
-	return c.Status(200).JSON(response.Pass("update film", data))
+	return c.Status(200).JSON(response.Pass("success update film", data))
 }
 
 func DeleteFilm(c *fiber.Ctx) error {
 	// get id
 	id, err := c.ParamsInt("id")
 	if err != nil {
-		return c.Status(400).JSON(response.Error("get id", err.Error()))
+		return c.Status(400).JSON(response.Error("failed get id", err.Error()))
 	}
 
 	// start service
 	if err := service.DeleteFilm(int64(id)); err != nil {
-		return c.Status(500).JSON(response.Error("delete film", err.Error()))
+		return c.Status(500).JSON(response.Error("failed delete film", err.Error()))
 	}
 
 	// return json data

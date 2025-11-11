@@ -12,12 +12,12 @@ import (
 func SendOTP(c *fiber.Ctx) error {
 	var otp request.OtpToken
 	if err := c.BodyParser(&otp); err != nil {
-		return c.Status(400).JSON(response.Error("parser json", err.Error()))
+		return c.Status(400).JSON(response.Error("unable to parse request body", err.Error()))
 	}
 
 	// validate data
 	if err := validate.BodyStructs(otp); err != nil {
-		return c.Status(422).JSON(response.Error("validation data", err.Error()))
+		return c.Status(422).JSON(response.Error("invalid or incomplete data", err.Error()))
 	}
 
 	send, err := service.SendOTP(otp.Email)
@@ -31,12 +31,12 @@ func SendOTP(c *fiber.Ctx) error {
 func Register(c *fiber.Ctx) error {
 	var regist request.Register
 	if err := c.BodyParser(&regist); err != nil {
-		return c.Status(400).JSON(response.Error("parser json", err.Error()))
+		return c.Status(400).JSON(response.Error("unable to parse request body", err.Error()))
 	}
 
 	// validate data
 	if err := validate.BodyStructs(regist); err != nil {
-		return c.Status(422).JSON(response.Error("validation data", err.Error()))
+		return c.Status(422).JSON(response.Error("invalid or incomplete data", err.Error()))
 	}
 
 	user_regist, err := service.Register(regist)
@@ -49,11 +49,11 @@ func Register(c *fiber.Ctx) error {
 func Login(c *fiber.Ctx) error {
 	var login request.Login
 	if err := c.BodyParser(&login); err != nil {
-		return c.Status(400).JSON(response.Error("parser json", err.Error()))
+		return c.Status(400).JSON(response.Error("unable to parse request body", err.Error()))
 	}
 	// validate data
 	if err := validate.BodyStructs(login); err != nil {
-		return c.Status(422).JSON(response.Error("validation data", err.Error()))
+		return c.Status(422).JSON(response.Error("invalid or incomplete data", err.Error()))
 	}
 
 	access, refresh, err := service.Login(login)
@@ -78,11 +78,11 @@ func Login(c *fiber.Ctx) error {
 func ResetPassword(c *fiber.Ctx) error {
 	var pass request.ResetPassword
 	if err := c.BodyParser(&pass); err != nil {
-		return c.Status(400).JSON(response.Error("parser json", err.Error()))
+		return c.Status(400).JSON(response.Error("unable to parse request body", err.Error()))
 	}
 	// validate data
 	if err := validate.BodyStructs(pass); err != nil {
-		return c.Status(422).JSON(response.Error("validation data", err.Error()))
+		return c.Status(422).JSON(response.Error("invalid or incomplete data", err.Error()))
 	}
 
 	update_password, err := service.ResetPassword(pass)

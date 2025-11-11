@@ -15,7 +15,7 @@ func ListBookingSeat(c *fiber.Ctx) error {
 		BookingID int64 `json:"booking_id" validate:"required"`
 	}{}
 	if err := c.BodyParser(&booking_seat); err != nil {
-		return c.Status(400).JSON(response.Error("parser json", err.Error()))
+		return c.Status(400).JSON(response.Error("unable to parse request body", err.Error()))
 	}
 
 	if err := validate.BodyStructs(booking_seat); err != nil {
@@ -24,7 +24,7 @@ func ListBookingSeat(c *fiber.Ctx) error {
 
 	data, err := service.ListBookingSeat(booking_seat)
 	if err != nil {
-		return c.Status(500).JSON(response.Error("list booking seat", err.Error()))
+		return c.Status(500).JSON(response.Error("unable to list booking seat", err.Error()))
 	}
 
 	return c.Status(200).JSON(response.Pass("list booking seat", data))
@@ -34,19 +34,19 @@ func CreateBookingSeat(c *fiber.Ctx) error {
 	var booking_seat model.CreateBookingSeatParams
 
 	if err := c.BodyParser(&booking_seat); err != nil {
-		return c.Status(400).JSON(response.Error("parser json", err.Error()))
+		return c.Status(400).JSON(response.Error("unable to parse request body", err.Error()))
 	}
 
 	// get booking
 	booking, err := service.GetBooking(booking_seat.BookingID)
 	if err != nil {
-		return c.Status(500).JSON(response.Error("get booking data", err.Error()))
+		return c.Status(500).JSON(response.Error("failed get booking data", err.Error()))
 	}
 
 	// get price seat
 	price, err := service.SeatPrice(booking.ShowtimeID, booking_seat.SeatID)
 	if err != nil {
-		return c.Status(500).JSON(response.Error("get seat price", err.Error()))
+		return c.Status(500).JSON(response.Error("failed get seat price", err.Error()))
 	}
 
 	// input price
@@ -58,17 +58,17 @@ func CreateBookingSeat(c *fiber.Ctx) error {
 
 	data, err := service.CreateBookingSeat(booking_seat)
 	if err != nil {
-		return c.Status(500).JSON(response.Error("create booking seat", err.Error()))
+		return c.Status(500).JSON(response.Error("failed create booking seat", err.Error()))
 	}
 
-	return c.Status(200).JSON(response.Pass("create booking seat", data))
+	return c.Status(200).JSON(response.Pass("success create booking seat", data))
 }
 
 func DeleteBookingSeat(c *fiber.Ctx) error {
 	id := c.Params("id")
 
 	if err := service.DeleteBookingSeat(id); err != nil {
-		return c.Status(500).JSON(response.Error("delete booking seat", err.Error()))
+		return c.Status(500).JSON(response.Error("failed delete booking seat", err.Error()))
 	}
 
 	return c.Status(200).JSON(response.Pass("delete booking seat", struct{}{}))
