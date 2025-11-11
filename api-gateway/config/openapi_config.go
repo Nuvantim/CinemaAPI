@@ -11,15 +11,15 @@ import (
 func APIDocs() scalar.Config {
 	data, err := os.ReadFile("docs/openapi.yaml")
 	if err != nil {
-		log.Fatalf("Gagal membaca file openapi.yaml: %v", err)
+		log.Fatalf("failed read file openapi.yaml: %v", err)
 	}
 
 	fileContent := strings.ReplaceAll(string(data), "{{BASE_URL}}", os.Getenv("URL"))
 
 	return scalar.Config{
 		Title:             "Cinema API Docs",
-		BasePath:          "/api/v1",
-		Path:              "docs",
+		BasePath:          "/",
+		Path:              "/api/v1/docs",
 		FileContentString: fileContent,
 		Theme:             scalar.ThemeBluePlanet,
 	}

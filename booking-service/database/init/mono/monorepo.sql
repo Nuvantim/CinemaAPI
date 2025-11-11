@@ -28,8 +28,16 @@ SELECT * FROM booking_seat WHERE booking_id = $1;
 DELETE FROM booking_seat WHERE id = $1 RETURNING booking_id;
 
 -- name: CreatePayment :one
-INSERT INTO payment (booking_id, user_id,payment_method, payment_status, transaction_amount, payment_time)
-VALUES(sqlc.arg(booking_id),sqlc.arg(user_id),sqlc.arg(payment_method),'Success' ,sqlc.arg(total_amount),NOW())
+INSERT INTO payment (booking_id, user_id, payment_method, payment_status, transaction_amount, payment_time)
+SELECT 
+    b.id,
+    b.user_id,
+    sqlc.arg(payment_method),
+    sqlc.arg(payment_status),
+    b.total_amount,
+    NOW()
+FROM booking b
+WHERE b.id = sqlc.arg(booking_id)
 RETURNING *;
 
 -- name: ListPayment :many

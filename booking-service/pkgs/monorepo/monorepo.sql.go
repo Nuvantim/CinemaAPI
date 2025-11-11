@@ -9,6 +9,7 @@ import (
 	"context"
 
 	"github.com/google/uuid"
+	"github.com/jackc/pgx/v5/pgtype"
 )
 
 const CreateBooking = `-- name: CreateBooking :one
@@ -51,25 +52,27 @@ func (q *Queries) CreateBookingSeat(ctx context.Context, arg CreateBookingSeatPa
 }
 
 const CreatePayment = `-- name: CreatePayment :one
-INSERT INTO payment (booking_id, user_id,payment_method, payment_status, transaction_amount, payment_time)
-VALUES($1,$2,$3,'Success' ,$4,NOW())
+INSERT INTO payment (booking_id, user_id, payment_method, payment_status, transaction_amount, payment_time)
+SELECT 
+    b.id,
+    b.user_id,
+    $1,
+    $2,
+    b.total_amount,
+    NOW()
+FROM booking b
+WHERE b.id = $3
 RETURNING id, user_id, booking_id, payment_method, payment_status, transaction_amount, payment_time
 `
 
 type CreatePaymentParams struct {
-	BookingID     int64   `json:"booking_id" validate:"required"`
-	UserID        int64   `json:"user_id" validate:"required"`
-	PaymentMethod string  `json:"payment_method" validate:"required"`
-	TotalAmount   float64 `json:"total_amount" validate:"required"`
+	PaymentMethod string      `json:"payment_method" validate:"required"`
+	PaymentStatus pgtype.Text `json:"payment_status" validate:"required"`
+	BookingID     int64       `json:"booking_id" validate:"required"`
 }
 
 func (q *Queries) CreatePayment(ctx context.Context, arg CreatePaymentParams) (Payment, error) {
-	row := q.db.QueryRow(ctx, CreatePayment,
-		arg.BookingID,
-		arg.UserID,
-		arg.PaymentMethod,
-		arg.TotalAmount,
-	)
+	row := q.db.QueryRow(ctx, CreatePayment, arg.PaymentMethod, arg.PaymentStatus, arg.BookingID)
 	var i Payment
 	err := row.Scan(
 		&i.ID,

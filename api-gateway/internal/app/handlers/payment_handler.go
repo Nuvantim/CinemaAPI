@@ -38,32 +38,17 @@ func CreatePayment(c *fiber.Ctx) error {
 	// declared model
 	var payment model.CreatePaymentParams
 
-	// get user_id
-	user_id, ok := c.Locals("user_id").(int64)
-	if !ok || user_id == 0 {
-		return c.Status(401).JSON(response.Error("get user id", "unauthorized"))
-	}
-
 	// parser body data to json
 	if err := c.BodyParser(&payment); err != nil {
 		return c.Status(400).JSON(response.Error("parser json", err.Error()))
 	}
-
-	// get booking
-	booking, err := service.GetBooking(payment.BookingID)
-	if err != nil {
-		return c.Status(500).JSON(response.Error("get booking data", err.Error()))
-	}
-
-	// input data payment
-	payment.UserID = user_id
-	payment.BookingID = booking.ID
-	payment.TotalAmount = booking.TotalAmount
+	payment.PaymentStatus.String = "Success"
 
 	// validate data
 	if err := validate.BodyStructs(payment); err != nil {
 		return c.Status(422).JSON(response.Error("validate data", err.Error()))
 	}
+
 
 	// start service
 	data, err := service.CreatePayment(payment)

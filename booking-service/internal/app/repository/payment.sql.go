@@ -7,28 +7,32 @@ package repository
 
 import (
 	"context"
+
+	"github.com/jackc/pgx/v5/pgtype"
 )
 
 const CreatePayment = `-- name: CreatePayment :one
-INSERT INTO payment (booking_id, user_id,payment_method, payment_status, transaction_amount, payment_time)
-VALUES($1,$2,$3,'Success' ,$4,NOW())
+INSERT INTO payment (booking_id, user_id, payment_method, payment_status, transaction_amount, payment_time)
+SELECT 
+    b.id,
+    b.user_id,
+    $1,
+    $2,
+    b.total_amount,
+    NOW()
+FROM booking b
+WHERE b.id = $3
 RETURNING id, user_id, booking_id, payment_method, payment_status, transaction_amount, payment_time
 `
 
 type CreatePaymentParams struct {
-	BookingID     int64   `json:"booking_id"`
-	UserID        int64   `json:"user_id"`
-	PaymentMethod string  `json:"payment_method"`
-	TotalAmount   float64 `json:"total_amount"`
+	PaymentMethod string      `json:"payment_method"`
+	PaymentStatus pgtype.Text `json:"payment_status"`
+	BookingID     int64       `json:"booking_id"`
 }
 
 func (q *Queries) CreatePayment(ctx context.Context, arg CreatePaymentParams) (Payment, error) {
-	row := q.db.QueryRow(ctx, CreatePayment,
-		arg.BookingID,
-		arg.UserID,
-		arg.PaymentMethod,
-		arg.TotalAmount,
-	)
+	row := q.db.QueryRow(ctx, CreatePayment, arg.PaymentMethod, arg.PaymentStatus, arg.BookingID)
 	var i Payment
 	err := row.Scan(
 		&i.ID,
@@ -43,9 +47,13 @@ func (q *Queries) CreatePayment(ctx context.Context, arg CreatePaymentParams) (P
 }
 
 const ListPayment = `-- name: ListPayment :many
+
 SELECT id, user_id, booking_id, payment_method, payment_status, transaction_amount, payment_time FROM payment WHERE user_id = $1
 `
 
+// INSERT INTO payment (booking_id, user_id,payment_method, payment_status, transaction_amount, payment_time)
+// VALUES(sqlc.arg(booking_id),sqlc.arg(user_id),sqlc.arg(payment_method),'Success' ,sqlc.arg(total_amount),NOW())
+// RETURNING *;
 func (q *Queries) ListPayment(ctx context.Context, userID int64) ([]Payment, error) {
 	rows, err := q.db.Query(ctx, ListPayment, userID)
 	if err != nil {
