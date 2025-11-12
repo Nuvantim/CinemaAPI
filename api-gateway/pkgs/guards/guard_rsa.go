@@ -34,7 +34,7 @@ func GenRSA() {
 
 	if os.IsNotExist(errPublic) || os.IsNotExist(errPrivate) {
 		fmt.Println("Generating RSA key pair...")
-		privateKey, publicKey, err := generateRSAKeyPair(4096)
+		privateKey, publicKey, err := generateRSAKeyPair(2048)
 		if err != nil {
 			log.Println("Failed to generate RSA keys:", err)
 			return
