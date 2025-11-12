@@ -15,19 +15,20 @@ import (
 )
 
 func SendOTP(email string) (string, error) {
+	// generate otp
 	otp := guard.GenerateOTP()
 
+	// create struct data
 	token := req.CreateOTP{
 		Code:  otp,
 		Email: email,
 	}
 
+	// set data to redis
 	var key string = fmt.Sprintf("verif:%s", token.Code)
 	if err := rds.SetData(key, token); err != nil {
 		return "", err
 	}
-
-	fmt.Println(otp)
 
 	// send otp via email
 	if error := guard.SendOTP(token.Email, token.Code); error != nil {
@@ -39,14 +40,13 @@ func SendOTP(email string) (string, error) {
 }
 
 func Register(regist req.Register) (string, error) {
-	var data req.CreateOTP
 	// search otp
 	var value string = fmt.Sprintf("verif:%s", regist.Code)
-	result, err := rds.GetData(value, data)
+	result, err := rds.GetData[req.CreateOTP](value)
 	if err != nil {
 		return "", err
 	}
-	if result.Email == "" {
+	if result == nil {
 		return "", fmt.Errorf("OTP not found or expired")
 	}
 
@@ -64,17 +64,18 @@ func Register(regist req.Register) (string, error) {
 	}
 
 	// create user_account
-	id_user, err := db.Queries.CreateUser(ctx.Background(), createUser)
+	account, err := db.Queries.CreateUser(ctx.Background(), createUser)
 	if err != nil {
 		return "", db.Fatal(err)
 	}
+
 	// Create a buffered channel to receive any error from the goroutine
 	errChan := make(chan error, 1)
 
 	// Run user creation and OTP deletion in a separate goroutine
 	go func() {
 		// Create the user_profile
-		if err := db.Queries.CreateProfile(ctx.Background(), id_user); err != nil {
+		if err := db.Queries.CreateProfile(ctx.Background(), account.ID); err != nil {
 			errChan <- db.Fatal(err) // Send error if user creation fails
 			return
 		}
@@ -130,13 +131,12 @@ func Login(login req.Login) (string, string, error) {
 
 func ResetPassword(pass req.ResetPassword) (string, error) {
 	// Check Code Otp
-	var data req.CreateOTP
 	var value string = fmt.Sprintf("verif:%s", pass.Code)
-	result, err := rds.GetData(value, data)
+	result, err := rds.GetData[req.CreateOTP](value)
 	if err != nil {
 		return "", err
 	}
-	if result.Email == "" {
+	if result == nil {
 		return "", fmt.Errorf("OTP not found or expired")
 	}
 

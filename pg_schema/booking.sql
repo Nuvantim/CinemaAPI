@@ -26,8 +26,8 @@ CREATE  TABLE "public".payment (
     user_id              bigint  NOT NULL  ,
     booking_id           bigint  NOT NULL  ,
     payment_method       varchar(100)  NOT NULL  ,
-    payment_status       varchar(10)    ,
+    payment_status       varchar(10)    NOT NULL,
     transaction_amount   double precision  NOT NULL  ,
-    payment_time         timestamp DEFAULT CURRENT_TIMESTAMP   ,
+    payment_time         timestamp DEFAULT CURRENT_TIMESTAMP   NOT NULL,
     CONSTRAINT pk_payment PRIMARY KEY ( id ) 
  );

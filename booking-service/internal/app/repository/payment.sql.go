@@ -7,8 +7,6 @@ package repository
 
 import (
 	"context"
-
-	"github.com/jackc/pgx/v5/pgtype"
 )
 
 const CreatePayment = `-- name: CreatePayment :one
@@ -26,9 +24,9 @@ RETURNING id, user_id, booking_id, payment_method, payment_status, transaction_a
 `
 
 type CreatePaymentParams struct {
-	PaymentMethod string      `json:"payment_method"`
-	PaymentStatus pgtype.Text `json:"payment_status"`
-	BookingID     int64       `json:"booking_id"`
+	PaymentMethod string `json:"payment_method"`
+	PaymentStatus string `json:"payment_status"`
+	BookingID     int64  `json:"booking_id"`
 }
 
 func (q *Queries) CreatePayment(ctx context.Context, arg CreatePaymentParams) (Payment, error) {

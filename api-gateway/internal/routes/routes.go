@@ -62,52 +62,52 @@ func Setup(app *fiber.App) {
 	genre.Delete("/delete/:id", handler.DeleteGenre)
 
 	// film
-	film := api.Group("/film", middleware.Permission("handle film"))
 	api.Get("/film/", handler.ListFilm)
 	api.Get("/film/:id", handler.GetFilm)
 	api.Post("/film/search", handler.SearchFilm)
 	api.Get("/film/genre/:id", handler.SearchFilmGenre)
+	film := api.Group("/film", middleware.Permission("handle film"))
 	film.Post("/create", handler.CreateFilm)
 	film.Put("/update/:id", handler.UpdateFilm)
 	film.Delete("/delete/:id", handler.DeleteFilm)
 
 	// cinema
-	cinema := api.Group("/cinema", middleware.Permission("handle cinema"))
 	api.Get("/cinema/", handler.ListCinema)
 	api.Get("/cinema/schedule/:id", handler.ListCinemaSchedule)
 	api.Get("/cinema/:id", handler.GetCinema)
+	cinema := api.Group("/cinema", middleware.Permission("handle cinema"))
 	cinema.Post("/create", handler.CreateCinema)
 	cinema.Put("/update/:id", handler.UpdateCinema)
 	cinema.Delete("/delete/:id", handler.DeleteCinema)
 
 	// screen type
-	screen_type := api.Group("/screen/type", middleware.Permission("handle screen type"))
 	api.Get("/screen/type/", handler.ListScreenType)
 	api.Get("/screen/type/:id", handler.GetScreenType)
+	screen_type := api.Group("/screen/type", middleware.Permission("handle screen type"))
 	screen_type.Post("/create", handler.CreateScreenType)
 	screen_type.Put("/update/:id", handler.UpdateScreenType)
 	screen_type.Delete("/delete/:id", handler.DeleteScreenType)
 
 	// screen
-	screen := api.Group("/screen", middleware.Permission("handle screen"))
 	api.Get("/screen", handler.ListScreen)
 	api.Get("/screen/:id", handler.GetScreen)
+	screen := api.Group("/screen", middleware.Permission("handle screen"))
 	screen.Post("/create", handler.CreateScreen)
 	screen.Put("/update/:id", handler.UpdateScreen)
 	screen.Delete("/delete/:id", handler.DeleteScreen)
 
 	// seat
-	seat := api.Group("/seat", middleware.Permission("handle seat"))
 	api.Get("/seat/", handler.ListSeat)
 	api.Get("/seat/:id", handler.GetSeat)
+	seat := api.Group("/seat", middleware.Permission("handle seat"))
 	seat.Post("/create", handler.CreateSeat)
 	seat.Put("/update/:id", handler.UpdateSeat)
 	seat.Delete("/delete/:id", handler.DeleteSeat)
 
 	// showtime
-	showtime := api.Group("/showtime", middleware.Permission("handle showtime"))
 	api.Get("/showtime/", handler.ListShowTime)
 	api.Get("/showtime/:id", handler.GetShowTime)
+	showtime := api.Group("/showtime", middleware.Permission("handle showtime"))
 	showtime.Post("/create", handler.CreateShowTime)
 	showtime.Put("/update/:id", handler.UpdateShowTime)
 	showtime.Delete("/delete/:id", handler.DeleteShowTime)

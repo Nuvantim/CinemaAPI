@@ -6,10 +6,16 @@ import (
 	"api/internal/app/service"
 	"api/pkgs/utils/responses"
 	"api/pkgs/utils/validates"
+	rds "api/redis"
 	model "cinema/pkgs/monorepo"
 )
 
 func ListFilm(c *fiber.Ctx) error {
+	// check data on redis
+	redis_data, err := rds.GetData[[]model.ListFilmRow]("list:film")
+	if err == nil && redis_data != nil {
+		c.Status(200).JSON(response.Pass("list film", redis_data))
+	}
 	// start service
 	data, err := service.ListFilm()
 	if err != nil {

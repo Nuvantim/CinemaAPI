@@ -5,16 +5,17 @@
 package monorepo
 
 import (
+	"time"
+
 	"github.com/google/uuid"
-	"github.com/jackc/pgx/v5/pgtype"
 )
 
 type Booking struct {
-	ID          int64            `json:"id" validate:"required"`
-	UserID      int64            `json:"user_id" validate:"required"`
-	ShowtimeID  int64            `json:"showtime_id" validate:"required"`
-	BookingTime pgtype.Timestamp `json:"booking_time" validate:"required"`
-	TotalAmount float64          `json:"total_amount" validate:"required"`
+	ID          int64     `json:"id" validate:"required"`
+	UserID      int64     `json:"user_id" validate:"required"`
+	ShowtimeID  int64     `json:"showtime_id" validate:"required"`
+	BookingTime time.Time `json:"booking_time" validate:"required"`
+	TotalAmount float64   `json:"total_amount" validate:"required"`
 }
 
 type BookingSeat struct {
@@ -25,11 +26,11 @@ type BookingSeat struct {
 }
 
 type Payment struct {
-	ID                int64            `json:"id" validate:"required"`
-	UserID            int64            `json:"user_id" validate:"required"`
-	BookingID         int64            `json:"booking_id" validate:"required"`
-	PaymentMethod     string           `json:"payment_method" validate:"required"`
-	PaymentStatus     pgtype.Text      `json:"payment_status" validate:"required"`
-	TransactionAmount float64          `json:"transaction_amount" validate:"required"`
-	PaymentTime       pgtype.Timestamp `json:"payment_time" validate:"required"`
+	ID                int64     `json:"id" validate:"required"`
+	UserID            int64     `json:"user_id" validate:"required"`
+	BookingID         int64     `json:"booking_id" validate:"required"`
+	PaymentMethod     string    `json:"payment_method" validate:"required"`
+	PaymentStatus     string    `json:"payment_status" validate:"required"`
+	TransactionAmount float64   `json:"transaction_amount" validate:"required"`
+	PaymentTime       time.Time `json:"payment_time" validate:"required"`
 }

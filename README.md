@@ -6,7 +6,7 @@
 
 ---
 
-## ✨ Features
+## 🔮 Features
 
 - [x] **Service-to-Service Communication via HTTP/2** — Enables low-latency, multiplexed communication between microservices for optimal performance and scalability.  
 - [x] **JWT Authentication with RS256 Algorithm** — Implements secure, asymmetric token-based authentication to safeguard data integrity and user sessions.  

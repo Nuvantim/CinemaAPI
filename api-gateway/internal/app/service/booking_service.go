@@ -3,8 +3,7 @@ package service
 
 import (
 	"fmt"
-
-	"github.com/jackc/pgx/v5/pgtype"
+	"time"
 
 	"api/internal/gateway"
 	model "booking/pkgs/monorepo"
@@ -15,7 +14,7 @@ type ListBookingRow struct {
 	ID          int64               `json:"id"`
 	UserID      int64               `json:"user_id"`
 	ShowTime    dto.ListShowTimeRow `json:"showtime"`
-	BookingTime pgtype.Timestamp    `json:"booking_time"`
+	BookingTime time.Time           `json:"booking_time"`
 	TotalAmount float64             `json:"total_amount"`
 }
 
@@ -23,7 +22,7 @@ type DataBookingRow struct {
 	ID          int64              `json:"id"`
 	UserID      int64              `json:"user_id"`
 	ShowTime    dto.GetShowTimeRow `json:"showtime"`
-	BookingTime pgtype.Timestamp   `json:"booking_time"`
+	BookingTime time.Time          `json:"booking_time"`
 	TotalAmount float64            `json:"total_amount"`
 }
 

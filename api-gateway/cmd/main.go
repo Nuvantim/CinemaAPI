@@ -5,7 +5,7 @@ import (
 	"api/database"
 	"api/internal/server/http"
 	"api/pkgs/guards"
-	// rds "api/redis"
+	rds "api/redis"
 
 	"log"
 	"os"
@@ -69,7 +69,7 @@ func main() {
 
 	<-done
 	// Close Connection redis
-	// rds.RedisClose()
+	rds.RedisClose()
 	// Close Connection database
 	database.CloseDB()
 }

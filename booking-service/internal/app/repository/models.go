@@ -5,16 +5,17 @@
 package repository
 
 import (
+	"time"
+
 	"github.com/google/uuid"
-	"github.com/jackc/pgx/v5/pgtype"
 )
 
 type Booking struct {
-	ID          int64            `json:"id"`
-	UserID      int64            `json:"user_id"`
-	ShowtimeID  int64            `json:"showtime_id"`
-	BookingTime pgtype.Timestamp `json:"booking_time"`
-	TotalAmount float64          `json:"total_amount"`
+	ID          int64     `json:"id"`
+	UserID      int64     `json:"user_id"`
+	ShowtimeID  int64     `json:"showtime_id"`
+	BookingTime time.Time `json:"booking_time"`
+	TotalAmount float64   `json:"total_amount"`
 }
 
 type BookingSeat struct {
@@ -25,11 +26,11 @@ type BookingSeat struct {
 }
 
 type Payment struct {
-	ID                int64            `json:"id"`
-	UserID            int64            `json:"user_id"`
-	BookingID         int64            `json:"booking_id"`
-	PaymentMethod     string           `json:"payment_method"`
-	PaymentStatus     pgtype.Text      `json:"payment_status"`
-	TransactionAmount float64          `json:"transaction_amount"`
-	PaymentTime       pgtype.Timestamp `json:"payment_time"`
+	ID                int64     `json:"id"`
+	UserID            int64     `json:"user_id"`
+	BookingID         int64     `json:"booking_id"`
+	PaymentMethod     string    `json:"payment_method"`
+	PaymentStatus     string    `json:"payment_status"`
+	TransactionAmount float64   `json:"transaction_amount"`
+	PaymentTime       time.Time `json:"payment_time"`
 }

@@ -6,8 +6,8 @@ import (
 	"api/config"
 	"api/database"
 	"api/internal/routes"
-	// rds "api/redis"
 	"api/internal/server/client"
+	rds "api/redis"
 
 	"github.com/gofiber/fiber/v2"
 )
@@ -28,8 +28,8 @@ func ServerGo() *fiber.App {
 	database.InitDB()
 
 	// Start redis Connection
-	// fmt.Print("[ 🎲 ]")
-	// rds.InitRedis()
+	fmt.Print("[ 🎲 ]")
+	rds.InitRedis()
 
 	// Star Connect Cinema Service
 	fmt.Print("[ 🎬 ] ")

@@ -40,7 +40,7 @@ sql:
           - db_type: "double"
             nullable: false
             go_type: float64
-          - db_type: "timestamp"
+          - db_type: "pg_catalog.timestamp"
             nullable: false
             go_type: time.Time
   # monorepo
@@ -80,7 +80,7 @@ sql:
           - db_type: "double"
             nullable: false
             go_type: float64
-          - db_type: "timestamp"
+          - db_type: "pg_catalog.timestamp"
             nullable: false
             go_type: time.Time
           - column: booking.*

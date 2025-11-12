@@ -1,7 +1,7 @@
 -- name: CreateUser :one
 INSERT INTO user_account(name,email,password) 
 VALUES ($1,$2,$3) 
-RETURNING id;
+RETURNING *;
 
 -- name: CreateProfile :exec
 INSERT INTO user_profile (user_id) 

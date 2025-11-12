@@ -24,7 +24,7 @@ func (q *Queries) CreateProfile(ctx context.Context, userID int64) error {
 const CreateUser = `-- name: CreateUser :one
 INSERT INTO user_account(name,email,password) 
 VALUES ($1,$2,$3) 
-RETURNING id
+RETURNING id, name, email, password, created_at
 `
 
 type CreateUserParams struct {
@@ -33,11 +33,17 @@ type CreateUserParams struct {
 	Password string `json:"password" validate:"required"`
 }
 
-func (q *Queries) CreateUser(ctx context.Context, arg CreateUserParams) (int64, error) {
+func (q *Queries) CreateUser(ctx context.Context, arg CreateUserParams) (UserAccount, error) {
 	row := q.db.QueryRow(ctx, CreateUser, arg.Name, arg.Email, arg.Password)
-	var id int64
-	err := row.Scan(&id)
-	return id, err
+	var i UserAccount
+	err := row.Scan(
+		&i.ID,
+		&i.Name,
+		&i.Email,
+		&i.Password,
+		&i.CreatedAt,
+	)
+	return i, err
 }
 
 const DeleteAccount = `-- name: DeleteAccount :exec
