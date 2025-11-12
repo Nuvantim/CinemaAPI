@@ -66,7 +66,7 @@ func SetData[T any](key string, data T) error {
 	if err != nil {
 		return err
 	}
-	err = RDS.Set(ctx, key, jsonData, 1*time.Minute).Err()
+	err = RDS.Set(ctx, key, jsonData, 2*time.Hour).Err()
 	if err != nil {
 		return err
 	}
