@@ -4,6 +4,7 @@ package service
 import (
 	"fmt"
 	"time"
+	"reflect"
 
 	"api/internal/gateway"
 	model "booking/pkgs/monorepo"
@@ -29,23 +30,26 @@ type DataBookingRow struct {
 
 func ListBooking(body any) ([]ListBookingRow, error) {
     // get data booking
-    data_booking,err := func()([]model.Booking,error){
-        // check data on redis
-        key := fmt.Sprintf("list:booking:%d",body.UserID)
-        redis_data, err := rds.GetData[[]model.Booking](key)
-        if err == nil && redis_data != nil {
-            return redis_data,nil
-        }else{
-            // get data from service
-            url := "/bookings"
-            booking_data, err := gateway.PostBooking[any, []model.Booking](url, body)
-            if err != nil {
-                return []ListBookingRow{}, err
-            }
-            return booking_data,nil
-        }
-        
-    }()
+    data_booking, err := func() ([]model.Booking, error) {
+		
+		// get value from body
+		v := reflect.ValueOf(body)
+		
+		// check data on redis
+		key := fmt.Sprintf("list:booking:%d", v.FieldByName("UserID").Int())
+		redis_data, err := rds.GetData[[]model.Booking](key)
+		if err == nil && redis_data != nil && len(*redis_data) > 0 {
+			return *redis_data, nil
+		}
+		
+		// get data from service
+		url := "/bookings"
+		booking_data, err := gateway.PostBooking[any, []model.Booking](url, body)
+		if err != nil {
+			return []model.Booking, err
+		}
+		return booking_data, nil
+	}()
     if err != nil{
         return []ListBookingRow{},err
     }
