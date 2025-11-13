@@ -8,6 +8,7 @@ import (
 	"booking/config"
 	"booking/database"
 	"booking/internal/server/http"
+	rds "booking/redis"
 )
 
 func main() {
@@ -33,6 +34,9 @@ func main() {
 
 	// Run GraceFullyShutdown
 	config.GraceFullShutdown(app)
+
+	// Close Redis
+	rds.RedisClose()
 
 	// Close Database
 	defer database.CloseDB()

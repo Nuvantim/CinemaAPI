@@ -7,6 +7,7 @@ import (
 	"booking/config"
 	"booking/database"
 	"booking/internal/routes"
+	rds "booking/redis"
 
 	"golang.org/x/net/http2"
 	"golang.org/x/net/http2/h2c"
@@ -24,6 +25,9 @@ func StartServer() (*http.Server, string) {
 
 	// Database Connection
 	database.InitDB()
+
+	// Redis Connection
+	rds.InitRedis()
 
 	// Get Server Configuration
 	conf, err := config.GetServerConfig()

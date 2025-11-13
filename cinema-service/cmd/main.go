@@ -8,6 +8,7 @@ import (
 	"cinema/config"
 	"cinema/database"
 	"cinema/internal/server/http"
+	rds "cinema/redis"
 )
 
 func main() {
@@ -33,6 +34,8 @@ func main() {
 
 	// Run GraceFullyShutdown
 	config.GraceFullShutdown(app)
+        // Close Redis
+	rds.RedisClose()
 
 	// Close Database
 	defer database.CloseDB()
