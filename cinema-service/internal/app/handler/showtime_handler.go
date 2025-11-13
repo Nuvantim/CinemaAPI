@@ -2,7 +2,7 @@ package handler
 
 import (
 	model "cinema/internal/app/repository"
-	"cinema/internal/app/services"
+	"cinema/internal/app/service"
 	"cinema/pkgs/parser"
 	"cinema/pkgs/response"
 	rds "cinema/redis"

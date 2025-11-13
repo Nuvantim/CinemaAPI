@@ -2,7 +2,7 @@ package handler
 
 import (
 	model "booking/internal/app/repository"
-	"booking/internal/app/services"
+	"booking/internal/app/service"
 	"booking/pkgs/parser"
 	"booking/pkgs/response"
 

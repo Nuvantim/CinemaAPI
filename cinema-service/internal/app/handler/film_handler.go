@@ -4,7 +4,7 @@ import (
 	model "cinema/internal/app/repository"
 	rds "cinema/redis"
 
-	"cinema/internal/app/services"
+	"cinema/internal/app/service"
 	"cinema/pkgs/parser"
 	"cinema/pkgs/response"
 	"cinema/pkgs/validator"

@@ -2,7 +2,7 @@ package routes
 
 import (
 	"booking/config"
-	"booking/internal/app/handlers"
+	"booking/internal/app/handler"
 	"net/http"
 )
 
