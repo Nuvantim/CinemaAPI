@@ -34,7 +34,7 @@ func main() {
 
 	// Run GraceFullyShutdown
 	config.GraceFullShutdown(app)
-        // Close Redis
+	// Close Redis
 	rds.RedisClose()
 
 	// Close Database

@@ -7,7 +7,7 @@ import (
 
 	"api/internal/gateway"
 	model "booking/pkgs/monorepo"
- rds "api/redis"
+ 	rds "api/redis"
 	dto "cinema/pkgs/monorepo"
 )
 

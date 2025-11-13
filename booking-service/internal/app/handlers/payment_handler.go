@@ -30,7 +30,7 @@ func ListPayment(w http.ResponseWriter, r *http.Request) {
 
 	// set data to redis
 	defer func() {
-		_ := rds.SetData(fmt.Sprintf("list:payment:%d", user.UserID), data)
+		_ = rds.SetData(fmt.Sprintf("list:payment:%d", user.UserID), data)
 	}()
 
 	response.Success(w, data)
@@ -54,7 +54,7 @@ func CreatePayment(w http.ResponseWriter, r *http.Request) {
 	defer func() {
 		data_payment, _ := service.ListPayment(data.UserID)
 		if data_payment != nil {
-			_ := rds.SetData(fmt.Sprintf("list:payment:%d", data.UserID), data_payment)
+			_ = rds.SetData(fmt.Sprintf("list:payment:%d", data.UserID), data_payment)
 		}
 	}()
 

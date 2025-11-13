@@ -2,10 +2,10 @@ package handler
 
 import (
 	model "cinema/internal/app/repository"
- rds "cinema/redis"
 	"cinema/internal/app/services"
 	"cinema/pkgs/parser"
 	"cinema/pkgs/response"
+	rds "cinema/redis"
 	"net/http"
 )
 
@@ -15,12 +15,12 @@ func ListShowTime(w http.ResponseWriter, r *http.Request) {
 		response.Error(w, err)
 		return
 	}
-	
+
 	// set data to redis
-	defer func(){
-	    if data != nil{
-	        _ := rds.SetData("list:showtime", data)
-	    }
+	defer func() {
+		if data != nil {
+			_ = rds.SetData("list:showtime", data)
+		}
 	}()
 
 	response.Success(w, data)
@@ -55,15 +55,14 @@ func CreateShowTime(w http.ResponseWriter, r *http.Request) {
 		response.Error(w, err)
 		return
 	}
-	
-	// set data to redis
-	defer func(){
-	    data_showtime,_ := service.ListShowTime()
-	    if data_showtime != nil{
-	        _ := rds.SetData("list:showtime", data_showtime)
-	    }
-	}()
 
+	// set data to redis
+	defer func() {
+		data_showtime, _ := service.ListShowTime()
+		if data_showtime != nil {
+			_ = rds.SetData("list:showtime", data_showtime)
+		}
+	}()
 
 	response.Success(w, data)
 }
@@ -81,13 +80,13 @@ func UpdateShowTime(w http.ResponseWriter, r *http.Request) {
 		response.Error(w, err)
 		return
 	}
-	
+
 	// set data to redis
-	defer func(){
-	    data_showtime,_ := service.ListShowTime()
-	    if data_showtime != nil{
-	        _ := rds.SetData("list:showtime", data_showtime)
-	    }
+	defer func() {
+		data_showtime, _ := service.ListShowTime()
+		if data_showtime != nil {
+			_ = rds.SetData("list:showtime", data_showtime)
+		}
 	}()
 
 	response.Success(w, data)
@@ -107,13 +106,13 @@ func DeleteShowTime(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// set data to redis
-	defer func(){
-	    data_showtime,_ := service.ListShowTime()
-	    if data_showtime != nil{
-	        _ := rds.SetData("list:showtime", data_showtime)
-	    }
+	defer func() {
+		data_showtime, _ := service.ListShowTime()
+		if data_showtime != nil {
+			_ = rds.SetData("list:showtime", data_showtime)
+		}
 	}()
-    
+
 	response.Success(w, struct {
 		Message string `json:"message"`
 	}{Message: "showtime deleted"})

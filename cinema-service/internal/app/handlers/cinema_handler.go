@@ -2,11 +2,11 @@ package handler
 
 import (
 	model "cinema/internal/app/repository"
-	rds "cinema/redis"
 	"cinema/internal/app/services"
 	"cinema/pkgs/parser"
 	"cinema/pkgs/response"
-	
+	rds "cinema/redis"
+
 	"net/http"
 )
 
@@ -16,12 +16,12 @@ func ListCinema(w http.ResponseWriter, r *http.Request) {
 		response.Error(w, err)
 		return
 	}
-	
+
 	// set data to redis
-	defer func(){
-	    if data != nil{
-	        _ := rds.SetData("list:cinema",data)
-	    }
+	defer func() {
+		if data != nil {
+			_ = rds.SetData("list:cinema", data)
+		}
 	}()
 
 	response.Success(w, data)
@@ -70,16 +70,15 @@ func CreateCinema(w http.ResponseWriter, r *http.Request) {
 		response.Error(w, err)
 		return
 	}
-	
+
 	// set data to redis
-	defer func(){
-	    data_cinema,_ := service.ListCinema()
-	    if data_cinema != nil{
-	        _ := rds.SetData("list:cinema",data)
-	    }
+	defer func() {
+		data_cinema, _ := service.ListCinema()
+		if data_cinema != nil {
+			_ = rds.SetData("list:cinema", data)
+		}
 	}()
 
-	
 	response.Success(w, data)
 }
 
@@ -97,15 +96,14 @@ func UpdateCinema(w http.ResponseWriter, r *http.Request) {
 		response.Error(w, err)
 		return
 	}
-	
-	// set data to redis
-	defer func(){
-	    data_cinema,_ := service.ListCinema()
-	    if data_cinema != nil{
-	        _ := rds.SetData("list:cinema",data)
-	    }
-	}()
 
+	// set data to redis
+	defer func() {
+		data_cinema, _ := service.ListCinema()
+		if data_cinema != nil {
+			_ = rds.SetData("list:cinema", data)
+		}
+	}()
 
 	response.Success(w, data)
 }
@@ -121,13 +119,13 @@ func DeleteCinema(w http.ResponseWriter, r *http.Request) {
 		response.Error(w, err)
 		return
 	}
-	
+
 	// set data to redis
-	defer func(){
-	    data_cinema,_ := service.ListCinema()
-	    if data_cinema != nil{
-	        _ := rds.SetData("list:cinema",data)
-	    }
+	defer func() {
+		data_cinema, _ := service.ListCinema()
+		if data_cinema != nil {
+			_ = rds.SetData("list:cinema", data_cinema)
+		}
 	}()
 
 	response.Success(w, struct {

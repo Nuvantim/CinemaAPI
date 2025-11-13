@@ -28,7 +28,7 @@ func ListBooking(c *fiber.Ctx) error {
 	}
 
 	// start service
-	data, err := service.ListBooking(body)
+	data, err := service.ListBooking(body.UserID)
 	if err != nil {
 		return c.Status(500).JSON(response.Error("unable to list booking", err.Error()))
 	}

@@ -2,11 +2,13 @@ package handler
 
 import (
 	model "cinema/internal/app/repository"
- rds "cinema/redis
+	rds "cinema/redis"
+
 	"cinema/internal/app/services"
 	"cinema/pkgs/parser"
 	"cinema/pkgs/response"
 	"cinema/pkgs/validator"
+
 	"net/http"
 )
 
@@ -16,17 +18,16 @@ func ListFilm(w http.ResponseWriter, r *http.Request) {
 		response.Error(w, err)
 		return
 	}
-	
+
 	// set data to redis
-	defer func(){
-	    if data != nil{
-	        _ := rds.SetData("list:film", data)
-	    }
+	defer func() {
+		if data != nil {
+			_ = rds.SetData("list:film", data)
+		}
 	}()
-	
+
 	response.Success(w, data)
 }
-
 
 func GetFilm(w http.ResponseWriter, r *http.Request) {
 	id, err := parser.ParamsInt(r, "/film/")
@@ -43,7 +44,6 @@ func GetFilm(w http.ResponseWriter, r *http.Request) {
 
 	response.Success(w, data)
 }
-
 
 func SearchFilm(w http.ResponseWriter, r *http.Request) {
 	var film = struct {
@@ -63,7 +63,6 @@ func SearchFilm(w http.ResponseWriter, r *http.Request) {
 	response.Success(w, data)
 }
 
-
 func SearchFilmGenre(w http.ResponseWriter, r *http.Request) {
 	id, err := parser.ParamsInt(r, "/film/genre/")
 	if err != nil {
@@ -78,7 +77,6 @@ func SearchFilmGenre(w http.ResponseWriter, r *http.Request) {
 
 	response.Success(w, data)
 }
-
 
 func CreateFilm(w http.ResponseWriter, r *http.Request) {
 	var film model.CreateFilmParams
@@ -100,19 +98,18 @@ func CreateFilm(w http.ResponseWriter, r *http.Request) {
 		response.Error(w, err)
 		return
 	}
-	
+
 	// set data to redis
-	defer func(){
-	    data_film,_ := service.ListFilm()
-	    if data_film != nil{
-	        _ := rds.SetData("list:film", data_film)
-	    }
+	defer func() {
+		data_film, _ := service.ListFilm()
+		if data_film != nil {
+			_ = rds.SetData("list:film", data_film)
+		}
 	}()
-	
+
 	response.Success(w, data)
 
 }
-
 
 func UpdateFilm(w http.ResponseWriter, r *http.Request) {
 	var film model.UpdateFilmParams
@@ -134,19 +131,17 @@ func UpdateFilm(w http.ResponseWriter, r *http.Request) {
 		response.Error(w, err)
 		return
 	}
-	
+
 	// set data to redis
-	defer func(){
-	    data_film,_ := service.ListFilm()
-	    if data_film != nil{
-	        _ := rds.SetData("list:film", data_film)
-	    }
+	defer func() {
+		data_film, _ := service.ListFilm()
+		if data_film != nil {
+			_ = rds.SetData("list:film", data_film)
+		}
 	}()
-	
 
 	response.Success(w, data)
 }
-
 
 func DeleteFilm(w http.ResponseWriter, r *http.Request) {
 	id, err := parser.ParamsInt(r, "/film/delete/")
@@ -159,13 +154,13 @@ func DeleteFilm(w http.ResponseWriter, r *http.Request) {
 		response.Error(w, err)
 		return
 	}
-	
+
 	// set data to redis
-	defer func(){
-	    data_film,_ := service.ListFilm()
-	    if data_film != nil{
-	        _ := rds.SetData("list:film", data_film)
-	    }
+	defer func() {
+		data_film, _ := service.ListFilm()
+		if data_film != nil {
+			_ = rds.SetData("list:film", data_film)
+		}
 	}()
 
 	response.Success(w, struct {
