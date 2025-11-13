@@ -32,7 +32,7 @@ func ListBooking(body any) ([]ListBookingRow, error) {
     // get data booking
     data_booking, err := func() ([]model.Booking, error) {
 		
-		// get value from body
+		// get key from body
 		v := reflect.ValueOf(body)
 		
 		// check data on redis

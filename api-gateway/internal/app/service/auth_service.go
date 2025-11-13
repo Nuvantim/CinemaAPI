@@ -41,8 +41,8 @@ func SendOTP(email string) (string, error) {
 
 func Register(regist req.Register) (string, error) {
 	// search otp
-	var value string = fmt.Sprintf("verif:%s", regist.Code)
-	result, err := rds.GetData[req.CreateOTP](value)
+	var key string = fmt.Sprintf("verif:%s", regist.Code)
+	result, err := rds.GetData[req.CreateOTP](key)
 	if err != nil {
 		return "", err
 	}
@@ -81,7 +81,7 @@ func Register(regist req.Register) (string, error) {
 		}
 
 		// Delete the used OTP
-		if err := rds.DelData(value); err != nil {
+		if err := rds.DelData(key); err != nil {
 			errChan <- err // Send error if OTP deletion fails
 			return
 		}
@@ -131,8 +131,8 @@ func Login(login req.Login) (string, string, error) {
 
 func ResetPassword(pass req.ResetPassword) (string, error) {
 	// Check Code Otp
-	var value string = fmt.Sprintf("verif:%s", pass.Code)
-	result, err := rds.GetData[req.CreateOTP](value)
+	var key string = fmt.Sprintf("verif:%s", pass.Code)
+	result, err := rds.GetData[req.CreateOTP](key)
 	if err != nil {
 		return "", err
 	}
@@ -170,7 +170,7 @@ func ResetPassword(pass req.ResetPassword) (string, error) {
 		}
 
 		// Delete OTP code by email
-		if err := rds.DelData(value); err != nil {
+		if err := rds.DelData(key); err != nil {
 			errChan <- err
 			return
 		}

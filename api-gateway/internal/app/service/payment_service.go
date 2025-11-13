@@ -11,8 +11,8 @@ import (
 
 func ListPayment(body any) ([]model.Payment, error) {
 	// check data on redis
-	value := fmt.Sprintf("list:booking:%d", body.UserID)
-	redis_data, err := rds.GetData[*[]model.Payment](value)
+	key := fmt.Sprintf("list:booking:%d", body.UserID)
+	redis_data, err := rds.GetData[*[]model.Payment](key)
 	if err == nil && redis_data != nil {
 		return redis_data,nil
 	}
