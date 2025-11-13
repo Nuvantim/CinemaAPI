@@ -9,7 +9,6 @@ import (
 	"api/internal/app/service"
 	"api/pkgs/utils/responses"
 	"api/pkgs/utils/validates"
-	rds "api/redis"
 
 	model "booking/pkgs/monorepo"
 )
@@ -19,13 +18,6 @@ func ListBooking(c *fiber.Ctx) error {
 	user_id, ok := c.Locals("user_id").(int64)
 	if !ok || user_id == 0 {
 		return c.Status(401).JSON(response.Error("failed get user_id", "unauthorized"))
-	}
-
-	// check data on redis
-	value := fmt.Sprintf("list:booking:%d", user_id)
-	redis_data, err := rds.GetData[[]service.ListBookingRow](value)
-	if err == nil && redis_data != nil {
-		c.Status(200).JSON(response.Pass("list film", redis_data))
 	}
 
 	// create struct data
@@ -47,8 +39,8 @@ func ListBooking(c *fiber.Ctx) error {
 
 func CreateBooking(c *fiber.Ctx) error {
 	// get user id
-	userID, ok := c.Locals("user_id").(int64)
-	if !ok || userID == 0 {
+	user_id, ok := c.Locals("user_id").(int64)
+	if !ok || user_id == 0 {
 		return c.Status(401).JSON(response.Error("failed get user_id", "unauthorized"))
 	}
 
@@ -57,7 +49,7 @@ func CreateBooking(c *fiber.Ctx) error {
 	if err := c.BodyParser(&booking); err != nil {
 		return c.Status(400).JSON(response.Error("unable to parse request body", err.Error()))
 	}
-	booking.UserID = userID
+	booking.UserID = user_id
 
 	// validate data
 	if err := validate.BodyStructs(booking); err != nil {
@@ -87,5 +79,5 @@ func DeleteBooking(c *fiber.Ctx) error {
 	}
 
 	// return response
-	return c.Status(200).JSON(response.Pass("delete booking", struct{}{}))
+	return c.Status(200).JSON(response.Pass("booking deleted", struct{}{}))
 }

@@ -4,9 +4,18 @@ package service
 import (
 	"api/internal/gateway"
 	model "booking/pkgs/monorepo"
+ rds "api/redis"
 )
 
 func ListPayment(body any) ([]model.Payment, error) {
+	// check data on redis
+	value := fmt.Sprintf("list:booking:%d", user_id)
+	redis_data, err := rds.GetData[[]model.Payment](value)
+	if err == nil && redis_data != nil {
+		return redis_data,nil
+	}
+	
+	// get data from service
 	url := "/payment/"
 
 	data, err := gateway.PostBooking[any, []model.Payment](url, body)
@@ -15,6 +24,7 @@ func ListPayment(body any) ([]model.Payment, error) {
 	}
 
 	return data, nil
+	
 }
 
 func CreatePayment(body model.CreatePaymentParams) (model.Payment, error) {

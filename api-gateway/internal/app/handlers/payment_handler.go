@@ -21,13 +21,6 @@ func ListPayment(c *fiber.Ctx) error {
 		return c.Status(401).JSON(response.Error("failed get user id", "unauthorized"))
 	}
 
-	// check data on redis
-	value := fmt.Sprintf("list:booking:%d", user_id)
-	redis_data, err := rds.GetData[[]model.Payment](value)
-	if err == nil && redis_data != nil {
-		c.Status(200).JSON(response.Pass("list film", redis_data))
-	}
-
 	//  add user id to struct
 	payment := struct {
 		UserID int64 `json:"user_id"`
