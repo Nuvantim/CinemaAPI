@@ -37,6 +37,12 @@ func CreateBookingSeat(c *fiber.Ctx) error {
 		return c.Status(400).JSON(response.Error("unable to parse request body", err.Error()))
 	}
 
+	// check seat
+	_, err := service.GetSeat(booking_seat.SeatID)
+	if err != nil {
+		return c.Status(404).JSON(response.Error("failed check seat", err.Error()))
+	}
+
 	// get booking
 	booking, err := service.GetBooking(booking_seat.BookingID)
 	if err != nil {

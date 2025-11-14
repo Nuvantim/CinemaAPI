@@ -2,14 +2,11 @@
 package handler
 
 import (
-	"fmt"
-
 	"github.com/gofiber/fiber/v2"
 
 	"api/internal/app/service"
 	"api/pkgs/utils/responses"
 	"api/pkgs/utils/validates"
-	rds "api/redis"
 
 	model "booking/pkgs/monorepo"
 )

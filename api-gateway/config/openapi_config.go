@@ -9,9 +9,9 @@ import (
 )
 
 func APIDocs() scalar.Config {
-	data, err := os.ReadFile("docs/openapi.yaml")
+	data, err := os.ReadFile("docs/openapi.json")
 	if err != nil {
-		log.Fatalf("failed read file openapi.yaml: %v", err)
+		log.Fatalf("failed read file openapi.json: %v", err)
 	}
 
 	fileContent := strings.ReplaceAll(string(data), "{{BASE_URL}}", os.Getenv("URL"))

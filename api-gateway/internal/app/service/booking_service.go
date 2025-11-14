@@ -3,12 +3,12 @@ package service
 
 import (
 	"fmt"
-	"time"
 	"reflect"
+	"time"
 
 	"api/internal/gateway"
+	rds "api/redis"
 	model "booking/pkgs/monorepo"
- 	rds "api/redis"
 	dto "cinema/pkgs/monorepo"
 )
 
@@ -29,44 +29,44 @@ type DataBookingRow struct {
 }
 
 func ListBooking(body any) ([]ListBookingRow, error) {
-    // get data booking
-    data_booking, err := func() ([]model.Booking, error) {
-		
+	// get data booking
+	data_booking, err := func() ([]model.Booking, error) {
+
 		// get key from body
 		v := reflect.ValueOf(body)
-		
+
 		// check data on redis
 		key := fmt.Sprintf("list:booking:%d", v.FieldByName("UserID").Int())
 		redis_data, err := rds.GetData[[]model.Booking](key)
-		if err == nil && redis_data != nil && len(*redis_data) > 0 {
+		if err == nil && redis_data != nil {
 			return *redis_data, nil
 		}
-		
+
 		// get data from service
 		url := "/bookings"
 		booking_data, err := gateway.PostBooking[any, []model.Booking](url, body)
 		if err != nil {
-			return []model.Booking, err
+			return []model.Booking{}, err
 		}
 		return booking_data, nil
 	}()
-    if err != nil{
-        return []ListBookingRow{},err
-    }
-    
-    // get showtime data
+	if err != nil {
+		return []ListBookingRow{}, err
+	}
+
+	// get showtime data
 	data_showtime, err := ListShowTime()
 	if err != nil {
 		return []ListBookingRow{}, err
 	}
 
-    //create map for showtime
+	//create map for showtime
 	showtimeMap := make(map[int64]dto.ListShowTimeRow)
 	for _, s := range data_showtime {
 		showtimeMap[s.ID] = s
 	}
-    
-    // crete response 
+
+	// crete response
 	var data []ListBookingRow
 	for _, b := range data_booking {
 		showtime := showtimeMap[b.ShowtimeID]
@@ -126,4 +126,3 @@ func DeleteBooking(id int64) error {
 	}
 	return nil
 }
-

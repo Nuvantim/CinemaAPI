@@ -2,8 +2,6 @@
 package handler
 
 import (
-	"fmt"
-
 	"github.com/gofiber/fiber/v2"
 
 	"api/internal/app/service"
@@ -54,6 +52,12 @@ func CreateBooking(c *fiber.Ctx) error {
 	// validate data
 	if err := validate.BodyStructs(booking); err != nil {
 		return c.Status(422).JSON(response.Error("invalid or incomplete data", err.Error()))
+	}
+
+	// check showtime
+	_, err := service.GetShowTime(booking.ShowtimeID)
+	if err != nil {
+		return c.Status(404).JSON(response.Error("failed check showtime", err.Error()))
 	}
 
 	// start service

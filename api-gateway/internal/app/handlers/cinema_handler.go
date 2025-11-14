@@ -14,7 +14,7 @@ func ListCinema(c *fiber.Ctx) error {
 	// check data on redis
 	redis_data, err := rds.GetData[[]model.Cinema]("list:cinema")
 	if err == nil && redis_data != nil {
-		c.Status(200).JSON(response.Pass("list film", redis_data))
+		c.Status(200).JSON(response.Pass("list cinema", redis_data))
 	}
 	// start service
 	data, err := service.ListCinema()

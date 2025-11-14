@@ -3,20 +3,23 @@ package service
 
 import (
 	"api/internal/gateway"
+	rds "api/redis"
 	model "booking/pkgs/monorepo"
- 	rds "api/redis"
 
- 	"fmt"
+	"fmt"
+	"reflect"
 )
 
 func ListPayment(body any) ([]model.Payment, error) {
 	// check data on redis
-	key := fmt.Sprintf("list:booking:%d", body.UserID)
-	redis_data, err := rds.GetData[*[]model.Payment](key)
+	v := reflect.ValueOf(body)
+
+	key := fmt.Sprintf("list:booking:%d", v.FieldByName("UserID").Int())
+	redis_data, err := rds.GetData[[]model.Payment](key)
 	if err == nil && redis_data != nil {
-		return redis_data,nil
+		return *redis_data, nil
 	}
-	
+
 	// get data from service
 	url := "/payment/"
 
@@ -26,7 +29,7 @@ func ListPayment(body any) ([]model.Payment, error) {
 	}
 
 	return data, nil
-	
+
 }
 
 func CreatePayment(body model.CreatePaymentParams) (model.Payment, error) {

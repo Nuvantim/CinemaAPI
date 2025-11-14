@@ -66,7 +66,7 @@ func SetData[T any](key string, data T) error {
 	if err != nil {
 		return err
 	}
-	err = RDS.Set(ctx, key, jsonData, 1*time.Minute).Err()
+	err = RDS.Set(ctx, key, jsonData, 10*time.Minute).Err()
 	if err != nil {
 		return err
 	}
@@ -84,8 +84,9 @@ func GetData[T any](key string) (*T, error) {
 		return data, err
 	}
 
-	err = json.Unmarshal([]byte(val), data)
-	if err != nil {
+	data = new(T)
+
+	if err := json.Unmarshal([]byte(val), data); err != nil {
 		return data, err
 	}
 

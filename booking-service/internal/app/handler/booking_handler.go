@@ -105,4 +105,3 @@ func DeleteBooking(w http.ResponseWriter, r *http.Request) {
 		Message string `json:"message"`
 	}{Message: "booking deleted"})
 }
-
