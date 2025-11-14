@@ -64,36 +64,18 @@ func Register(regist req.Register) (string, error) {
 	}
 
 	// create user_account
-	account, err := db.Queries.CreateUser(ctx.Background(), createUser)
+	account_id, err := db.Queries.CreateUser(ctx.Background(), createUser)
 	if err != nil {
 		return "", db.Fatal(err)
 	}
 
-	// Create a buffered channel to receive any error from the goroutine
-	errChan := make(chan error, 1)
-
-	// Run user creation and OTP deletion in a separate goroutine
-	go func() {
-		// Create the user_profile
-		if err := db.Queries.CreateProfile(ctx.Background(), account.ID); err != nil {
-			errChan <- db.Fatal(err) // Send error if user creation fails
-			return
-		}
-
-		// Delete the used OTP
-		if err := rds.DelData(key); err != nil {
-			errChan <- err // Send error if OTP deletion fails
-			return
-		}
-
-		// Both operations succeeded
-		errChan <- nil
-	}()
-
-	// Wait for the result from the goroutine
-	if err := <-errChan; err != nil {
-		return "", err
+	// create profile
+	if err := db.Queries.CreateProfile(ctx.Background(), account_id); err != nil {
+		return "", db.Fatal(err)
 	}
+
+	// Delete the OTP on redis
+	_ = rds.DelData(key)
 
 	return "your account has been created, please login", nil
 }
@@ -113,7 +95,7 @@ func Login(login req.Login) (string, string, error) {
 	if err != nil {
 		return "", "", db.Fatal(err)
 	}
-	// Input jwt data
+
 	// Create access token and refresh token
 	accessToken, err := guard.CreateToken(data.ID, data.Email, role)
 	if err != nil {
@@ -157,28 +139,14 @@ func ResetPassword(pass req.ResetPassword) (string, error) {
 		Email:    email_search.Email,
 		Password: string(psw),
 	}
-	// Create a buffered channel to receive any error from the goroutine
-	errChan := make(chan error, 1)
 
-	// Run database operations in a separate goroutine
-	go func() {
+	if err := db.Queries.ResetPassword(ctx.Background(), resetPassword); err != nil {
+		return "", db.Fatal(err)
+	}
 
-		// Try to update the password
-		if err := db.Queries.ResetPassword(ctx.Background(), resetPassword); err != nil {
-			errChan <- db.Fatal(err)
-			return
-		}
-
-		// Delete OTP code by email
-		if err := rds.DelData(key); err != nil {
-			errChan <- err
-			return
-		}
-		errChan <- nil
-	}()
-
-	if err := <-errChan; err != nil {
-		return "", err
+	// Delete OTP code by email
+	if err := rds.DelData(key); err != nil {
+		return "", db.Fatal(err)
 	}
 
 	return "reset password successfully", nil

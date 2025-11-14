@@ -3,7 +3,7 @@ INSERT INTO booking (user_id, showtime_id)
 VALUES($1, $2) RETURNING user_id;
 
 -- name: ListBooking :many
-SELECT * FROM booking WHERE user_id = $1;
+SELECT * FROM booking WHERE user_id = $1 ORDER BY booking_time ASC;
 
 -- name: GetBooking :one
 SELECT * FROM booking WHERE id =$1;
@@ -41,5 +41,5 @@ WHERE b.id = sqlc.arg(booking_id)
 RETURNING *;
 
 -- name: ListPayment :many
-SELECT * FROM payment WHERE user_id = $1;
+SELECT * FROM payment WHERE user_id = $1 ORDER BY payment_time ASC;
 

@@ -7,8 +7,6 @@ package repository
 
 import (
 	"context"
-
-	"github.com/jackc/pgx/v5/pgtype"
 )
 
 const CreateProfile = `-- name: CreateProfile :exec
@@ -24,7 +22,7 @@ func (q *Queries) CreateProfile(ctx context.Context, userID int64) error {
 const CreateUser = `-- name: CreateUser :one
 INSERT INTO user_account(name,email,password) 
 VALUES ($1,$2,$3) 
-RETURNING id, name, email, password, created_at
+RETURNING id
 `
 
 type CreateUserParams struct {
@@ -33,17 +31,11 @@ type CreateUserParams struct {
 	Password string `json:"password" validate:"required"`
 }
 
-func (q *Queries) CreateUser(ctx context.Context, arg CreateUserParams) (UserAccount, error) {
+func (q *Queries) CreateUser(ctx context.Context, arg CreateUserParams) (int64, error) {
 	row := q.db.QueryRow(ctx, CreateUser, arg.Name, arg.Email, arg.Password)
-	var i UserAccount
-	err := row.Scan(
-		&i.ID,
-		&i.Name,
-		&i.Email,
-		&i.Password,
-		&i.CreatedAt,
-	)
-	return i, err
+	var id int64
+	err := row.Scan(&id)
+	return id, err
 }
 
 const DeleteAccount = `-- name: DeleteAccount :exec
@@ -127,13 +119,13 @@ WHERE user_id = $1
 `
 
 type UpdateAccountParams struct {
-	UserID   int64       `json:"user_id" validate:"required"`
-	Name     string      `json:"name" validate:"required"`
-	Age      pgtype.Int4 `json:"age" validate:"required"`
-	Phone    pgtype.Int4 `json:"phone" validate:"required"`
-	District pgtype.Text `json:"district" validate:"required"`
-	City     pgtype.Text `json:"city" validate:"required"`
-	Country  pgtype.Text `json:"country" validate:"required"`
+	UserID   int64  `json:"user_id" validate:"required"`
+	Name     string `json:"name" validate:"required"`
+	Age      int64  `json:"age" validate:"required"`
+	Phone    int64  `json:"phone" validate:"required"`
+	District string `json:"district" validate:"required"`
+	City     string `json:"city" validate:"required"`
+	Country  string `json:"country" validate:"required"`
 }
 
 func (q *Queries) UpdateAccount(ctx context.Context, arg UpdateAccountParams) error {

@@ -70,7 +70,7 @@ func (q *Queries) GetFilm(ctx context.Context, id int64) (GetFilmRow, error) {
 
 const ListFilm = `-- name: ListFilm :many
 SELECT film.id, film.title, film.director, genre.name AS genre, film.duration FROM film 
-INNER JOIN genre ON film.genre_id = genre.id
+INNER JOIN genre ON film.genre_id = genre.id ORDER BY film.id ASC
 `
 
 type ListFilmRow struct {

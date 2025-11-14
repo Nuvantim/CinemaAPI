@@ -7,6 +7,7 @@ import (
 	"api/internal/app/service"
 	"api/pkgs/utils/responses"
 	"api/pkgs/utils/validates"
+	req "api/internal/app/request"
 
 	model "booking/pkgs/monorepo"
 )
@@ -19,9 +20,7 @@ func ListPayment(c *fiber.Ctx) error {
 	}
 
 	//  add user id to struct
-	payment := struct {
-		UserID int64 `json:"user_id"`
-	}{
+	var payment = req.BookingPayment{
 		UserID: user_id,
 	}
 

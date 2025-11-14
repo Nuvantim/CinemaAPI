@@ -71,7 +71,7 @@ func (q *Queries) GetTotalAmmountBooking(ctx context.Context, id int64) (float64
 }
 
 const ListBooking = `-- name: ListBooking :many
-SELECT id, user_id, showtime_id, booking_time, total_amount FROM booking WHERE user_id = $1
+SELECT id, user_id, showtime_id, booking_time, total_amount FROM booking WHERE user_id = $1 ORDER BY booking_time ASC
 `
 
 func (q *Queries) ListBooking(ctx context.Context, userID int64) ([]Booking, error) {

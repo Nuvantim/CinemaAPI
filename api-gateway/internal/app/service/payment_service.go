@@ -2,19 +2,17 @@
 package service
 
 import (
+	req "api/internal/app/request"
 	"api/internal/gateway"
 	rds "api/redis"
 	model "booking/pkgs/monorepo"
 
 	"fmt"
-	"reflect"
 )
 
-func ListPayment(body any) ([]model.Payment, error) {
+func ListPayment(body req.BookingPayment) ([]model.Payment, error) {
 	// check data on redis
-	v := reflect.ValueOf(body)
-
-	key := fmt.Sprintf("list:booking:%d", v.FieldByName("UserID").Int())
+	key := fmt.Sprintf("list:booking:%d", body.UserID)
 	redis_data, err := rds.GetData[[]model.Payment](key)
 	if err == nil && redis_data != nil {
 		return *redis_data, nil

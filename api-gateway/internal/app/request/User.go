@@ -1,15 +1,13 @@
 package request
 
-import pg "github.com/jackc/pgx/v5/pgtype"
-
 type UpdateAccount struct {
-	Name     string  `validate:"required,min=2" json:"name"`
-	Password string  `validate:"omitempty,min=8" json:"password"`
-	Age      pg.Int4 `validate:"omitempty,gt=0" json:"age"`
-	Phone    pg.Int4 `validate:"omitempty,gt=0" json:"phone"`
-	District pg.Text `validate:"omitempty" json:"district"`
-	City     pg.Text `validate:"omitempty" json:"city"`
-	Country  pg.Text `validate:"omitempty" json:"country"`
+	Name     string `validate:"required,min=2" json:"name"`
+	Password string `validate:"omitempty,min=8" json:"password"`
+	Age      int64  `validate:"omitempty,gt=0" json:"age"`
+	Phone    int64  `validate:"omitempty,gt=0" json:"phone"`
+	District string `validate:"omitempty" json:"district"`
+	City     string `validate:"omitempty" json:"city"`
+	Country  string `validate:"omitempty" json:"country"`
 }
 
 type UpdateClient struct {

@@ -4,6 +4,7 @@ package handler
 import (
 	"github.com/gofiber/fiber/v2"
 
+	req "api/internal/app/request"
 	"api/internal/app/service"
 	"api/pkgs/utils/responses"
 	"api/pkgs/utils/validates"
@@ -18,15 +19,12 @@ func ListBooking(c *fiber.Ctx) error {
 		return c.Status(401).JSON(response.Error("failed get user_id", "unauthorized"))
 	}
 
-	// create struct data
-	body := struct {
-		UserID int64 `json:"user_id"`
-	}{
+	var body = req.BookingPayment{
 		UserID: user_id,
 	}
 
 	// start service
-	data, err := service.ListBooking(body.UserID)
+	data, err := service.ListBooking(body)
 	if err != nil {
 		return c.Status(500).JSON(response.Error("unable to list booking", err.Error()))
 	}

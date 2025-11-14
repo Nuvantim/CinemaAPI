@@ -34,34 +34,19 @@ func UpdateAccount(user req.UpdateAccount, userIDs int64) (repo.GetProfileRow, e
 		Country:  user.Country,
 	}
 
-	// Create a buffered channel to receive any error from the goroutine
-	errChan := make(chan error, 1)
-
-	// Run user creation and OTP deletion in a separate goroutine
-	go func() {
-		// Update password is available
-		if str.TrimSpace(user.Password) != "" {
-			psw := guard.HashBycrypt(user.Password)
-			passUpdate := repo.UpdatePasswordParams{
-				ID:       userIDs,
-				Password: string(psw),
-			}
-			if err := db.Queries.UpdatePassword(ctx.Background(), passUpdate); err != nil {
-				errChan <- err
-				return
-			}
+	// Update password is available
+	if str.TrimSpace(user.Password) != "" {
+		psw := guard.HashBycrypt(user.Password)
+		passUpdate := repo.UpdatePasswordParams{
+			ID:       userIDs,
+			Password: string(psw),
 		}
-		// Update Profile User
-		if err := db.Queries.UpdateAccount(ctx.Background(), updateAccount); err != nil {
-			errChan <- err
-			return
+		if err := db.Queries.UpdatePassword(ctx.Background(), passUpdate); err != nil {
+			return repo.GetProfileRow{}, db.Fatal(err)
 		}
-		// Both operations succeeded
-		errChan <- nil
-	}()
-
-	// Wait for the result from the goroutine
-	if err := <-errChan; err != nil {
+	}
+	// Update Profile User
+	if err := db.Queries.UpdateAccount(ctx.Background(), updateAccount); err != nil {
 		return repo.GetProfileRow{}, db.Fatal(err)
 	}
 

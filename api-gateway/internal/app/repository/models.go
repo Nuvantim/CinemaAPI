@@ -6,8 +6,6 @@ package repository
 
 import (
 	"time"
-
-	"github.com/jackc/pgx/v5/pgtype"
 )
 
 type Permission struct {
@@ -25,12 +23,12 @@ type UserAccount struct {
 }
 
 type UserProfile struct {
-	ID        int64       `json:"id" validate:"required"`
-	UserID    int64       `json:"user_id" validate:"required"`
-	Age       pgtype.Int4 `json:"age" validate:"required"`
-	Phone     pgtype.Int4 `json:"phone" validate:"required"`
-	District  pgtype.Text `json:"district" validate:"required"`
-	City      pgtype.Text `json:"city" validate:"required"`
-	Country   pgtype.Text `json:"country" validate:"required"`
-	CreatedAt time.Time   `json:"created_at" validate:"required"`
+	ID        int64     `json:"id" validate:"required"`
+	UserID    int64     `json:"user_id" validate:"required"`
+	Age       int64     `json:"age" validate:"required"`
+	Phone     int64     `json:"phone" validate:"required"`
+	District  string    `json:"district" validate:"required"`
+	City      string    `json:"city" validate:"required"`
+	Country   string    `json:"country" validate:"required"`
+	CreatedAt time.Time `json:"created_at" validate:"required"`
 }

@@ -45,13 +45,9 @@ func (q *Queries) CreatePayment(ctx context.Context, arg CreatePaymentParams) (P
 }
 
 const ListPayment = `-- name: ListPayment :many
-
-SELECT id, user_id, booking_id, payment_method, payment_status, transaction_amount, payment_time FROM payment WHERE user_id = $1
+SELECT id, user_id, booking_id, payment_method, payment_status, transaction_amount, payment_time FROM payment WHERE user_id = $1 ORDER BY payment_time ASC
 `
 
-// INSERT INTO payment (booking_id, user_id,payment_method, payment_status, transaction_amount, payment_time)
-// VALUES(sqlc.arg(booking_id),sqlc.arg(user_id),sqlc.arg(payment_method),'Success' ,sqlc.arg(total_amount),NOW())
-// RETURNING *;
 func (q *Queries) ListPayment(ctx context.Context, userID int64) ([]Payment, error) {
 	rows, err := q.db.Query(ctx, ListPayment, userID)
 	if err != nil {

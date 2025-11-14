@@ -3,7 +3,7 @@ INSERT INTO booking (id,user_id, showtime_id)
 VALUES($1, $2, $3) RETURNING *;
 
 -- name: ListBooking :many
-SELECT * FROM booking WHERE user_id = $1;
+SELECT * FROM booking WHERE user_id = $1 ORDER BY booking_time ASC;
 
 -- name: GetBooking :one
 SELECT * FROM booking WHERE id =$1;

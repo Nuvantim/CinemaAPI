@@ -3,9 +3,9 @@ package service
 
 import (
 	"fmt"
-	"reflect"
 	"time"
 
+	req "api/internal/app/request"
 	"api/internal/gateway"
 	rds "api/redis"
 	model "booking/pkgs/monorepo"
@@ -28,15 +28,11 @@ type DataBookingRow struct {
 	TotalAmount float64            `json:"total_amount"`
 }
 
-func ListBooking(body any) ([]ListBookingRow, error) {
+func ListBooking(body req.BookingPayment) ([]ListBookingRow, error) {
 	// get data booking
 	data_booking, err := func() ([]model.Booking, error) {
-
-		// get key from body
-		v := reflect.ValueOf(body)
-
 		// check data on redis
-		key := fmt.Sprintf("list:booking:%d", v.FieldByName("UserID").Int())
+		key := fmt.Sprintf("list:booking:%d", body.UserID)
 		redis_data, err := rds.GetData[[]model.Booking](key)
 		if err == nil && redis_data != nil {
 			return *redis_data, nil
