@@ -19,7 +19,7 @@ func APIDocs() scalar.Config {
 	return scalar.Config{
 		Title:             "Cinema API Docs",
 		BasePath:          "/",
-		Path:              "/api/v1/docs",
+		Path:              "/docs",
 		FileContentString: fileContent,
 		Theme:             scalar.ThemeBluePlanet,
 	}

@@ -1,6 +1,6 @@
 -- name: ListFilm :many
 SELECT film.id, film.title, film.director, genre.name AS genre, film.duration FROM film 
-INNER JOIN genre ON film.genre_id = genre.id;
+INNER JOIN genre ON film.genre_id = genre.id ORDER BY film.id ASC;
 
 -- name: CreateFilm :one
 INSERT INTO film (title,director,genre_id,duration) SELECT $1,$2,$3,$4 

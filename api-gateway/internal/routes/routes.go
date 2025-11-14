@@ -13,7 +13,7 @@ func Setup(app *fiber.App) {
 	app.Get("/", handler.Home)
 
 	api := app.Group("/api/v1")
-	api.Get("/docs/*", scalar.New(scalar.Config(config.APIDocs())))
+	api.Get("/docs/*", scalar.New(config.APIDocs())
 
 	auth := api.Group("/auth")
 	auth.Post("/send-otp", handler.SendOTP)
