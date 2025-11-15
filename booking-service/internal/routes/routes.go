@@ -7,7 +7,7 @@ import (
 )
 
 func Setup(mux *http.ServeMux) {
-	r := &config.Router{mux}
+	r := &config.Router{Mux: mux}
 	r.Get("/", handler.GetTest)
 
 	// booking

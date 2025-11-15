@@ -5,7 +5,7 @@ import (
 )
 
 type Router struct {
-	*http.ServeMux
+	Mux *http.ServeMux
 }
 
 // Method utama

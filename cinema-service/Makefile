@@ -17,11 +17,11 @@ build:
 
 	@echo -e "$(YELLOW)🚀 Starting Go build process...$(RESET)"
 	@START=$$(date +%s); \
-	GO111MODULE=on CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -ldflags="-s -w" -trimpath -o $(BINARY_NAME) $(MAIN_FILE); \
+	GOMEMLIMIT=200MiB GO111MODULE=on CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -ldflags="-s -w" -trimpath -o $(BINARY_NAME) $(MAIN_FILE); \
 	END=$$(date +%s); \
 	DURATION=$$((END - START)); \
 	if [ -f "$(BINARY_NAME)" ]; then \
-		SIZE_MB=$$(echo "scale=2; $$(stat -c%s $(BINARY_NAME)) / 1024 / 1024" | bc); \
+		SIZE_MB=$$(awk "BEGIN {printf \"%.2f\", $$(stat -c%s $(BINARY_NAME)) / 1024 / 1024}"); \
 		echo -e "$(GREEN)✅ Build completed successfully!$(RESET)"; \
 		echo -e "$(BLUE)📦 Output file:$(RESET)   $(BINARY_NAME)"; \
 		echo -e "$(BLUE)📏 File size:$(RESET)     $${SIZE_MB} MB"; \
