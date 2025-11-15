@@ -21,8 +21,8 @@ func APIDocs() scalar.Config {
 		BasePath:          "/api/v1",
 		Path:              "docs",
 		CacheAge:          60,
-		FallbackCacheAge:  86400,
 		FileContentString: fileContent,
 		Theme:             scalar.ThemeBluePlanet,
+		FallbackCacheAge:  86400,
 	}
 }

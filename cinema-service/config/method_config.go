@@ -10,7 +10,7 @@ type Router struct {
 
 // Method utama
 func (r *Router) Handle(method, path string, handler http.HandlerFunc) {
-	r.ServeMux.HandleFunc(path, func(w http.ResponseWriter, req *http.Request) {
+	r.Mux.HandleFunc(path, func(w http.ResponseWriter, req *http.Request) {
 		if req.Method != method {
 			http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
 			return
