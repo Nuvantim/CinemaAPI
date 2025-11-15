@@ -1,6 +1,7 @@
 package config
 
 import (
+	"io/ioutil"
 	"log"
 	"os"
 	"strings"
@@ -9,20 +10,27 @@ import (
 )
 
 func APIDocs() scalar.Config {
-	data, err := os.ReadFile("docs/openapi.json")
+	root, err := os.OpenRoot("docs")
 	if err != nil {
-		log.Fatalf("failed read file openapi.json: %v", err)
+		log.Fatalf("error membuka folder docs: %w", err)
 	}
-
+	defer root.Close()
+	file, err := root.Open("openapi.json")
+	if err != nil {
+		log.Fatalf("error membuka file openapi.json: %w", err)
+	}
+	defer file.Close()
+	
+	data, err := ioutil.ReadFile(file.Name())
+	if err != nil {
+		log.Fatalf("gagal baca template: %v", err)
+	}
 	fileContent := strings.ReplaceAll(string(data), "{{BASE_URL}}", os.Getenv("URL"))
-
 	return scalar.Config{
 		Title:             "Cinema API Docs",
 		BasePath:          "/api/v1",
 		Path:              "docs",
-		CacheAge:          60,
 		FileContentString: fileContent,
 		Theme:             scalar.ThemeBluePlanet,
-		FallbackCacheAge:  86400,
 	}
 }

@@ -4,9 +4,9 @@ import (
 	"github.com/gofiber/fiber/v2"
 	"github.com/yokeTH/gofiber-scalar/scalar/v2"
 
-	"api/config"
 	"api/internal/app/handlers"
 	"api/internal/middleware"
+	"api/config"
 )
 
 func Setup(app *fiber.App) {

@@ -24,11 +24,11 @@ func ServerGo() *fiber.App {
 	routes.Setup(app)
 
 	// Start Database Connection
-	fmt.Print("[ 🤖 ]")
+	fmt.Print("[ 🤖 ] ")
 	database.InitDB()
 
 	// Start redis Connection
-	fmt.Print("[ 🎲 ]")
+	fmt.Print("[ 🎲 ] ")
 	rds.InitRedis()
 
 	// Star Connect Cinema Service
