@@ -17,7 +17,7 @@ func ListShowTime(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// set data to redis
-	defer func() {
+	go func() {
 		if data != nil {
 			_ = rds.SetData("list:showtime", data)
 		}
@@ -57,7 +57,7 @@ func CreateShowTime(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// set data to redis
-	defer func() {
+	go func() {
 		data_showtime, _ := service.ListShowTime()
 		if data_showtime != nil {
 			_ = rds.SetData("list:showtime", data_showtime)
@@ -82,7 +82,7 @@ func UpdateShowTime(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// set data to redis
-	defer func() {
+	go func() {
 		data_showtime, _ := service.ListShowTime()
 		if data_showtime != nil {
 			_ = rds.SetData("list:showtime", data_showtime)
@@ -106,7 +106,7 @@ func DeleteShowTime(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// set data to redis
-	defer func() {
+	go func() {
 		data_showtime, _ := service.ListShowTime()
 		if data_showtime != nil {
 			_ = rds.SetData("list:showtime", data_showtime)

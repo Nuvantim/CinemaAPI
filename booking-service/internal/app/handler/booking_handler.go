@@ -29,7 +29,7 @@ func ListBooking(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// set data to redis
-	defer func() {
+	go func() {
 		_ = rds.SetData(fmt.Sprintf("list:booking:%d", body.UserID), data)
 	}()
 
@@ -52,7 +52,7 @@ func CreateBooking(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// set data to redis
-	defer func() {
+	go func() {
 		data_booking, _ := service.ListBooking(data.UserID)
 		if data != (model.Booking{}) {
 			_ = rds.SetData(fmt.Sprintf("list:booking:%d", data.UserID), data_booking)
@@ -94,7 +94,7 @@ func DeleteBooking(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// set data to redis
-	defer func() {
+	go func() {
 		if booking.UserID != 0 {
 			data_booking, _ := service.ListBooking(booking.UserID)
 			_ = rds.SetData(fmt.Sprintf("list:booking:%d", booking.UserID), data_booking)

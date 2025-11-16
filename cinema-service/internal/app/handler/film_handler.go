@@ -20,7 +20,7 @@ func ListFilm(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// set data to redis
-	defer func() {
+	go func() {
 		if data != nil {
 			_ = rds.SetData("list:film", data)
 		}
@@ -100,7 +100,7 @@ func CreateFilm(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// set data to redis
-	defer func() {
+	go func() {
 		data_film, _ := service.ListFilm()
 		if data_film != nil {
 			_ = rds.SetData("list:film", data_film)
@@ -133,7 +133,7 @@ func UpdateFilm(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// set data to redis
-	defer func() {
+	go func() {
 		data_film, _ := service.ListFilm()
 		if data_film != nil {
 			_ = rds.SetData("list:film", data_film)
@@ -156,7 +156,7 @@ func DeleteFilm(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// set data to redis
-	defer func() {
+	go func() {
 		data_film, _ := service.ListFilm()
 		if data_film != nil {
 			_ = rds.SetData("list:film", data_film)

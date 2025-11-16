@@ -18,7 +18,7 @@ func ListCinema(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// set data to redis
-	defer func() {
+	go func() {
 		if data != nil {
 			_ = rds.SetData("list:cinema", data)
 		}
@@ -72,7 +72,7 @@ func CreateCinema(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// set data to redis
-	defer func() {
+	go func() {
 		data_cinema, _ := service.ListCinema()
 		if data_cinema != nil {
 			_ = rds.SetData("list:cinema", data)
@@ -98,7 +98,7 @@ func UpdateCinema(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// set data to redis
-	defer func() {
+	go func() {
 		data_cinema, _ := service.ListCinema()
 		if data_cinema != nil {
 			_ = rds.SetData("list:cinema", data)
@@ -121,7 +121,7 @@ func DeleteCinema(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// set data to redis
-	defer func() {
+	go func() {
 		data_cinema, _ := service.ListCinema()
 		if data_cinema != nil {
 			_ = rds.SetData("list:cinema", data_cinema)
