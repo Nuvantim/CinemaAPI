@@ -57,21 +57,22 @@ jobs:
           working-directory: ${{ matrix.project }}
 
   vulncheck:
-    needs: build-test
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        project: ["api-gateway", "cinema-service", "booking-service"]
+   needs: build-test
+   runs-on: ubuntu-latest
+   strategy:
+    matrix:
+      project: ["api-gateway", "cinema-service", "booking-service"]
 
-    steps:
-      - name: Checkout Code
-        uses: actions/checkout@v4
+   steps:
+    - name: Checkout Code
+      uses: actions/checkout@v4
 
-      - name: run govulncheck
-        uses: golang/govulncheck-action@v1
-        with:
-          go-version-input: 1.24.9
-          go-package: ${{ matrix.project }}/...
+    - name: Run govulncheck
+      uses: golang/govulncheck-action@v1
+      with:
+        go-version-input: 1.24.9
+        working-directory: ${{ matrix.project }}
+
 
   coverage:
     needs: build-test
@@ -97,3 +98,4 @@ jobs:
         uses: codecov/codecov-action@v4
         with:
           files: ${{ matrix.project }}/coverage.out
+          token: ${{ secrets.CODECOV_TOKEN }}
