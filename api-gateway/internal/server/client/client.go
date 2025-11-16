@@ -10,7 +10,6 @@ import (
 var (
 	Cinema  string
 	Booking string
-	once    sync.Once
 )
 
 func CinemaService() {
