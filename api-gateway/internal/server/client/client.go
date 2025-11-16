@@ -4,7 +4,6 @@ import (
 	"api/config"
 	"fmt"
 	"log"
-	"sync"
 )
 
 var (
