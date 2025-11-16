@@ -4,15 +4,16 @@ import (
 	"github.com/gofiber/fiber/v2"
 	"github.com/yokeTH/gofiber-scalar/scalar/v2"
 
+	"api/config"
 	"api/internal/app/handlers"
 	"api/internal/middleware"
-	"api/config"
 )
 
 func Setup(app *fiber.App) {
 	app.Get("/", handler.Home)
 
 	api := app.Group("/api/v1")
+	api.Use(config.AllowDoc)
 	api.Get("/docs/*", scalar.New(config.APIDocs()))
 
 	auth := api.Group("/auth")

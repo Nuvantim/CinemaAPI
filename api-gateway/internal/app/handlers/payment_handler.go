@@ -4,10 +4,10 @@ package handler
 import (
 	"github.com/gofiber/fiber/v2"
 
+	req "api/internal/app/request"
 	"api/internal/app/service"
 	"api/pkgs/utils/responses"
 	"api/pkgs/utils/validates"
-	req "api/internal/app/request"
 
 	model "booking/pkgs/monorepo"
 )

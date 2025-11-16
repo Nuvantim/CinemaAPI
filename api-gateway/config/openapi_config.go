@@ -1,29 +1,26 @@
 package config
 
 import (
-	"io/ioutil"
 	"log"
 	"os"
 	"strings"
 
+	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/fiber/v2/middleware/helmet"
 	"github.com/yokeTH/gofiber-scalar/scalar/v2"
 )
 
+func AllowDoc(c *fiber.Ctx) error {
+	if strings.HasPrefix(c.Path(), "/api/v1/docs") {
+		return c.Next()
+	}
+	return helmet.New()(c)
+}
+
 func APIDocs() scalar.Config {
-	root, err := os.OpenRoot("docs")
+	data, err := os.ReadFile("docs/openapi.json")
 	if err != nil {
-		log.Fatalf("error membuka folder docs: %w", err)
-	}
-	defer root.Close()
-	file, err := root.Open("openapi.json")
-	if err != nil {
-		log.Fatalf("error membuka file openapi.json: %w", err)
-	}
-	defer file.Close()
-	
-	data, err := ioutil.ReadFile(file.Name())
-	if err != nil {
-		log.Fatalf("gagal baca template: %v", err)
+		log.Fatal("failed read openapi.json :", err)
 	}
 	fileContent := strings.ReplaceAll(string(data), "{{BASE_URL}}", os.Getenv("URL"))
 	return scalar.Config{
