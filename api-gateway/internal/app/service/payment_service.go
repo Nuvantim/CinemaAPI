@@ -12,7 +12,7 @@ import (
 
 func ListPayment(body req.BookingPayment) ([]model.Payment, error) {
 	// check data on redis
-	key := fmt.Sprintf("list:booking:%d", body.UserID)
+	key := fmt.Sprintf("list:payment:%d", body.UserID)
 	redis_data, err := rds.GetData[[]model.Payment](key)
 	if err == nil && redis_data != nil {
 		return *redis_data, nil

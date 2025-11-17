@@ -3,7 +3,10 @@ package service
 import (
 	db "booking/database"
 	model "booking/internal/app/repository"
+	rds "booking/redis"
 	ctx "context"
+
+	"fmt"
 
 	"github.com/google/uuid"
 )
@@ -40,5 +43,14 @@ func DeleteBookingSeat(id uuid.UUID) error {
 	if err := db.Queries.UpdateBookingAmount(ctx.Background(), booking_id); err != nil {
 		return db.Fatal(err)
 	}
+	// get data booking
+	booking,_ := GetBooking(booking_id)
+
+	// set data to redis
+	go func() {	
+		data_booking, _ := ListBooking(booking.UserID)
+		_ = rds.SetData(fmt.Sprintf("list:booking:%d", booking.UserID), data_booking)
+	}()
+
 	return nil
 }

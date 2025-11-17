@@ -121,7 +121,7 @@ func Setup(app *fiber.App) {
 
 	// booking seat
 	booking_seat := api.Group("/booking/seat")
-	booking_seat.Get("/", handler.ListBookingSeat)
+	booking_seat.Post("/", handler.ListBookingSeat)
 	booking_seat.Post("/create", handler.CreateBookingSeat)
 	booking_seat.Delete("/delete/:id", handler.DeleteBookingSeat)
 

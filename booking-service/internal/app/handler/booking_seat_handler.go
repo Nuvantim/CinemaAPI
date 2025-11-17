@@ -5,8 +5,10 @@ import (
 	"booking/internal/app/service"
 	"booking/pkgs/parser"
 	"booking/pkgs/response"
+	rds "booking/redis"
 
 	"net/http"
+	"fmt"
 )
 
 func ListBookingSeat(w http.ResponseWriter, r *http.Request) {
@@ -41,7 +43,17 @@ func CreateBookingSeat(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	booking, _ := service.GetBooking(data.BookingID)
+
 	response.Success(w, data)
+
+	// update data booking on redis
+	go func() {
+		if booking.UserID != 0 {
+			data_booking, _ := service.ListBooking(booking.UserID)
+			_ = rds.SetData(fmt.Sprintf("list:booking:%d", booking.UserID), data_booking)
+		}
+	}()
 }
 
 func DeleteBookingSeat(w http.ResponseWriter, r *http.Request) {
@@ -50,11 +62,14 @@ func DeleteBookingSeat(w http.ResponseWriter, r *http.Request) {
 		response.Error(w, err)
 		return
 	}
+
 	if err := service.DeleteBookingSeat(id); err != nil {
 		response.Error(w, err)
 		return
 	}
+
 	response.Success(w, struct {
 		Message string `json:"message"`
 	}{Message: "booking deleted"})
+
 }
