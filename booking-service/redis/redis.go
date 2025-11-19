@@ -62,31 +62,30 @@ func RedisClose() {
 }
 
 func SetData[T any](key string, data T) error {
-    b, err := json.Marshal(data)
-    if err != nil {
-        return err
-    }
-    return RDS.Set(ctx, key, b, 10*time.Minute).Err()
+	b, err := json.Marshal(data)
+	if err != nil {
+		return err
+	}
+	return RDS.Set(ctx, key, b, 10*time.Minute).Err()
 }
 
 func GetData[T any](key string) (*T, error) {
-    val, err := RDS.Get(ctx, key).Bytes()
-    if err == redis.Nil {
-        return nil, nil
-    }
-    if err != nil {
-        return nil, err
-    }
+	val, err := RDS.Get(ctx, key).Bytes()
+	if err == redis.Nil {
+		return nil, nil
+	}
+	if err != nil {
+		return nil, err
+	}
 
-    var data T
+	var data T
 
-    if err := json.Unmarshal(val, &data); err != nil {
-        return nil, err
-    }
+	if err := json.Unmarshal(val, &data); err != nil {
+		return nil, err
+	}
 
-    return &data, nil
+	return &data, nil
 }
-
 
 func DelData(key string) error {
 	if err := RDS.Del(ctx, key).Err(); err != nil {

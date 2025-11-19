@@ -29,8 +29,7 @@ CREATE  TABLE "public".user_account (
 	email                varchar(100)  NOT NULL  ,
 	"password"           varchar(100)  NOT NULL  ,
 	created_at           timestamptz DEFAULT CURRENT_TIMESTAMP   ,
-	CONSTRAINT pk_user_account PRIMARY KEY ( id ),
-	CONSTRAINT unq_user_email UNIQUE ( email ) 
+	CONSTRAINT pk_user_account PRIMARY KEY ( id )
  );
 
 CREATE  TABLE "public".user_profile ( 
@@ -73,5 +72,5 @@ INSERT INTO "public".role_permission( id_role, id_permission ) VALUES ( 1, 7);
 INSERT INTO "public".role_permission( id_role, id_permission ) VALUES ( 1, 8);
 INSERT INTO "public".role_permission( id_role, id_permission ) VALUES ( 1, 9);
 INSERT INTO "public".user_account( id, name, email, "password", created_at ) VALUES ( 1, 'nuvantim', 'nuvantim@gmail.com', '$2a$10$7CfzVVG0RoADtUxfWRC9COjj01d/fk2vlZTz.TsuFpw3HoOZlwVeG', '2025-08-08 05:06:52 PM');
-INSERT INTO "public".user_profile( id, user_id, age, phone, district, city, country, created_at ) VALUES ( 1, 1, null, null, null, null, null, '2025-08-08 05:06:52 PM');
+INSERT INTO "public".user_profile( id, user_id, age, phone, district, city, country, created_at ) VALUES ( 1, 1, 23, 891290202, 'nguling', 'pasuruan', 'indonesia', '2025-08-08 05:06:52 PM');
 INSERT INTO "public".user_role( id_user, id_role ) VALUES ( 1, 1);

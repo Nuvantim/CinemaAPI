@@ -31,9 +31,11 @@ func SendOTP(email string) (string, error) {
 	}
 
 	// send otp via email
-	if error := guard.SendOTP(token.Email, token.Code); error != nil {
-		return "", error
-	}
+	// if error := guard.SendOTP(token.Email, token.Code); error != nil {
+	// 	return "", error
+	// }
+
+	fmt.Println(token.Code)
 
 	return "otp send successfully", nil
 
@@ -53,6 +55,11 @@ func Register(regist req.Register) (string, error) {
 	// check email
 	if result.Email != regist.Email {
 		return "", fmt.Errorf("registration rejected")
+	}
+
+	_, err = db.Queries.FindEmail(ctx.Background(), result.Email)
+	if err == nil {
+		return "", errors.New("email already exist")
 	}
 
 	var pass = guard.HashBycrypt(regist.Password) // Hashing Password

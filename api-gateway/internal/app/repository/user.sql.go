@@ -66,8 +66,8 @@ func (q *Queries) FindEmail(ctx context.Context, email string) (FindEmailRow, er
 
 const GetProfile = `-- name: GetProfile :one
 SELECT user_account.id, user_account.name, user_account.email, user_account.password, user_account.created_at, user_profile.id, user_profile.user_id, user_profile.age, user_profile.phone, user_profile.district, user_profile.city, user_profile.country, user_profile.created_at
-FROM "public".user_account
-INNER JOIN "public".user_profile ON (user_account.id = user_profile.user_id) WHERE user_account.id = $1 LIMIT 1
+FROM user_account
+INNER JOIN user_profile ON (user_account.id = user_profile.user_id) WHERE user_account.id = $1 LIMIT 1
 `
 
 type GetProfileRow struct {

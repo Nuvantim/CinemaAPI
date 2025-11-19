@@ -49,14 +49,20 @@ func CreatePayment(w http.ResponseWriter, r *http.Request) {
 		response.Error(w, err)
 		return
 	}
+	var userId int64 = data.UserID
 
 	// set data to redis
-	go func() {
-		data_payment, _ := service.ListPayment(data.UserID)
+	go func(userId int64) {
+		// set data payment
+		data_payment, _ := service.ListPayment(userId)
 		if data_payment != nil {
-			_ = rds.SetData(fmt.Sprintf("list:payment:%d", data.UserID), data_payment)
+			_ = rds.SetData(fmt.Sprintf("list:payment:%d", userId), data_payment)
 		}
-	}()
+
+		// set data booking
+		data_booking, _ := service.ListBooking(userId)
+		_ = rds.SetData(fmt.Sprintf("list:booking:%d", userId), data_booking)
+	}(userId)
 
 	response.Success(w, data)
 }

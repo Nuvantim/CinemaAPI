@@ -41,7 +41,7 @@ func Register(c *fiber.Ctx) error {
 
 	user_regist, err := service.Register(regist)
 	if err != nil {
-		return c.Status(500).JSON(response.Error("register account", err.Error()))
+		return c.Status(500).JSON(response.Error("failed register account", err.Error()))
 	}
 	return c.Status(200).JSON(response.Pass(user_regist, struct{}{}))
 }
@@ -58,7 +58,7 @@ func Login(c *fiber.Ctx) error {
 
 	access, refresh, err := service.Login(login)
 	if err != nil {
-		return c.Status(500).JSON(response.Error("login account", err.Error()))
+		return c.Status(500).JSON(response.Error("failed login account", err.Error()))
 	}
 	// Set Cookie with refresh token
 	c.Cookie(&fiber.Cookie{
@@ -75,6 +75,7 @@ func Login(c *fiber.Ctx) error {
 		Token string `json:"access_token"`
 	}{Token: access}))
 }
+
 func ResetPassword(c *fiber.Ctx) error {
 	var pass request.ResetPassword
 	if err := c.BodyParser(&pass); err != nil {

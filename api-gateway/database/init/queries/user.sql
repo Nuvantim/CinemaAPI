@@ -9,8 +9,8 @@ VALUES ($1);
 
 -- name: GetProfile :one
 SELECT sqlc.embed(user_account), sqlc.embed(user_profile)
-FROM "public".user_account
-INNER JOIN "public".user_profile ON (user_account.id = user_profile.user_id) WHERE user_account.id = $1 LIMIT 1;
+FROM user_account
+INNER JOIN user_profile ON (user_account.id = user_profile.user_id) WHERE user_account.id = $1 LIMIT 1;
 
 -- name: FindEmail :one
 SELECT id, email,password FROM user_account WHERE email = $1;

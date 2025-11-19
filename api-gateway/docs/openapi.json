@@ -2674,7 +2674,7 @@
       }
     },
     "/booking/seat/": {
-      "get": {
+      "post": {
         "summary": "ListBookingSeat",
         "deprecated": false,
         "description": "",

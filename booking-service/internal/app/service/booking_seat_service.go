@@ -44,11 +44,11 @@ func DeleteBookingSeat(id uuid.UUID) error {
 		return db.Fatal(err)
 	}
 	// get data booking
-	booking,_ := GetBooking(booking_id)
+	booking, _ := GetBooking(booking_id)
 	var user_id int64 = booking.UserID
 
 	// set data to redis
-	go func(userId int64) {	
+	go func(userId int64) {
 		data_booking, _ := ListBooking(userId)
 		_ = rds.SetData(fmt.Sprintf("list:booking:%d", userId), data_booking)
 	}(user_id)

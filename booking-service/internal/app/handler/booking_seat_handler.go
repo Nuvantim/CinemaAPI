@@ -7,8 +7,8 @@ import (
 	"booking/pkgs/response"
 	rds "booking/redis"
 
-	"net/http"
 	"fmt"
+	"net/http"
 )
 
 func ListBookingSeat(w http.ResponseWriter, r *http.Request) {

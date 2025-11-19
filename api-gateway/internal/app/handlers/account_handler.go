@@ -5,6 +5,7 @@ import (
 	"api/internal/app/service"
 	"api/pkgs/utils/responses"
 	"api/pkgs/utils/validates"
+	"fmt"
 	"github.com/gofiber/fiber/v2"
 )
 
@@ -13,6 +14,8 @@ func GetProfile(c *fiber.Ctx) error {
 	if id == 0 {
 		return c.Status(401).JSON(response.Error("failed get user_id", "unauthorized"))
 	}
+
+	fmt.Println(id)
 	// Get Account by id
 	user, err := service.GetProfile(id)
 	if err != nil {
