@@ -4,7 +4,7 @@ import (
 	"api/config"
 	"api/database"
 	"api/internal/server/http"
-	"api/pkgs/guards"
+	"api/pkg/guards"
 	rds "api/redis"
 
 	"log"

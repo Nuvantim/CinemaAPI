@@ -3,8 +3,8 @@ package handler
 import (
 	model "booking/internal/app/repository"
 	"booking/internal/app/service"
-	"booking/pkgs/parser"
-	"booking/pkgs/response"
+	"booking/pkg/parser"
+	"booking/pkg/response"
 	rds "booking/redis"
 
 	"fmt"

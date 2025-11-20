@@ -4,10 +4,10 @@ import (
 	"github.com/gofiber/fiber/v2"
 
 	"api/internal/app/service"
-	"api/pkgs/utils/responses"
-	"api/pkgs/utils/validates"
+	"api/pkg/utils/responses"
+	"api/pkg/utils/validates"
 	rds "api/redis"
-	model "cinema/pkgs/monorepo"
+	model "cinema/pkg/monorepo"
 )
 
 func ListFilm(c *fiber.Ctx) error {

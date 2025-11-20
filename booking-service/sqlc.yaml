@@ -50,7 +50,7 @@ sql:
     gen:
       go:
         package: "monorepo"
-        out: "pkgs/monorepo"
+        out: "pkg/monorepo"
 
         sql_package: "pgx/v5"
 

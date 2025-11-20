@@ -5,7 +5,7 @@ import (
 	"github.com/yokeTH/gofiber-scalar/scalar/v2"
 
 	"api/config"
-	"api/internal/app/handlers"
+	"api/internal/app/handler"
 	"api/internal/middleware"
 )
 

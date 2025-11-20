@@ -5,7 +5,7 @@ import (
 	"fmt"
 
 	"api/internal/gateway"
-	model "cinema/pkgs/monorepo"
+	model "cinema/pkg/monorepo"
 )
 
 func ListSeat() ([]model.ListSeatRow, error) {

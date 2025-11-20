@@ -5,7 +5,7 @@ import (
 	req "api/internal/app/request"
 	"api/internal/gateway"
 	rds "api/redis"
-	model "booking/pkgs/monorepo"
+	model "booking/pkg/monorepo"
 
 	"fmt"
 )

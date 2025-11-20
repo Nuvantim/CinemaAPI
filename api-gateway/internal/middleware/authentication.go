@@ -1,8 +1,8 @@
 package middleware
 
 import (
-	"api/pkgs/guards"
-	"api/pkgs/utils/responses"
+	"api/pkg/guards"
+	"api/pkg/utils/responses"
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/golang-jwt/jwt/v5"

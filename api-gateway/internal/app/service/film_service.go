@@ -2,7 +2,7 @@ package service
 
 import (
 	"api/internal/gateway"
-	model "cinema/pkgs/monorepo"
+	model "cinema/pkg/monorepo"
 	"fmt"
 )
 

@@ -5,9 +5,9 @@ import (
 	"github.com/gofiber/fiber/v2"
 
 	"api/internal/app/service"
-	"api/pkgs/utils/responses"
-	"api/pkgs/utils/validates"
-	model "booking/pkgs/monorepo"
+	"api/pkg/utils/responses"
+	"api/pkg/utils/validates"
+	model "booking/pkg/monorepo"
 )
 
 func ListBookingSeat(c *fiber.Ctx) error {

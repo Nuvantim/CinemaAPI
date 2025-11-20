@@ -2,7 +2,7 @@ package middleware
 
 import (
 	repo "api/internal/app/repository"
-	"api/pkgs/utils/responses"
+	"api/pkg/utils/responses"
 
 	"github.com/gofiber/fiber/v2"
 )

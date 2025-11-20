@@ -4,9 +4,9 @@ import (
 	"github.com/gofiber/fiber/v2"
 
 	"api/internal/app/service"
-	"api/pkgs/utils/responses"
-	"api/pkgs/utils/validates"
-	model "cinema/pkgs/monorepo"
+	"api/pkg/utils/responses"
+	"api/pkg/utils/validates"
+	model "cinema/pkg/monorepo"
 )
 
 func ListScreenType(c *fiber.Ctx) error {

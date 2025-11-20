@@ -8,8 +8,8 @@ import (
 	req "api/internal/app/request"
 	"api/internal/gateway"
 	rds "api/redis"
-	model "booking/pkgs/monorepo"
-	dto "cinema/pkgs/monorepo"
+	model "booking/pkg/monorepo"
+	dto "cinema/pkg/monorepo"
 )
 
 type ListBookingRow struct {

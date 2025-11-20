@@ -4,7 +4,7 @@ import (
 	"fmt"
 
 	"api/internal/gateway"
-	model "cinema/pkgs/monorepo"
+	model "cinema/pkg/monorepo"
 )
 
 func ListGenre() ([]model.Genre, error) {

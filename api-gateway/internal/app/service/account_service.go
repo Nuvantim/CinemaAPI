@@ -4,7 +4,7 @@ import (
 	db "api/database"
 	repo "api/internal/app/repository"
 	req "api/internal/app/request"
-	"api/pkgs/guards"
+	"api/pkg/guards"
 
 	ctx "context"
 	"errors"

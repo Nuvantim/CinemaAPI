@@ -5,9 +5,9 @@ import (
 	rds "cinema/redis"
 
 	"cinema/internal/app/service"
-	"cinema/pkgs/parser"
-	"cinema/pkgs/response"
-	"cinema/pkgs/validator"
+	"cinema/pkg/parser"
+	"cinema/pkg/response"
+	"cinema/pkg/validator"
 
 	"net/http"
 )

@@ -7,8 +7,8 @@ import (
 	"github.com/google/uuid"
 
 	"api/internal/gateway"
-	model "booking/pkgs/monorepo"
-	dto "cinema/pkgs/monorepo"
+	model "booking/pkg/monorepo"
+	dto "cinema/pkg/monorepo"
 )
 
 type ListBookingSeatRow struct {

@@ -3,8 +3,8 @@ package handler
 import (
 	"api/internal/app/request"
 	"api/internal/app/service"
-	"api/pkgs/utils/responses"
-	"api/pkgs/utils/validates"
+	"api/pkg/utils/responses"
+	"api/pkg/utils/validates"
 	"github.com/gofiber/fiber/v2"
 )
 
