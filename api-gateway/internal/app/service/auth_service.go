@@ -31,9 +31,9 @@ func SendOTP(email string) (string, error) {
 	}
 
 	// send otp via email
-	// if error := guard.SendOTP(token.Email, token.Code); error != nil {
-	// 	return "", error
-	// }
+	 if error := guard.SendOTP(token.Email, token.Code); error != nil {
+	 	return "", error
+	 }
 
 	fmt.Println(token.Code)
 

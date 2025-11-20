@@ -27,6 +27,7 @@ func APIDocs() scalar.Config {
 		Title:             "Cinema API Docs",
 		BasePath:          "/api/v1",
 		Path:              "docs",
+		ForceOffline: ForceOfflineFalse,
 		FileContentString: fileContent,
 		Theme:             scalar.ThemeBluePlanet,
 	}
