@@ -1,4 +1,5 @@
 CREATE SCHEMA IF NOT EXISTS "public";
+CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
 CREATE  TABLE "public".booking ( 
 	id                   bigint  NOT NULL  ,
