@@ -3,6 +3,8 @@ package config
 import (
 	"log"
 	"time"
+	"os"
+	"fmt"
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/cors"
@@ -58,9 +60,14 @@ func SecurityConfig(app *fiber.App) {
 	// app.Use(csrf.New())
 
 	// CORS Configuration
+	var url string = os.Getenv("URL")
+	var port string = os.Getenv("PORT")
+
+	var origin = fmt.Sprintf("%s,http://localhost:%s, http://127.0.0.1:%s",url,port,port)
 	app.Use(cors.New(cors.Config{
+		AllowOrigins: origin,
 		AllowMethods: "GET,POST,PUT,DELETE",
-		AllowHeaders: "Content-Type, Authorization",
+		AllowHeaders: "Origin, Content-Type, Authorization, Accept",
 		MaxAge:       3600,
 	}))
 }

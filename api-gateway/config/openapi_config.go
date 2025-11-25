@@ -14,7 +14,12 @@ func AllowDoc(c *fiber.Ctx) error {
 	if strings.HasPrefix(c.Path(), "/api/v1/docs") {
 		return c.Next()
 	}
-	return helmet.New()(c)
+	return helmet.New(helmet.Config{
+		ContentSecurityPolicy: "dafault-src 'self'; frame-ancestors 'self'",
+		HSTSMaxAge:            31536000,
+		HSTSPreloadEnabled:    true,
+		HSTSExcludeSubdomains: false,
+	})(c)
 }
 
 func APIDocs() scalar.Config {

@@ -17,7 +17,7 @@ build:
 
 	@echo -e "$(YELLOW)🚀 Starting Go build process...$(RESET)"
 	@START=$$(date +%s); \
-	GOMEMLIMIT=200MiB GO111MODULE=on CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -ldflags="-s -w" -trimpath -o $(BINARY_NAME) $(MAIN_FILE); \
+	GO111MODULE=on CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -ldflags="-s -w" -trimpath -o $(BINARY_NAME) $(MAIN_FILE); \
 	END=$$(date +%s); \
 	DURATION=$$((END - START)); \
 	if [ -f "$(BINARY_NAME)" ]; then \
