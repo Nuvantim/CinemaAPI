@@ -7,6 +7,7 @@ on:
     branches: ["main"]
 
 jobs:
+
   build-test:
     runs-on: ubuntu-latest
     strategy:
@@ -17,25 +18,25 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v4
 
-      - name: install golang
+      - name: Install Golang
         uses: actions/setup-go@v5
         with:
-          go-version: '1.24.9'
+          go-version: '1.24.10'
           cache: true
 
-      - name: install dependency
+      - name: Install Dependency
         run: go mod tidy
         working-directory: ${{ matrix.project }}
 
-      - name: run test
-        run: go test -v -race ./... 
+      - name: Run Tests
+        run: go test -v -race ./...
         working-directory: ${{ matrix.project }}
 
-      - name: run vet
-        run: go vet ./... 
+      - name: Run go vet
+        run: go vet ./...
         working-directory: ${{ matrix.project }}
 
-      - name: build project
+      - name: Build Project
         run: make build
         working-directory: ${{ matrix.project }}
 
@@ -49,30 +50,30 @@ jobs:
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
-        
-      - name: run staticcheck
+
+      - name: Run staticcheck
         uses: dominikh/staticcheck-action@v1
         with:
           version: "latest"
           working-directory: ${{ matrix.project }}
 
   vulncheck:
-   needs: build-test
-   runs-on: ubuntu-latest
-   strategy:
-    matrix:
-      project: ["api-gateway", "cinema-service", "booking-service"]
+    needs: build-test
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        project: ["api-gateway", "cinema-service", "booking-service"]
 
-   steps:
-    - name: Checkout Code
-      uses: actions/checkout@v4
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
 
-    - name: run govulncheck
-      uses: golang/govulncheck-action@v1
-      with:
-        go-version-input: 1.24.9
-        work-dir: ${{ matrix.project }}
-        go-package: ./...
+      - name: Run govulncheck
+        uses: golang/govulncheck-action@v1
+        with:
+          go-version-input: 1.24.10
+          work-dir: ${{ matrix.project }}
+          go-package: ./...
 
   coverage:
     needs: build-test
@@ -84,16 +85,16 @@ jobs:
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
-        
+
       - name: Set up Go
         uses: actions/setup-go@v5
         with:
-          go-version: '1.24.9'
+          go-version: '1.24.10'
 
-      - name: generate coverage profile
-        run: go test -race -coverprofile=coverage.out -covermode=atomic ./... 
+      - name: Generate coverage profile
+        run: go test -race -coverprofile=coverage.out -covermode=atomic ./...
         working-directory: ${{ matrix.project }}
-        
+
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v4
         with:
@@ -101,20 +102,22 @@ jobs:
           token: ${{ secrets.CODECOV_TOKEN }}
 
   security:
-   runs-on: ubuntu-latest
-   env:
-     GO111MODULE: on
+    needs: [build-test, staticcheck, vulncheck, coverage]
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        project: ["api-gateway", "cinema-service", "booking-service"]
 
-   strategy:
-     matrix:
-       project: ["api-gateway", "cinema-service", "booking-service"]
+    steps:
+      - name: Checkout Source
+        uses: actions/checkout@v4
 
-   steps:
-    - name: Checkout Source
-      uses: actions/checkout@v4
+      - name: Install Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: '1.24.10'
 
-    - name: Run Gosec Security Scanner
-      uses: securego/gosec@master
-      with:
-        args: ./${{ matrix.project }}/...
-
+      - name: running golang security
+        uses: securego/gosec@master
+        with:
+          args: ./${{ matrix.project }}/...
