@@ -106,7 +106,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        project: ["api-gateway", "cinema-service", "booking-service"]
+        project: ["booking-service", "cinema-service", "api-gateway"]
 
     steps:
       - name: Checkout Source
