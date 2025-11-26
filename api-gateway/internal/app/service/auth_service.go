@@ -35,8 +35,6 @@ func SendOTP(email string) (string, error) {
 		return "", error
 	}
 
-	fmt.Println(token.Code)
-
 	return "otp send successfully", nil
 
 }
@@ -71,13 +69,7 @@ func Register(regist req.Register) (string, error) {
 	}
 
 	// create user_account
-	account_id, err := db.Queries.CreateUser(ctx.Background(), createUser)
-	if err != nil {
-		return "", db.Fatal(err)
-	}
-
-	// create profile
-	if err := db.Queries.CreateProfile(ctx.Background(), account_id); err != nil {
+	if err := db.Queries.CreateUser(ctx.Background(), createUser); err != nil {
 		return "", db.Fatal(err)
 	}
 

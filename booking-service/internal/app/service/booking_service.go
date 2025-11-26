@@ -5,8 +5,9 @@ import (
 	model "booking/internal/app/repository"
 	ctx "context"
 
+	crand "crypto/rand"
 	"fmt"
-	"math/rand"
+	"math/big"
 	"time"
 )
 
@@ -20,7 +21,10 @@ func ListBooking(id int64) ([]model.Booking, error) {
 }
 
 func CreateBooking(body model.CreateBookingParams) (model.Booking, error) {
-	id := GenBookingId()
+	id, err := GenBookingId()
+	if err != nil {
+		return model.Booking{}, err
+	}
 
 	body.ID = id
 	data, err := db.Queries.CreateBooking(ctx.Background(), body)
@@ -47,15 +51,18 @@ func DeleteBooking(id int64) error {
 	return nil
 }
 
-func GenBookingId() int64 {
+func GenBookingId() (int64, error) {
 	now := time.Now()
 	str := now.Format("20060102150405")
 
 	var id int64
-	fmt.Sscan(str, &id)
+	if _, err := fmt.Sscan(str, &id); err != nil {
+		return 0, fmt.Errorf("invalid id format: %w", err)
+	}
 
-	random := int64(rand.Intn(90) + 10)
+	number, _ := crand.Int(crand.Reader, big.NewInt(90))
+	random := 10 + number.Int64()
 	result := id*100 + random
 
-	return result
+	return result, nil
 }

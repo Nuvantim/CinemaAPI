@@ -1,11 +1,8 @@
--- name: CreateUser :one
-INSERT INTO user_account(name,email,password) 
-VALUES ($1,$2,$3) 
-RETURNING id;
-
--- name: CreateProfile :exec
-INSERT INTO user_profile (user_id) 
-VALUES ($1);
+-- name: CreateUser :exec
+WITH new_user AS (
+    INSERT INTO user_account(name,email,password) VALUES ($1,$2,$3) RETURNING id
+)
+INSERT INTO user_profile (user_id) SELECT id FROM new_user RETURNING user_id;
 
 -- name: GetProfile :one
 SELECT sqlc.embed(user_account), sqlc.embed(user_profile)
@@ -30,4 +27,3 @@ UPDATE user_account SET password=$2 WHERE email=$1;
 
 -- name: DeleteAccount :exec
 DELETE FROM user_account WHERE id = $1;
-

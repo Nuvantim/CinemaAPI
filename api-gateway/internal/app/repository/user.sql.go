@@ -9,20 +9,11 @@ import (
 	"context"
 )
 
-const CreateProfile = `-- name: CreateProfile :exec
-INSERT INTO user_profile (user_id) 
-VALUES ($1)
-`
-
-func (q *Queries) CreateProfile(ctx context.Context, userID int64) error {
-	_, err := q.db.Exec(ctx, CreateProfile, userID)
-	return err
-}
-
-const CreateUser = `-- name: CreateUser :one
-INSERT INTO user_account(name,email,password) 
-VALUES ($1,$2,$3) 
-RETURNING id
+const CreateUser = `-- name: CreateUser :exec
+WITH new_user AS (
+    INSERT INTO user_account(name,email,password) VALUES ($1,$2,$3) RETURNING id
+)
+INSERT INTO user_profile (user_id) SELECT id FROM new_user RETURNING user_id
 `
 
 type CreateUserParams struct {
@@ -31,11 +22,9 @@ type CreateUserParams struct {
 	Password string `json:"password" validate:"required"`
 }
 
-func (q *Queries) CreateUser(ctx context.Context, arg CreateUserParams) (int64, error) {
-	row := q.db.QueryRow(ctx, CreateUser, arg.Name, arg.Email, arg.Password)
-	var id int64
-	err := row.Scan(&id)
-	return id, err
+func (q *Queries) CreateUser(ctx context.Context, arg CreateUserParams) error {
+	_, err := q.db.Exec(ctx, CreateUser, arg.Name, arg.Email, arg.Password)
+	return err
 }
 
 const DeleteAccount = `-- name: DeleteAccount :exec

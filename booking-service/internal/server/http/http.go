@@ -3,6 +3,7 @@ package server
 import (
 	"log"
 	"net/http"
+	"time"
 
 	"booking/config"
 	"booking/database"
@@ -38,8 +39,9 @@ func StartServer() (*http.Server, string) {
 	// http2 configuration
 	h2s := &http2.Server{}
 	server := &http.Server{
-		Addr:    ":" + conf.Port,
-		Handler: h2c.NewHandler(handler, h2s),
+		Addr:              ":" + conf.Port,
+		Handler:           h2c.NewHandler(handler, h2s),
+		ReadHeaderTimeout: 5 * time.Second,
 	}
 
 	return server, conf.Port
