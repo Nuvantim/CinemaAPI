@@ -1,19 +1,19 @@
 module api
 
-go 1.24.6
+go 1.24.10
 
 require (
 	github.com/go-playground/validator/v10 v10.28.0
-	github.com/gofiber/fiber/v2 v2.52.9
+	github.com/gofiber/fiber/v2 v2.52.10
 	github.com/gofiber/template/html/v2 v2.1.3
 	github.com/golang-jwt/jwt/v5 v5.3.0
 	github.com/google/uuid v1.6.0
 	github.com/jackc/pgx/v5 v5.7.6
 	github.com/joho/godotenv v1.5.1
 	github.com/kelseyhightower/envconfig v1.4.0
-	github.com/redis/go-redis/v9 v9.16.0
-	github.com/yokeTH/gofiber-scalar/scalar/v2 v2.1.0
-	golang.org/x/crypto v0.44.0
+	github.com/redis/go-redis/v9 v9.17.1
+	github.com/yokeTH/gofiber-scalar/scalar/v2 v2.1.2
+	golang.org/x/crypto v0.45.0
 	golang.org/x/net v0.47.0
 	gopkg.in/gomail.v2 v2.0.0-20160411212932-81ebce5c23df
 )
