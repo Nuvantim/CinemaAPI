@@ -54,9 +54,9 @@ func (q *Queries) FindEmail(ctx context.Context, email string) (FindEmailRow, er
 }
 
 const GetProfile = `-- name: GetProfile :one
-SELECT user_account.id, user_account.name, user_account.email, user_account.password, user_account.created_at, user_profile.id, user_profile.user_id, user_profile.age, user_profile.phone, user_profile.district, user_profile.city, user_profile.country, user_profile.created_at
-FROM user_account
-INNER JOIN user_profile ON (user_account.id = user_profile.user_id) WHERE user_account.id = $1 LIMIT 1
+SELECT user_account.id, user_account.name, user_account.email, user_account.password, user_account.created_at, user_profile.id, user_profile.user_id, user_profile.age, user_profile.phone, user_profile.district, user_profile.city, user_profile.country, user_profile.created_at FROM user_account
+INNER JOIN user_profile ON (user_account.id = user_profile.user_id) 
+WHERE user_account.id = $1
 `
 
 type GetProfileRow struct {
@@ -108,13 +108,13 @@ WHERE user_id = $1
 `
 
 type UpdateAccountParams struct {
-	UserID   int64  `json:"user_id" validate:"required"`
-	Name     string `json:"name" validate:"required"`
-	Age      int64  `json:"age" validate:"required"`
-	Phone    int64  `json:"phone" validate:"required"`
-	District string `json:"district" validate:"required"`
-	City     string `json:"city" validate:"required"`
-	Country  string `json:"country" validate:"required"`
+	UserID   int64   `json:"user_id" validate:"required"`
+	Name     string  `json:"name" validate:"required"`
+	Age      *int64  `json:"age" validate:"required"`
+	Phone    *int64  `json:"phone" validate:"required"`
+	District *string `json:"district" validate:"required"`
+	City     *string `json:"city" validate:"required"`
+	Country  *string `json:"country" validate:"required"`
 }
 
 func (q *Queries) UpdateAccount(ctx context.Context, arg UpdateAccountParams) error {

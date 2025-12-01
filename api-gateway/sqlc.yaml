@@ -26,7 +26,7 @@ sql:
         output_db_file_name: "db.go"
         output_models_file_name: "models.go"
         output_querier_file_name: "queries.go"
-        output_files_suffix: ""   
+        output_files_suffix: ""
 
         overrides:
           - column: user_account.*
@@ -40,15 +40,25 @@ sql:
           - column: role.*
             go_struct_tag: validate:"required"
           - column: "user_profile.age"
-            go_type: "int64"
+            go_type:
+              type: "int64"
+              pointer: true
           - column: "user_profile.phone"
-            go_type: "int64"
+            go_type:
+              type: "int64"
+              pointer: true
           - column: "user_profile.district"
-            go_type: "string"
+            go_type:
+              type: "string"
+              pointer: true
           - column: "user_profile.city"
-            go_type: "string"
+            go_type:
+              type: "string"
+              pointer: true
           - column: "user_profile.country"
-            go_type: "string"
+            go_type:
+              type: "string"
+              pointer: true
           - column: "*.created_at"
             go_type: "time.Time"
           - column: "*.updated_at"

@@ -25,10 +25,10 @@ type UserAccount struct {
 type UserProfile struct {
 	ID        int64     `json:"id" validate:"required"`
 	UserID    int64     `json:"user_id" validate:"required"`
-	Age       int64     `json:"age" validate:"required"`
-	Phone     int64     `json:"phone" validate:"required"`
-	District  string    `json:"district" validate:"required"`
-	City      string    `json:"city" validate:"required"`
-	Country   string    `json:"country" validate:"required"`
+	Age       *int64    `json:"age" validate:"required"`
+	Phone     *int64    `json:"phone" validate:"required"`
+	District  *string   `json:"district" validate:"required"`
+	City      *string   `json:"city" validate:"required"`
+	Country   *string   `json:"country" validate:"required"`
 	CreatedAt time.Time `json:"created_at" validate:"required"`
 }

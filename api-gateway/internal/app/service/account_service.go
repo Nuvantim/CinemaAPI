@@ -7,8 +7,8 @@ import (
 	"api/pkg/guards"
 
 	ctx "context"
-	"errors"
 	str "strings"
+	"errors"
 )
 
 func GetProfile(userID int64) (repo.GetProfileRow, error) {
@@ -27,11 +27,11 @@ func UpdateAccount(user req.UpdateAccount, userIDs int64) (repo.GetProfileRow, e
 	var updateAccount = repo.UpdateAccountParams{
 		UserID:   userIDs,
 		Name:     user.Name,
-		Age:      user.Age,
-		Phone:    user.Phone,
-		District: user.District,
-		City:     user.City,
-		Country:  user.Country,
+		Age:      &user.Age,
+		Phone:    &user.Phone,
+		District: &user.District,
+		City:     &user.City,
+		Country:  &user.Country,
 	}
 
 	// Update password is available
