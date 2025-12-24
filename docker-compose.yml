@@ -1,0 +1,92 @@
+services:
+  postgres:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: main_db
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: admin123
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./pg_schema:/docker-entrypoint-initdb.d/pg_schema
+    networks:
+      - cinema_network
+
+  redis:
+    image: redis:8.2.3
+    container_name: redis_server
+    restart: always
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    command: ["redis-server", "--appendonly", "yes"]
+    networks:
+      - cinema_network
+
+  cinema-service:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: my-app
+    pull_policy: never
+    container_name: cinema_service
+    restart: always
+    ports:
+      - "8278:8278"
+    volumes:
+      - ./logs:/app/logs
+    depends_on:
+      - postgres
+      - redis
+    networks:
+      - cinema_network
+
+  booking-service:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: my-app
+    pull_policy: never
+    container_name: booking_service
+    restart: always
+    ports:
+      - "8458:8458"
+    volumes:
+      - ./logs:/app/logs
+    depends_on:
+      - postgres
+      - redis
+    networks:
+      - cinema_network
+
+  api-gateway:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: my-app
+    pull_policy: never
+    container_name: api_gateway
+    restart: always
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./logs:/app/logs
+    depends_on:
+      - postgres
+      - redis
+    networks:
+      - cinema_network
+
+volumes:
+  postgres_data:
+  redis_data:
+
+networks:
+  cinema_network:
+    driver: bridge
+

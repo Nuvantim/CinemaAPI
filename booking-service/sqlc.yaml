@@ -1,0 +1,96 @@
+version: "2"
+
+sql:
+  # repository
+  - engine: "postgresql"
+    schema: "../pg_schema/booking.sql"
+    queries: "database/init/queries/"
+    gen:
+      go:
+        package: "repository"
+        out: "internal/app/repository"
+
+        sql_package: "pgx/v5"
+
+        emit_interface: false
+        emit_methods_with_db_argument: false
+        emit_result_struct_pointers: false
+        emit_params_struct_pointers: false
+
+        emit_exact_table_names: false
+        emit_empty_slices: true
+        emit_exported_queries: true
+        emit_json_tags: true
+        omit_unused_structs: true
+
+        output_db_file_name: "db.go"
+        output_models_file_name: "models.go"
+        output_querier_file_name: "queries.go"
+        output_files_suffix: ""   
+        
+        overrides:
+          - db_type: "uuid"
+            nullable: false
+            go_type:
+              import: "github.com/google/uuid"
+              type: "UUID"
+          - db_type: "bigint"
+            nullable: false
+            go_type: int64
+          - db_type: "double"
+            nullable: false
+            go_type: float64
+          - db_type: "pg_catalog.timestamp"
+            nullable: false
+            go_type: time.Time
+  # monorepo
+  - engine: "postgresql"
+    schema: "../pg_schema/booking.sql"
+    queries: "database/init/mono/monorepo.sql"
+    gen:
+      go:
+        package: "monorepo"
+        out: "pkg/monorepo"
+
+        sql_package: "pgx/v5"
+
+        emit_interface: false
+        emit_methods_with_db_argument: false
+        emit_result_struct_pointers: false
+        emit_params_struct_pointers: false
+
+        emit_exact_table_names: false
+        emit_empty_slices: true
+        emit_exported_queries: true
+        emit_json_tags: true
+        omit_unused_structs: true
+
+        output_querier_file_name: "queries.go"
+        output_files_suffix: ""
+
+        overrides:
+          - db_type: "uuid"
+            nullable: false
+            go_type:
+              import: "github.com/google/uuid"
+              type: "UUID"
+          - db_type: "bigint"
+            nullable: false
+            go_type: int64
+          - db_type: "double"
+            nullable: false
+            go_type: float64
+          - db_type: "pg_catalog.timestamp"
+            nullable: false
+            go_type: time.Time
+          - column: booking.*
+            go_struct_tag: validate:"required"
+          - column: booking_seat.*
+            go_struct_tag: validate:"required"
+          - column: payment.*
+            go_struct_tag: validate:"required"
+          - column: "*.created_at"
+            go_type: "time.Time"
+          - column: "*.updated_at"
+            go_type: "time.Time"
+

@@ -1,0 +1,2914 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Default module",
+    "description": "",
+    "version": "1.0.0"
+  },
+  "tags": [
+    {
+      "name": "Auth"
+    },
+    {
+      "name": "Access"
+    },
+    {
+      "name": "Access/Client"
+    },
+    {
+      "name": "Access/Role"
+    },
+    {
+      "name": "Access/Permission"
+    },
+    {
+      "name": "User"
+    },
+    {
+      "name": "Genre"
+    },
+    {
+      "name": "Film"
+    },
+    {
+      "name": "Cinema"
+    },
+    {
+      "name": "Screen Type"
+    },
+    {
+      "name": "Screen"
+    },
+    {
+      "name": "Seat"
+    },
+    {
+      "name": "ShowTime"
+    },
+    {
+      "name": "Booking"
+    },
+    {
+      "name": "BookingSeat"
+    },
+    {
+      "name": "Payment"
+    }
+  ],
+  "paths": {
+    "/auth/send-otp": {
+      "post": {
+        "summary": "SendOTP",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "Auth"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "email"
+                ]
+              },
+              "example": {
+                "email": "yoga@gmail.com"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/auth/register": {
+      "post": {
+        "summary": "Register",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "Auth"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "email": {
+                    "type": "string"
+                  },
+                  "password": {
+                    "type": "string"
+                  },
+                  "code": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "name",
+                  "email",
+                  "password",
+                  "code"
+                ]
+              },
+              "example": {
+                "name": "yoga",
+                "email": "yoga@gmail.com",
+                "password": "admin123",
+                "code": "6VH5950"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/auth/login": {
+      "post": {
+        "summary": "Login",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "Auth"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string"
+                  },
+                  "password": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "email",
+                  "password"
+                ]
+              },
+              "example": {
+                "email": "yoga@gmail.com",
+                "password": "admin123"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/auth/logout": {
+      "post": {
+        "summary": "Log Out",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "Auth"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/auth/reset-password": {
+      "post": {
+        "summary": "UpdatePassword",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "Auth"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "otp": {
+                    "type": "string"
+                  },
+                  "password": {
+                    "type": "string"
+                  },
+                  "retype_password": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "otp",
+                  "password",
+                  "retype_password"
+                ]
+              },
+              "example": {
+                "otp": "4X5PNOE",
+                "password": "admin123",
+                "retype_password": "admin123"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/client/": {
+      "get": {
+        "summary": "ListClient",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "Access/Client"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/client/1": {
+      "get": {
+        "summary": "FindClient",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "Access/Client"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/client/update/2": {
+      "put": {
+        "summary": "UpdateClient",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "Access/Client"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "role_id": {
+                    "type": "array",
+                    "items": {
+                      "type": "integer"
+                    }
+                  }
+                },
+                "required": [
+                  "role_id"
+                ]
+              },
+              "example": {
+                "role_id": [
+                  3
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/client/delete/1": {
+      "delete": {
+        "summary": "New Request",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "Access/Client"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/role/": {
+      "get": {
+        "summary": "ListRole",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "Access/Role"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/role/1": {
+      "get": {
+        "summary": "FindRole",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "Access/Role"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/role/store": {
+      "post": {
+        "summary": "CreateRole",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "Access/Role"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "permission_id": {
+                    "type": "array",
+                    "items": {
+                      "type": "integer"
+                    }
+                  }
+                },
+                "required": [
+                  "name",
+                  "permission_id"
+                ]
+              },
+              "example": {
+                "name": "role 2",
+                "permission_id": [
+                  1,
+                  2
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/role/update/1": {
+      "put": {
+        "summary": "UpdateRole",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "Access/Role"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "permission_id": {
+                    "type": "array",
+                    "items": {
+                      "type": "integer"
+                    }
+                  }
+                },
+                "required": [
+                  "name",
+                  "permission_id"
+                ]
+              },
+              "example": {
+                "name": "new role",
+                "permission_id": [
+                  1,
+                  2
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/role/delete/5": {
+      "delete": {
+        "summary": "DeleteRole",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "Access/Role"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/permission/": {
+      "get": {
+        "summary": "ListPermission",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "Access/Permission"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/permission/1": {
+      "get": {
+        "summary": "FindPermission",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "Access/Permission"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/permission/store": {
+      "post": {
+        "summary": "CratePermission",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "Access/Permission"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "name"
+                ]
+              },
+              "example": {
+                "name": "manage product"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/permission/update/1": {
+      "put": {
+        "summary": "UpdatePermission",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "Access/Permission"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "name"
+                ]
+              },
+              "example": {
+                "name": "manage product 1"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/permission/delete/1": {
+      "delete": {
+        "summary": "DeletePermission",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "Access/Permission"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/account/profile": {
+      "get": {
+        "summary": "Account Profile",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "User"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/account/update": {
+      "put": {
+        "summary": "Update Account",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "User"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "email": {
+                    "type": "string"
+                  },
+                  "password": {
+                    "type": "string"
+                  },
+                  "age": {
+                    "type": "integer"
+                  },
+                  "phone": {
+                    "type": "integer"
+                  },
+                  "district": {
+                    "type": "string"
+                  },
+                  "city": {
+                    "type": "string"
+                  },
+                  "state": {
+                    "type": "string"
+                  },
+                  "country": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "name",
+                  "email",
+                  "password",
+                  "age",
+                  "phone",
+                  "district",
+                  "city",
+                  "state",
+                  "country"
+                ]
+              },
+              "example": {
+                "name": "Firman",
+                "email": "firman@gmail.com",
+                "password": "123",
+                "age": 32,
+                "phone": 8937839,
+                "district": "Nguling",
+                "city": "Pasuruan",
+                "state": "Jawa Timur",
+                "country": "indonesia"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/account/delete": {
+      "delete": {
+        "summary": "Delete Account",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "User"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/genre/": {
+      "get": {
+        "summary": "ListGenre",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "Genre"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/genre/1": {
+      "get": {
+        "summary": "GetGenre",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "Genre"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/genre/create": {
+      "post": {
+        "summary": "CreateGenre",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "Genre"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "name"
+                ]
+              },
+              "example": {
+                "name": "example_genre"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/genre/update/11": {
+      "put": {
+        "summary": "UpdateGenre",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "Genre"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "name"
+                ]
+              },
+              "example": {
+                "name": "example_genre 1"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/genre/delete/11": {
+      "delete": {
+        "summary": "DeleteGenre",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "Genre"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/film/": {
+      "get": {
+        "summary": "ListFilm",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "Film"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/film/1": {
+      "get": {
+        "summary": "GetFilm",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "Film"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/film/genre/1": {
+      "get": {
+        "summary": "SearchFilmGenre",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "Film"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/film/search": {
+      "post": {
+        "summary": "SearchFilm",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "Film"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "title": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "title"
+                ]
+              },
+              "example": {
+                "title": "The Silent Code"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/film/create": {
+      "post": {
+        "summary": "CreateFilm",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "Film"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "title": {
+                    "type": "string"
+                  },
+                  "director": {
+                    "type": "string"
+                  },
+                  "genre_id": {
+                    "type": "integer"
+                  },
+                  "Duration": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "title",
+                  "director",
+                  "genre_id",
+                  "Duration"
+                ]
+              },
+              "example": {
+                "title": "example_title",
+                "director": "example_director",
+                "genre_id": 1,
+                "Duration": "02:30:09"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/film/update/11": {
+      "put": {
+        "summary": "UpdateFilm",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "Film"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "title": {
+                    "type": "string"
+                  },
+                  "director": {
+                    "type": "string"
+                  },
+                  "genre_id": {
+                    "type": "integer"
+                  },
+                  "Duration": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "title",
+                  "director",
+                  "genre_id",
+                  "Duration"
+                ]
+              },
+              "example": {
+                "title": "example_title",
+                "director": "example_director",
+                "genre_id": 3,
+                "Duration": "02:20:09"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/film/delete/11": {
+      "delete": {
+        "summary": "DeleteFilm",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "Film"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/cinema/": {
+      "get": {
+        "summary": "ListCinema",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "Cinema"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/cinema/1": {
+      "get": {
+        "summary": "GetCinema",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "Cinema"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/cinema/schedule/1": {
+      "get": {
+        "summary": "GetCinemaSchedule",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "Cinema"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/cinema/create": {
+      "post": {
+        "summary": "CreateCinema",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "Cinema"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "address": {
+                    "type": "string"
+                  },
+                  "city": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "name",
+                  "address",
+                  "city"
+                ]
+              },
+              "example": {
+                "name": "example_cinema",
+                "address": "example_address",
+                "city": "example_city"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/cinema/update/11": {
+      "put": {
+        "summary": "UpdateCinema",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "Cinema"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "address": {
+                    "type": "string"
+                  },
+                  "city": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "name",
+                  "address",
+                  "city"
+                ]
+              },
+              "example": {
+                "name": "example_cinema 1",
+                "address": "example_address",
+                "city": "example_city"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/cinema/delete/11": {
+      "delete": {
+        "summary": "DeleteCinema",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "Cinema"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/screen/type/": {
+      "get": {
+        "summary": "ListScreenType",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "Screen Type"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/screen/type/1": {
+      "get": {
+        "summary": "GetScreenType",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "Screen Type"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/screen/type/create": {
+      "post": {
+        "summary": "CreateScreenType",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "Screen Type"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "name"
+                ]
+              },
+              "example": {
+                "name": "example_screen_type"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/screen/type/update/11": {
+      "put": {
+        "summary": "UpdateScreenType",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "Screen Type"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "name"
+                ]
+              },
+              "example": {
+                "name": "example_screen_type 2"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/screen/type/delete/11": {
+      "delete": {
+        "summary": "DeleteScreenType",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "Screen Type"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/screen/": {
+      "get": {
+        "summary": "ListScreen",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "Screen"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/screen/1": {
+      "get": {
+        "summary": "GetScreen",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "Screen"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/screen/create": {
+      "post": {
+        "summary": "CreateScreen",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "Screen"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "cinema_id": {
+                    "type": "integer"
+                  },
+                  "name": {
+                    "type": "string"
+                  },
+                  "screen_type_id": {
+                    "type": "integer"
+                  }
+                },
+                "required": [
+                  "cinema_id",
+                  "name",
+                  "screen_type_id"
+                ]
+              },
+              "example": {
+                "cinema_id": 7,
+                "name": "flower screen",
+                "screen_type_id": 4
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/screen/update/11": {
+      "put": {
+        "summary": "UpdateScreen",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "Screen"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "cinema_id": {
+                    "type": "integer"
+                  },
+                  "name": {
+                    "type": "string"
+                  },
+                  "screen_type_id": {
+                    "type": "integer"
+                  }
+                },
+                "required": [
+                  "cinema_id",
+                  "name",
+                  "screen_type_id"
+                ]
+              },
+              "example": {
+                "cinema_id": 7,
+                "name": "cinematic screen",
+                "screen_type_id": 4
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/screen/delete/11": {
+      "delete": {
+        "summary": "DeleteScreen",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "Screen"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/seat/": {
+      "get": {
+        "summary": "ListSeat",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "Seat"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/seat/1": {
+      "get": {
+        "summary": "GetSeat",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "Seat"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/seat/create": {
+      "post": {
+        "summary": "CreateSeat",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "Seat"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "screen_id": {
+                    "type": "integer"
+                  },
+                  "seat_row": {
+                    "type": "string"
+                  },
+                  "seat_number": {
+                    "type": "integer"
+                  },
+                  "seat_price_modifier": {
+                    "type": "integer"
+                  }
+                },
+                "required": [
+                  "screen_id",
+                  "seat_row",
+                  "seat_number",
+                  "seat_price_modifier"
+                ]
+              },
+              "example": {
+                "screen_id": 1,
+                "seat_row": "C",
+                "seat_number": 3,
+                "seat_price_modifier": 40000
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/seat/update/11": {
+      "put": {
+        "summary": "UpdateSeat",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "Seat"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "screen_id": {
+                    "type": "integer"
+                  },
+                  "seat_row": {
+                    "type": "string"
+                  },
+                  "seat_number": {
+                    "type": "integer"
+                  },
+                  "seat_price_modifier": {
+                    "type": "integer"
+                  }
+                },
+                "required": [
+                  "screen_id",
+                  "seat_row",
+                  "seat_number",
+                  "seat_price_modifier"
+                ]
+              },
+              "example": {
+                "screen_id": 1,
+                "seat_row": "C",
+                "seat_number": 7,
+                "seat_price_modifier": 40000
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/seat/delete/11": {
+      "delete": {
+        "summary": "DeleteSeat",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "Seat"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/showtime/": {
+      "get": {
+        "summary": "ListShowTime",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "ShowTime"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/showtime/1": {
+      "get": {
+        "summary": "GetShowTime",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "ShowTime"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/showtime/create": {
+      "post": {
+        "summary": "CreateShowTime",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "ShowTime"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "film_id": {
+                    "type": "integer"
+                  },
+                  "screen_id": {
+                    "type": "integer"
+                  },
+                  "start_time": {
+                    "type": "string"
+                  },
+                  "base_price": {
+                    "type": "integer"
+                  }
+                },
+                "required": [
+                  "film_id",
+                  "screen_id",
+                  "start_time",
+                  "base_price"
+                ]
+              },
+              "example": {
+                "film_id": 1,
+                "screen_id": 3,
+                "start_time": "2025-12-05 10:00",
+                "base_price": 40000
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/showtime/update/11": {
+      "put": {
+        "summary": "UpdateShowTime",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "ShowTime"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "film_id": {
+                    "type": "integer"
+                  },
+                  "screen_id": {
+                    "type": "integer"
+                  },
+                  "start_time": {
+                    "type": "string"
+                  },
+                  "base_price": {
+                    "type": "integer"
+                  }
+                },
+                "required": [
+                  "film_id",
+                  "screen_id",
+                  "start_time",
+                  "base_price"
+                ]
+              },
+              "example": {
+                "film_id": 1,
+                "screen_id": 4,
+                "start_time": "2025-12-05 10:00",
+                "base_price": 40000
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/showtime/delete/11": {
+      "delete": {
+        "summary": "DeleteShowTime",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "ShowTime"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/booking/": {
+      "get": {
+        "summary": "ListBooking",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "Booking"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/booking/create": {
+      "post": {
+        "summary": "CreateBooking",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "Booking"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "showtime_id": {
+                    "type": "integer"
+                  }
+                },
+                "required": [
+                  "showtime_id"
+                ]
+              },
+              "example": {
+                "showtime_id": 1
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/booking/delete/2025110910403751": {
+      "delete": {
+        "summary": "DeleteBooking",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "Booking"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/booking/seat/": {
+      "post": {
+        "summary": "ListBookingSeat",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "BookingSeat"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "booking_id": {
+                    "type": "integer"
+                  }
+                },
+                "required": [
+                  "booking_id"
+                ]
+              },
+              "example": {
+                "booking_id": 2025111110281629
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/booking/seat/create": {
+      "post": {
+        "summary": "CreateBookingSeat",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "BookingSeat"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "booking_id": {
+                    "type": "integer"
+                  },
+                  "seat_id": {
+                    "type": "integer"
+                  }
+                },
+                "required": [
+                  "booking_id",
+                  "seat_id"
+                ]
+              },
+              "example": {
+                "booking_id": 2025111110281629,
+                "seat_id": 1
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/booking/seat/delete/11": {
+      "delete": {
+        "summary": "DeleteBookingSeat",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "BookingSeat"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/payment/": {
+      "post": {
+        "summary": "ListPayment",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "Payment"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/payment/create": {
+      "post": {
+        "summary": "CreatePayment",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "Payment"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "booking_id": {
+                    "type": "integer"
+                  },
+                  "payment_method": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "booking_id",
+                  "payment_method"
+                ]
+              },
+              "example": {
+                "booking_id": 2025111110281629,
+                "payment_method": "QRIS"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    }
+  },
+  "webhooks": {},
+  "components": {
+    "schemas": {},
+    "securitySchemes": {
+      "bearer": {
+        "type": "http",
+        "scheme": "bearer"
+      }
+    }
+  },
+  "servers": [
+    {
+      "url": "{{BASE_URL}}",
+      "description": "Production Environtment"
+    }
+  ],
+  "security": []
+}

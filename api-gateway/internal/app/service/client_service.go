@@ -1,0 +1,91 @@
+package service
+
+import (
+	db "api/database"
+	repo "api/internal/app/repository"
+	req "api/internal/app/request"
+	"api/pkg/guards"
+
+	ctx "context"
+	str "strings"
+)
+
+func ListClient() ([]repo.ListClientRow, error) {
+	data, err := db.Queries.ListClient(ctx.Background())
+	if err != nil {
+		return []repo.ListClientRow{}, db.Fatal(err)
+	}
+	return data, nil
+}
+
+func GetClient(id int64) (req.GetClient, error) {
+	client, err := db.Queries.GetClient(ctx.Background(), id)
+	if err != nil {
+		return req.GetClient{}, db.Fatal(err)
+	}
+	role, err := db.Queries.GetRoleClient(ctx.Background(), id)
+	if err != nil {
+		return req.GetClient{}, db.Fatal(err)
+	}
+	var data = req.GetClient{
+		ID:    client.ID,
+		Name:  client.Name,
+		Email: client.Email,
+		Role:  role,
+	}
+	return data, nil
+}
+
+func UpdateClient(Id int64, client req.UpdateClient) (req.GetClient, error) {
+	var update_data = repo.UpdateClientParams{
+		ID:    Id,
+		Name:  client.Name,
+		Email: client.Email,
+	}
+
+	if str.TrimSpace(client.Password) != "" {
+		psw := guard.HashBycrypt(client.Password)
+		update_data.Password = string(psw)
+	}
+
+	// Update client data
+	if err := db.Queries.UpdateClient(ctx.Background(), update_data); err != nil {
+		return req.GetClient{}, db.Fatal(err)
+	}
+
+	// verify role
+	role, err := db.Queries.VerifyRole(ctx.Background(), client.Role)
+	if err != nil {
+		return req.GetClient{}, db.Fatal(err)
+	}
+	var check int = len(role)
+	if check != 0 {
+		// update client role
+		var client_role = repo.UpdateRoleClientParams{
+			IDUser: Id,
+			RoleID: role,
+		}
+
+		if err := db.Queries.UpdateRoleClient(ctx.Background(), client_role); err != nil {
+			return req.GetClient{}, db.Fatal(err)
+		}
+	} else {
+		_ = db.Queries.DeleteRoleClient(ctx.Background(), Id)
+	}
+
+	// Get Client data
+	client_data, err := GetClient(Id)
+	if err != nil {
+		return req.GetClient{}, db.Fatal(err)
+	}
+
+	return client_data, nil
+
+}
+
+func DeleteClient(id int64) (string, error) {
+	if err := db.Queries.DeleteClient(ctx.Background(), id); err != nil {
+		return "", db.Fatal(err)
+	}
+	return "Client Deleted", nil
+}

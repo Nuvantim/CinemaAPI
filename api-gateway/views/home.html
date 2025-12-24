@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CinemaAPI</title>
+
+    <link rel="icon"
+      href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎦</text></svg>">
+    
+    <!-- Bulma CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/bulma.min.css">
+    <!-- Font Awesome untuk ikon -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+    <style>
+        body {
+            background: linear-gradient(135deg, #fff 0%, #f8f9fa 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding: 20px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .bg-radial {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 50% 50%, rgba(139, 0, 0, 0.1) 0%, rgba(255, 255, 255, 0) 70%);
+            z-index: -1;
+        }
+
+        /* Efek tirai dengan lipatan */
+        .curtain {
+            position: fixed;
+            top: 0;
+            width: 50%;
+            height: 100%;
+            z-index: 999;
+            animation: openCurtain 1s ease-in-out forwards;
+        }
+        .curtain.left { 
+            left: 0; 
+            background: 
+                linear-gradient(to right, 
+                    #8B0000 0%, 
+                    #A30000 10%, 
+                    #8B0000 20%, 
+                    #A30000 30%, 
+                    #8B0000 40%, 
+                    #A30000 50%, 
+                    #8B0000 60%, 
+                    #A30000 70%, 
+                    #8B0000 80%, 
+                    #A30000 90%, 
+                    #8B0000 100%);
+            border-right: 2px solid white; 
+            box-shadow: 
+                inset -10px 0 15px -10px rgba(0,0,0,0.5),
+                5px 0 15px rgba(0,0,0,0.3);
+        }
+        .curtain.right { 
+            right: 0; 
+            background: 
+                linear-gradient(to left, 
+                    #8B0000 0%, 
+                    #A30000 10%, 
+                    #8B0000 20%, 
+                    #A30000 30%, 
+                    #8B0000 40%, 
+                    #A30000 50%, 
+                    #8B0000 60%, 
+                    #A30000 70%, 
+                    #8B0000 80%, 
+                    #A30000 90%, 
+                    #8B0000 100%);
+            border-left: 2px solid white; 
+            box-shadow: 
+                inset 10px 0 15px -10px rgba(0,0,0,0.5),
+                -5px 0 15px rgba(0,0,0,0.3);
+        }
+
+        @keyframes openCurtain {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-100%); }
+        }
+        .curtain.right {
+            animation-name: openCurtainRight;
+        }
+        @keyframes openCurtainRight {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(100%); }
+        }
+
+        /* Card styling - Ukuran diperkecil */
+        .card {
+            background: linear-gradient(145deg, #ffffff 0%, #f8f9fa 100%);
+            box-shadow: 
+                0 5px 15px rgba(139, 0, 0, 0.15),
+                0 0 0 1px rgba(139, 0, 0, 0.05);
+            border: 1px solid rgba(139, 0, 0, 0.2);
+            outline: 2px solid rgba(139, 0, 0, 0.3);
+            outline-offset: 3px;
+            opacity: 0;
+            transform: translateY(50px) scale(0.9);
+            animation: 
+                cardEntrance 0.6s ease-out forwards,
+                cardBeat 2s ease-in-out infinite;
+            animation-delay: 0.9s, 1.5s;
+            position: relative;
+            overflow: hidden;
+            border-radius: 8px;
+            max-width: 500px; /* Ukuran card diperkecil */
+            margin: 0 auto;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(139, 0, 0, 0.1) 0%, rgba(255, 255, 255, 0) 70%);
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        .card:hover::before {
+            opacity: 1;
+        }
+
+        @keyframes cardEntrance {
+            0% {
+                opacity: 0;
+                transform: translateY(50px) scale(0.85);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        /* Efek detak pada card */
+        @keyframes cardBeat {
+            0%, 100% {
+                transform: scale(1);
+                box-shadow: 
+                    0 5px 15px rgba(139, 0, 0, 0.15),
+                    0 0 0 1px rgba(139, 0, 0, 0.05);
+            }
+            50% {
+                transform: scale(1.02);
+                box-shadow: 
+                    0 8px 25px rgba(139, 0, 0, 0.2),
+                    0 0 0 1px rgba(139, 0, 0, 0.1);
+            }
+        }
+
+        .card:hover {
+            transform: scale(1.03) translateY(-5px) rotate(0.5deg);
+            outline-offset: 6px;
+            box-shadow: 
+                0 12px 25px rgba(139, 0, 0, 0.25),
+                0 0 0 1px rgba(139, 0, 0, 0.1);
+            animation: none; /* Hentikan animasi detak saat hover */
+        }
+
+        .card-header {
+            background: linear-gradient(135deg, #8B0000 0%, #A30000 50%, #8B0000 100%);
+            color: white;
+            position: relative;
+            overflow: hidden;
+            padding: 1rem;
+            border-radius: 8px 8px 0 0;
+        }
+
+        .card-header::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.7s ease;
+        }
+
+        .card:hover .card-header::after {
+            left: 100%;
+        }
+
+        .btn-api {
+            background: linear-gradient(135deg, #8B0000 0%, #A30000 100%);
+            border: none;
+            color: white;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+            border-radius: 4px;
+            padding: 12px 24px;
+            font-weight: 600;
+            width: 100%;
+        }
+
+        .btn-api::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s ease;
+            z-index: -1;
+        }
+
+        .btn-api:hover::before {
+            left: 100%;
+        }
+
+        .btn-api:hover {
+            background: linear-gradient(135deg, #A30000 0%, #8B0000 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(139, 0, 0, 0.3);
+        }
+
+        .text-content {
+            text-align: justify;
+        }
+
+        /* Perbaikan warna teks deskripsi */
+        .card-content p {
+            color: #333 !important; /* Warna abu-abu gelap untuk kontras yang baik */
+            line-height: 1.6;
+        }
+
+        .card-content strong {
+            color: #8B0000; /* Warna merah tua untuk teks tebal */
+        }
+
+        .camera-icon {
+            width: 70px; /* Diperkecil sesuai card */
+            height: 70px;
+            fill: url(#cameraGradient);
+            transform-origin: center center;
+        }
+
+        .camera-swing {
+            animation: cameraSwing 1.8s ease-in-out;
+        }
+
+        @keyframes cameraSwing {
+            0%, 100% {
+                transform: rotate(0deg) translateY(0) translateX(0);
+            }
+            15% {
+                transform: rotate(-4deg) translateY(-3px) translateX(-2px);
+            }
+            30% {
+                transform: rotate(3deg) translateY(2px) translateX(2px);
+            }
+            45% {
+                transform: rotate(-2deg) translateY(-1px) translateX(-1px);
+            }
+            60% {
+                transform: rotate(1.5deg) translateY(1px) translateX(1px);
+            }
+            75% {
+                transform: rotate(-1deg) translateY(-0.5px) translateX(-0.5px);
+            }
+            90% {
+                transform: rotate(0.5deg) translateY(0.3px) translateX(0.3px);
+            }
+        }
+
+        .camera-float {
+            animation: cameraFloat 3s ease-in-out infinite;
+        }
+
+        @keyframes cameraFloat {
+            0%, 100% {
+                transform: translateY(0) rotate(0);
+            }
+            25% {
+                transform: translateY(-3px) rotate(1deg);
+            }
+            50% {
+                transform: translateY(-1px) rotate(-0.5deg);
+            }
+            75% {
+                transform: translateY(-2px) rotate(0.5deg);
+            }
+        }
+
+        .camera-pulse {
+            animation: cameraPulse 6s ease-in-out infinite;
+        }
+
+        @keyframes cameraPulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+        }
+
+        .camera-icon-wrapper {
+            position: relative;
+            display: inline-block;
+            margin-bottom: 1.5rem;
+        }
+
+        .camera-icon-wrapper::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: radial-gradient(circle, rgba(139, 0, 0, 0.15) 0%, transparent 70%);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: all 0.5s ease;
+            animation: cameraGlow 5s ease-in-out infinite;
+        }
+
+        @keyframes cameraGlow {
+            0%, 100% {
+                width: 0;
+                height: 0;
+                opacity: 0;
+            }
+            50% {
+                width: 90px; /* Diperkecil sesuai card */
+                height: 90px;
+                opacity: 0.2;
+            }
+        }
+
+        .svg-defs {
+            position: absolute;
+            width: 0;
+            height: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-radial"></div>
+    <div class="curtain left"></div>
+    <div class="curtain right"></div>
+
+    <svg class="svg-defs">
+        <defs>
+            <linearGradient id="cameraGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#8B0000" />
+                <stop offset="100%" stop-color="#A30000" />
+            </linearGradient>
+        </defs>
+    </svg>
+
+    <div class="container">
+        <div class="columns is-centered">
+            <div class="column is-8-tablet is-6-desktop">
+                <div class="card">
+                    <div class="card-header has-text-centered py-4">
+                        <h1 class="title is-3 has-text-white mb-0">CinemaAPI</h1>
+                    </div>
+                    <div class="card-content p-5 has-text-centered">
+                        <div class="camera-icon-wrapper" id="cameraWrapper">
+                            <svg class="camera-icon camera-float camera-pulse" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M29.5,14.1c-0.3-0.2-0.7-0.2-1,0l-4.6,2.3C23.7,15,22.5,14,21,14H7c-1.7,0-3,1.3-3,3v6c0,1.7,1.3,3,3,3h5.1l-3,4.4
+                                    c-0.3,0.5-0.2,1.1,0.3,1.4c0.5,0.3,1.1,0.2,1.4-0.3l3.2-4.8l3.2,4.8c0.2,0.3,0.5,0.4,0.8,0.4c0.2,0,0.4-0.1,0.6-0.2
+                                    c0.5-0.3,0.6-0.9,0.3-1.4l-3-4.4H21c1.5,0,2.7-1,2.9-2.4l4.6,2.3C28.7,26,28.8,26,29,26c0.2,0,0.4-0.1,0.5-0.1
+                                    c0.3-0.2,0.5-0.5,0.5-0.9V15C30,14.7,29.8,14.3,29.5,14.1z"/>
+                                <path d="M19,1c-2.1,0-3.9,1.1-5,2.7C12.9,2.1,11.1,1,9,1C5.7,1,3,3.7,3,7s2.7,6,6,6c2.1,0,3.9-1.1,5-2.7c1.1,1.6,2.9,2.7,5,2.7
+                                    c3.3,0,6-2.7,6-6S22.3,1,19,1z M9,9C7.9,9,7,8.1,7,7s0.9-2,2-2s2,0.9,2,2S10.1,9,9,9z M19,9c-1.1,0-2-0.9-2-2s0.9-2,2-2s2,0.9,2,2
+                                    S20.1,9,19,9z"/>
+                            </svg>
+                        </div>
+
+                        <div class="content mt-3 has-text-left">
+                            <p class="mb-4">
+                                A <strong>REST API</strong> built on a <strong>microservice architecture</strong>, designed to manage cinema content and ticketing processes efficiently and in a distributed manner.
+                            </p>
+                            <p class="mb-4">
+                                The system leverages the <strong>HTTP/2</strong> protocol to enable fast and reliable communication between services, while <strong>Redis caching</strong> is utilized to optimize performance and accelerate access to frequently requested data.
+                            </p>
+                        </div>
+                        <div class="field mt-5">
+                            <div class="control">
+                                <a href="{{.URL}}" class="button btn-api is-fullwidth is-large">
+                                    <span class="icon">
+                                        <i class="fas fa-file-alt"></i>
+                                    </span>
+                                    <span>API Documentation</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        setTimeout(() => {
+            document.querySelectorAll('.curtain').forEach(c => c.remove());
+        }, 1200);
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const cameraIcon = document.querySelector('.camera-icon');
+            let isAnimating = false;
+            
+            function triggerSwing() {
+                if (isAnimating) return;
+                
+                isAnimating = true;
+                cameraIcon.classList.remove('camera-float', 'camera-pulse');
+                cameraIcon.classList.add('camera-swing');
+                
+                setTimeout(() => {
+                    cameraIcon.classList.remove('camera-swing');
+                    cameraIcon.classList.add('camera-float', 'camera-pulse');
+                    isAnimating = false;
+                }, 1800);
+                
+                setTimeout(triggerSwing, 4000);
+            }
+            
+            setTimeout(triggerSwing, 2000);
+            
+            const cameraWrapper = document.getElementById('cameraWrapper');
+            cameraWrapper.addEventListener('mouseenter', function() {
+                if (!isAnimating) {
+                    cameraIcon.style.transform = 'scale(1.1)';
+                    cameraIcon.style.transition = 'transform 0.3s ease';
+                }
+            });
+            
+            cameraWrapper.addEventListener('mouseleave', function() {
+                if (!isAnimating) {
+                    cameraIcon.style.transform = 'scale(1)';
+                }
+            });
+
+            cameraWrapper.addEventListener('mouseenter', function() {
+                if (!isAnimating) {
+                    triggerSwing();
+                }
+            });
+        });
+    </script>
+</body>
+</html>
