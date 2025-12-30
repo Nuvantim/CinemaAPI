@@ -27,3 +27,7 @@ profile.cov
 # Editor/IDE
 # .idea/
 # .vscode/
+api-gateway/bin
+booking-service/bin
+cinema-service/bin
+

@@ -3,12 +3,12 @@ package config
 import (
 	"fmt"
 	"log"
-	"os"
 	"time"
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/cors"
 	// "github.com/gofiber/fiber/v2/middleware/csrf"
+	"github.com/gofiber/fiber/v2/middleware/helmet"
 	"github.com/gofiber/fiber/v2/middleware/idempotency"
 	"github.com/gofiber/fiber/v2/middleware/limiter"
 	"github.com/gofiber/fiber/v2/middleware/logger"
@@ -37,6 +37,11 @@ func FiberConfig() fiber.Config {
 }
 
 func SecurityConfig(app *fiber.App) {
+	// Get Server Config
+	serverConfig, err := GetServerConfig()
+	if err != nil {
+		log.Fatal(err)
+	}
 
 	// Rate Limiting
 	app.Use(limiter.New(limiter.Config{
@@ -57,15 +62,23 @@ func SecurityConfig(app *fiber.App) {
 	// CSRF Protection
 	// app.Use(csrf.New())
 
-	// CORS Configuration
-	var url string = os.Getenv("URL")
-	var port string = os.Getenv("PORT")
+	// helmet
+	app.Use(helmet.New(helmet.Config{
+		ContentSecurityPolicy: fmt.Sprintf("dafault-src 'self'; frame-ancestors 'none'; http://%s, https://%s", serverConfig.Url, serverConfig.Url),
+		HSTSMaxAge:            31536000,
+		XFrameOptions:         "DENY",
+		HSTSPreloadEnabled:    true,
+		HSTSExcludeSubdomains: false,
+	}))
 
-	var origin = fmt.Sprintf("%s,http://localhost:%s, http://127.0.0.1:%s", url, port, port)
+	// CORS Configuration
+	var origin = fmt.Sprintf("http://%s, https://%s, http://localhost:%s, http://127.0.0.1:%s", serverConfig.Url, serverConfig.Url, serverConfig.Port, serverConfig.Port)
 	app.Use(cors.New(cors.Config{
-		AllowOrigins: origin,
-		AllowMethods: "GET,POST,PUT,DELETE",
-		AllowHeaders: "Origin, Content-Type, Authorization, Accept",
-		MaxAge:       3600,
+		AllowOrigins:     origin,
+		AllowCredentials: true,
+		ExposeHeaders:    "Content-Length, X-Knowledge-Base",
+		AllowMethods:     "GET,POST,PUT,DELETE",
+		AllowHeaders:     "Origin, Content-Type, Authorization, Accept, Accept-Language, Content-Length",
+		MaxAge:           3600,
 	}))
 }
