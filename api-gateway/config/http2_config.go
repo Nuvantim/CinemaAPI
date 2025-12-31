@@ -11,10 +11,10 @@ import (
 
 func Http2Config() *http.Client {
 	client := &http.Client{
+		// HTTP2 configuration
 		Transport: &http2.Transport{
-			AllowHTTP: true, // penting untuk HTTP/2 tanpa TLS
+			AllowHTTP: true,
 			DialTLSContext: func(ctx context.Context, network, addr string, cfg *tls.Config) (net.Conn, error) {
-				// gunakan koneksi TCP biasa tanpa TLS
 				return (&net.Dialer{}).DialContext(ctx, network, addr)
 			},
 		},
