@@ -56,18 +56,22 @@ func main() {
 		log.Fatal(err)
 	}
 
-	done := make(chan bool, 1)
+	done := make(chan struct{}, 1)
 
 	// Start server in goroutine
 	go func() {
 		if err := app.Listen(":" + serverConfig.Port); err != nil {
-			log.Printf("Server stopped: %v", err)
-			done <- true
+			log.Printf("server error: %v", err)
+			select {
+			case done <- struct{}{}:
+			default:
+			}
 		}
 	}()
-	config.GracefulShutdown(app, done)
 
+	go config.GracefulShutdown(app, done)
 	<-done
+
 	// Close Connection redis
 	rds.RedisClose()
 	// Close Connection database
