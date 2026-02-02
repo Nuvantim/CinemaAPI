@@ -64,7 +64,7 @@ func SecurityConfig(app *fiber.App) {
 
 	// helmet
 	app.Use(helmet.New(helmet.Config{
-		ContentSecurityPolicy: fmt.Sprintf("default-src 'self'; frame-ancestors 'none'; http://%s, https://%s", serverConfig.Url, serverConfig.Url),
+		ContentSecurityPolicy: fmt.Sprintf("dafault-src 'self'; frame-ancestors 'none'; http://%s, https://%s", serverConfig.Url, serverConfig.Url),
 		HSTSMaxAge:            31536000,
 		XFrameOptions:         "DENY",
 		HSTSPreloadEnabled:    true,
