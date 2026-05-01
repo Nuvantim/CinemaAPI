@@ -49,7 +49,7 @@ cd booking-service && go mod tidy
 ```
 **🌐 API Gateway**
 ```bash
-cd cinema-service && go mod tidy
+cd api-gateway && go mod tidy
 ```
 
 ### 3. Build Binary  

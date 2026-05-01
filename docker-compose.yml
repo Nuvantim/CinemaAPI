@@ -3,16 +3,17 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+    image: cinema_db  
     container_name: main_db
     restart: always
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: admin123
+      POSTGRES_DB: default
     ports:
       - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
-      - ./pg_schema:/docker-entrypoint-initdb.d/pg_schema
     networks:
       - cinema_network
 
@@ -30,9 +31,9 @@ services:
 
   cinema-service:
     build:
-      context: .
+      context: ./cinema-service
       dockerfile: Dockerfile
-    image: my-app
+    image: cinema_app
     pull_policy: never
     container_name: cinema_service
     restart: always
@@ -48,9 +49,9 @@ services:
 
   booking-service:
     build:
-      context: .
+      context: ./booking-service
       dockerfile: Dockerfile
-    image: my-app
+    image: booking_app
     pull_policy: never
     container_name: booking_service
     restart: always
@@ -66,9 +67,9 @@ services:
 
   api-gateway:
     build:
-      context: .
+      context: ./api-gateway
       dockerfile: Dockerfile
-    image: my-app
+    image: api_app
     pull_policy: never
     container_name: api_gateway
     restart: always
