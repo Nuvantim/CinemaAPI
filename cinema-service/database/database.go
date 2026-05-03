@@ -9,8 +9,8 @@ import (
 	"sync"
 	"time"
 
-	"api/config"
-	"api/internal/app/repository"
+	"cinema/config"
+	"cinema/internal/app/repository"
 	"github.com/jackc/pgx/v5/pgconn"
 	"github.com/jackc/pgx/v5/pgxpool"
 )
