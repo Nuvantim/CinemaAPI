@@ -2,19 +2,17 @@ package routes
 
 import (
 	"github.com/gofiber/fiber/v2"
-	"github.com/yokeTH/gofiber-scalar/scalar/v2"
 
-	"api/config"
 	"api/internal/app/handler"
 	"api/internal/middleware"
 )
 
 func Setup(app *fiber.App) {
 	app.Get("/", handler.Home)
+	app.Static("/public", "./views")
+	app.Get("/docs", handler.Swagger)
 
 	api := app.Group("/api/v1")
-	api.Use(config.AllowDoc)
-	api.Get("/docs/*", scalar.New(config.APIDocs()))
 
 	auth := api.Group("/auth")
 	auth.Post("/send-otp", handler.SendOTP)

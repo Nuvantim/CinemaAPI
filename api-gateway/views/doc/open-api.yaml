@@ -1,0 +1,1086 @@
+openapi: 3.0.0
+info:
+  title: CinemaAPI Documentation
+  version: 1.0.0
+servers:
+  - url: http://{{url}}
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+security:
+  - bearerAuth: []
+tags:
+  - name: Auth
+  - name: Access
+  - name: Access > Client
+  - name: Access > Role
+  - name: Access > Permission
+  - name: User
+  - name: Genre
+  - name: Film
+  - name: Cinema
+  - name: Screen Type
+  - name: Screen
+  - name: Seat
+  - name: ShowTime
+  - name: Booking
+  - name: BookingSeat
+  - name: Payment
+paths:
+  /auth/send-otp:
+    post:
+      tags:
+        - Auth
+      summary: SendOTP
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                email: yoga@gmail.com
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /auth/register:
+    post:
+      tags:
+        - Auth
+      summary: Register
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                name: yoga
+                email: yoga@gmail.com
+                password: admin123
+                code: 6VH5950
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /auth/login:
+    post:
+      tags:
+        - Auth
+      summary: Login
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                email: nuvantim@gmail.com
+                password: "12345678"
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /auth/logout:
+    post:
+      tags:
+        - Auth
+      summary: Log Out
+      requestBody:
+        content: {}
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /auth/reset-password:
+    post:
+      tags:
+        - Auth
+      summary: UpdatePassword
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                otp: 4X5PNOE
+                password: admin123
+                retype_password: admin123
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /client/:
+    get:
+      tags:
+        - Access > Client
+      summary: ListClient
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /client/1:
+    get:
+      tags:
+        - Access > Client
+      summary: FindClient
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /client/update/2:
+    put:
+      tags:
+        - Access > Client
+      summary: UpdateClient
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                role_id:
+                  - 3
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /client/delete/1:
+    delete:
+      tags:
+        - Access > Client
+      summary: New Request
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /role/:
+    get:
+      tags:
+        - Access > Role
+      summary: ListRole
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /role/1:
+    get:
+      tags:
+        - Access > Role
+      summary: FindRole
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /role/store:
+    post:
+      tags:
+        - Access > Role
+      summary: CreateRole
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                name: role 2
+                permission_id:
+                  - 1
+                  - 2
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /role/update/1:
+    put:
+      tags:
+        - Access > Role
+      summary: UpdateRole
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                name: new role
+                permission_id:
+                  - 1
+                  - 2
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /role/delete/5:
+    delete:
+      tags:
+        - Access > Role
+      summary: DeleteRole
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /permission/:
+    get:
+      tags:
+        - Access > Permission
+      summary: ListPermission
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /permission/1:
+    get:
+      tags:
+        - Access > Permission
+      summary: FindPermission
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /permission/store:
+    post:
+      tags:
+        - Access > Permission
+      summary: CratePermission
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                name: manage product
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /permission/update/1:
+    put:
+      tags:
+        - Access > Permission
+      summary: UpdatePermission
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                name: manage product 1
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /permission/delete/1:
+    delete:
+      tags:
+        - Access > Permission
+      summary: DeletePermission
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /account/profile:
+    get:
+      tags:
+        - User
+      summary: Account Profile
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /account/update:
+    put:
+      tags:
+        - User
+      summary: Update Account
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                name: Firman
+                email: firman@gmail.com
+                password: '123'
+                age: 32
+                phone: 8937839
+                district: Nguling
+                city: Pasuruan
+                state: Jawa Timur
+                country: indonesia
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /account/delete:
+    delete:
+      tags:
+        - User
+      summary: Delete Account
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /genre/:
+    get:
+      tags:
+        - Genre
+      summary: ListGenre
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /genre/1:
+    get:
+      tags:
+        - Genre
+      summary: GetGenre
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /genre/create:
+    post:
+      tags:
+        - Genre
+      summary: CreateGenre
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                name: example_genre
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /genre/update/11:
+    put:
+      tags:
+        - Genre
+      summary: UpdateGenre
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                name: example_genre 1
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /genre/delete/11:
+    delete:
+      tags:
+        - Genre
+      summary: DeleteGenre
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /film/:
+    get:
+      tags:
+        - Film
+      summary: ListFilm
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /film/1:
+    get:
+      tags:
+        - Film
+      summary: GetFilm
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /film/genre/1:
+    get:
+      tags:
+        - Film
+      summary: SearchFilmGenre
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /film/search:
+    post:
+      tags:
+        - Film
+      summary: SearchFilm
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                title: The Silent Code
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /film/create:
+    post:
+      tags:
+        - Film
+      summary: CreateFilm
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                title: example_title
+                director: example_director
+                genre_id: 1
+                Duration: '02:30:09'
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /film/update/11:
+    put:
+      tags:
+        - Film
+      summary: UpdateFilm
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                title: example_title
+                director: example_director
+                genre_id: 3
+                Duration: '02:20:09'
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /film/delete/11:
+    delete:
+      tags:
+        - Film
+      summary: DeleteFilm
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /cinema/:
+    get:
+      tags:
+        - Cinema
+      summary: ListCinema
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /cinema/1:
+    get:
+      tags:
+        - Cinema
+      summary: GetCinema
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /cinema/schedule/1:
+    get:
+      tags:
+        - Cinema
+      summary: GetCinemaSchedule
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /cinema/create:
+    post:
+      tags:
+        - Cinema
+      summary: CreateCinema
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                name: example_cinema
+                address: example_address
+                city: example_city
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /cinema/update/11:
+    put:
+      tags:
+        - Cinema
+      summary: UpdateCinema
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                name: example_cinema 1
+                address: example_address
+                city: example_city
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /cinema/delete/11:
+    delete:
+      tags:
+        - Cinema
+      summary: DeleteCinema
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /screen/type/:
+    get:
+      tags:
+        - Screen Type
+      summary: ListScreenType
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /screen/type/1:
+    get:
+      tags:
+        - Screen Type
+      summary: GetScreenType
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /screen/type/create:
+    post:
+      tags:
+        - Screen Type
+      summary: CreateScreenType
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                name: example_screen_type
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /screen/type/update/11:
+    put:
+      tags:
+        - Screen Type
+      summary: UpdateScreenType
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                name: example_screen_type 2
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /screen/type/delete/11:
+    delete:
+      tags:
+        - Screen Type
+      summary: DeleteScreenType
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /screen/:
+    get:
+      tags:
+        - Screen
+      summary: ListScreen
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /screen/1:
+    get:
+      tags:
+        - Screen
+      summary: GetScreen
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /screen/create:
+    post:
+      tags:
+        - Screen
+      summary: CreateScreen
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                cinema_id: 7
+                name: flower screen
+                screen_type_id: 4
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /screen/update/11:
+    put:
+      tags:
+        - Screen
+      summary: UpdateScreen
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                cinema_id: 7
+                name: cinematic screen
+                screen_type_id: 4
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /screen/delete/11:
+    delete:
+      tags:
+        - Screen
+      summary: DeleteScreen
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /seat/:
+    get:
+      tags:
+        - Seat
+      summary: ListSeat
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /seat/1:
+    get:
+      tags:
+        - Seat
+      summary: GetSeat
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /seat/create:
+    post:
+      tags:
+        - Seat
+      summary: CreateSeat
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                screen_id: 1
+                seat_row: C
+                seat_number: 3
+                seat_price_modifier: 40000
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /seat/update/11:
+    put:
+      tags:
+        - Seat
+      summary: UpdateSeat
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                screen_id: 1
+                seat_row: C
+                seat_number: 7
+                seat_price_modifier: 40000
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /seat/delete/11:
+    delete:
+      tags:
+        - Seat
+      summary: DeleteSeat
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /showtime/:
+    get:
+      tags:
+        - ShowTime
+      summary: ListShowTime
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /showtime/1:
+    get:
+      tags:
+        - ShowTime
+      summary: GetShowTime
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /showtime/create:
+    post:
+      tags:
+        - ShowTime
+      summary: CreateShowTime
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                film_id: 1
+                screen_id: 3
+                start_time: 2025-12-05 10:00
+                base_price: 40000
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /showtime/update/11:
+    put:
+      tags:
+        - ShowTime
+      summary: UpdateShowTime
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                film_id: 1
+                screen_id: 4
+                start_time: 2025-12-05 10:00
+                base_price: 40000
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /showtime/delete/11:
+    delete:
+      tags:
+        - ShowTime
+      summary: DeleteShowTime
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /booking/:
+    get:
+      tags:
+        - Booking
+      summary: ListBooking
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /booking/create:
+    post:
+      tags:
+        - Booking
+      summary: CreateBooking
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                showtime_id: 1
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /booking/delete/2025110910403751:
+    delete:
+      tags:
+        - Booking
+      summary: DeleteBooking
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /booking/seat/:
+    get:
+      tags:
+        - BookingSeat
+      summary: ListBookingSeat
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /booking/seat/create:
+    post:
+      tags:
+        - BookingSeat
+      summary: CreateBookingSeat
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                booking_id: 2025111110281629
+                seat_id: 1
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /booking/seat/delete/11:
+    delete:
+      tags:
+        - BookingSeat
+      summary: DeleteBookingSeat
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /payment/:
+    post:
+      tags:
+        - Payment
+      summary: ListPayment
+      requestBody:
+        content: {}
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /payment/create:
+    post:
+      tags:
+        - Payment
+      summary: CreatePayment
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                booking_id: 2025111110281629
+                payment_method: QRIS
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
