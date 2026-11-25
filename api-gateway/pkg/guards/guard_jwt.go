@@ -36,7 +36,7 @@ type RefreshClaims struct {
 }
 
 // loadKey membaca dan memproses file kunci RSA
-func loadKey(filename string, isPrivate bool) (interface{}, error) {
+func loadKey(filename string, isPrivate bool) (any, error) {
 
 	keyBytes, err := os.ReadFile(filename)
 	if err != nil {
