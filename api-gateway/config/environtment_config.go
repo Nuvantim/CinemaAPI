@@ -68,11 +68,9 @@ func GetServerConfig() (*ServerConfig, error) {
 	if err := envconfig.Process("", &serv); err != nil {
 		return nil, err
 	}
-
 	if serv.Url == "" {
 		serv.Url = "example.com"
 	}
-
 	return &serv, nil
 }
 

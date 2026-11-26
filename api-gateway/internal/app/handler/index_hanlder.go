@@ -1,8 +1,8 @@
 package handler
 
 import (
+	"api/config"
 	"github.com/gofiber/fiber/v2"
-	"os"
 )
 
 func Home(c *fiber.Ctx) error {
@@ -11,9 +11,10 @@ func Home(c *fiber.Ctx) error {
 
 func Swagger(c *fiber.Ctx) error {
 	var url string
-	url = os.Getenv("APP_URL")
-	if url == "" {
-		url = "127.0.0.1" + ":" + os.Getenv("PORT")
+	serv, _ := config.GetServerConfig()
+	url = serv.Url
+	if url == "example.com" {
+		url = "127.0.0.1" + ":" + serv.Port
 	}
 	return c.Render("api", fiber.Map{
 		"Title":      "CinemaAPI Documentation",
