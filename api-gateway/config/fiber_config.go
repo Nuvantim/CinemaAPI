@@ -46,7 +46,7 @@ func SecurityConfig(app *fiber.App) {
 
 	// Rate Limiting
 	app.Use(limiter.New(limiter.Config{
-		Max:        20,
+		Max:        15,
 		Expiration: 120 * time.Second,
 	}))
 

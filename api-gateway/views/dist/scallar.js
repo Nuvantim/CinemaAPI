@@ -40991,16 +40991,14 @@
                 ? e.prefixItems
                 : void 0,
             f =
-              d
-                ?.slice(0, l)
-                .map((e, i) =>
-                  Wy(e, t, {
-                    level: n + 1,
-                    schemaPath: [...a, `prefixItems`, String(i)],
-                    seen: r,
-                    dynamicScope: s,
-                  }),
-                ) ?? [],
+              d?.slice(0, l).map((e, i) =>
+                Wy(e, t, {
+                  level: n + 1,
+                  schemaPath: [...a, `prefixItems`, String(i)],
+                  seen: r,
+                  dynamicScope: s,
+                }),
+              ) ?? [],
             p = tUe(
               e,
               f,
@@ -151482,14 +151480,10 @@ ${a}const { statusCode, body } = await request('${$Y(r)}'${o})`;
               schemas: re.schemas(),
               externalDocumentsKey: t.externalDocumentsKey,
               createTraversal: ee,
-              documents: re
-                .documents()
-                .map(({ path: e, value: t }) => ({
-                  path: e,
-                  context: G(t)
-                    ? (C.location(t)?.context ?? `schema`)
-                    : `schema`,
-                })),
+              documents: re.documents().map(({ path: e, value: t }) => ({
+                path: e,
+                context: G(t) ? (C.location(t)?.context ?? `schema`) : `schema`,
+              })),
               sourceReferences: ce,
               outputBase: t.outputBase,
             });
@@ -157405,14 +157399,12 @@ ${a}const { statusCode, body } = await request('${$Y(r)}'${o})`;
             e.name &&
               t(e) &&
               (r.has(e.name) || (r.set(e.name, []), n.push(e.name)),
-              r
-                .get(e.name)
-                ?.push({
-                  location: i,
-                  value: e.value,
-                  isDisabled: e.isDisabled ?? !1,
-                  index: a,
-                }));
+              r.get(e.name)?.push({
+                location: i,
+                value: e.value,
+                isDisabled: e.isDisabled ?? !1,
+                index: a,
+              }));
           });
         let i = [];
         for (let e of n) {
